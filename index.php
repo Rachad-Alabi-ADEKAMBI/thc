@@ -111,10 +111,71 @@
                     livrer au lieu de votre choix, deux ou trois fois 
                     par semaine selon vos besoins.
                     </p>
+
+                    <ul>
+                        <li>
+                            <i></i>Choix de vos fruits préféreés
+                        </li>
+                        <li>
+                            <i></i> Livraisons simples au lieu de votre choix
+                        </li>
+
+                        <li>
+                            <i></i> Cash back de 10% reversés chaque mois pour chaque nouveau filleul
+                        </li>
+                    </ul>
+
+                    <button class="btn btn-primary">
+                        En savoir plus
+                    </button>
                 </div>
 
                 <div class="reason__content__image">
-                    <img src="/public/images/logo-thc.webp" alt="">
+                    <img src="./public/images/logo-carre.webp" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="fruits">
+            <div class="fruits__slider">
+
+            </div>
+        </div>
+
+        <div class="cashback">
+            <div class="cashback__content">
+                <div class="cashback__content__image">
+                    <img src="./public/images/logo-carre.webp" alt="">
+                </div>
+
+                <div class="cashback__content__text">
+                    <h2>
+                        Notre programme de parrainage
+                    </h2>
+
+                    <p>
+                        Lorem ipsum dolor sit, amet consectetur 
+                        adipisicing elit. Eveniet eius suscipit nesciunt 
+                        consectetur, aperiam odit maiores facere numquam ad!
+                         Nam delectus porro explicabo atque quisquam quasi
+                          maxime reiciendis ipsa in?
+                    </p>
+
+                    <ul>
+                        <li>
+                            <i></i> Le programme ne vous engage en rien
+                        </li>
+                        <li>
+                            <i></i> Les retraits se font chaque Lundi
+                        </li>
+                        <li>
+                            <i></i> Possibilité de renouveller votre abonnment directement avec votre cashback
+                        </li>
+                    </ul>
+
+                    <button class="btn btn-primary">
+                        En savoir plus
+                    </button>
                 </div>
             </div>
         </div>

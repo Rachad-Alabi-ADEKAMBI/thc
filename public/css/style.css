@@ -24,6 +24,14 @@ html, body {
   display: block;
 }
 
+.btn-primary {
+  width: 200px;
+  height: 50px;
+  background-color: #F99401;
+  border-radius: 30px;
+  border: 1px solid #F99401;
+}
+
 .header {
   width: 100%;
   padding-left: 10px;
@@ -154,18 +162,78 @@ html, body {
 .main .process__content__item .easy {
   margin: auto;
 }
+.main .reason {
+  display: block;
+}
 .main .reason__content {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
+  height: 90vh;
+  padding: 30px;
 }
-.main .reason__content__content__text {
+.main .reason__content__text {
+  display: block;
+  flex: 1;
+  padding-top: 20px;
+}
+.main .reason__content__text h2 {
+  margin: 30px auto;
+}
+.main .reason__content__text p {
+  text-align: left;
+}
+.main .reason__content__text ul {
+  text-align: left;
+}
+.main .reason__content__text .btn-primary {
+  margin: 20px auto;
+}
+.main .reason__content__image {
+  flex: 1;
+}
+.main .reason__content__image img {
+  width: 500px;
+  height: 400px;
+  margin: 30px auto;
+  border-radius: 20px;
+}
+.main .cashback {
   display: block;
 }
-.main .reason__content__content__image img {
-  width: 320px;
-  margin: auto;
+.main .cashback__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  height: 90vh;
+}
+.main .cashback__content__text {
+  display: block;
+  flex: 1;
+  padding-top: 20px;
+}
+.main .cashback__content__text h2 {
+  margin: 30px auto;
+}
+.main .cashback__content__text p {
+  text-align: left;
+}
+.main .cashback__content__text ul {
+  text-align: left;
+}
+.main .cashback__content__text .btn-primary {
+  margin: 20px auto;
+}
+.main .cashback__content__image {
+  flex: 1;
+}
+.main .cashback__content__image img {
+  width: 500px;
+  height: 400px;
+  margin: 30px auto;
+  border-radius: 20px;
 }
 
 .footer {

@@ -38,6 +38,14 @@ html, body{
     display: block;
 }
 
+.btn-primary{
+    width: 200px;
+    height: 50px;
+    background-color: $secondary;
+    border-radius: 30px;
+    border: 1px solid $secondary;
+}
+
 .header{
     width: 100%;
     padding-left: 10px;
@@ -185,18 +193,95 @@ html, body{
     }
 
     .reason{
+        display: block;
         &__content{
             @include flex();
+            height: 90vh;
+            padding: 30px;
 
-            &__content__text{
+            &__text{
                 display: block;
+                flex: 1;
+                padding-top: 20px;
+
+                h2{
+                    margin: 30px auto;
+                }
+
+                p{
+                    text-align: left;
+                }
+
+
+                ul{
+                    text-align: left;
+                    li{
+                    }
+                }
+
+                .btn-primary{
+                    margin: 20px auto;
+                }
+
+
                 
             }
 
-            &__content__image{
+            &__image{
+               flex: 1;
+
                 img{
-                    width: 320px;
-                    margin: auto;
+                   width: 500px;
+                   height: 400px;
+                    margin: 30px auto;
+                    border-radius: 20px;
+                }
+            }
+        }
+    }
+
+    .cashback{
+        display: block;
+        &__content{
+            @include flex();
+            height: 90vh;
+
+            &__text{
+                display: block;
+                flex: 1;
+                padding-top: 20px;
+
+                h2{
+                    margin: 30px auto;
+                }
+
+                p{
+                    text-align: left;
+                }
+
+
+                ul{
+                    text-align: left;
+                    li{
+                    }
+                }
+
+                .btn-primary{
+                    margin: 20px auto;
+                }
+
+
+                
+            }
+
+            &__image{
+               flex: 1;
+
+                img{
+                   width: 500px;
+                   height: 400px;
+                    margin: 30px auto;
+                    border-radius: 20px;
                 }
             }
         }
