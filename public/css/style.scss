@@ -38,6 +38,10 @@ html, body{
     display: block;
 }
 
+h2{
+    color: $secondary;
+    font-weight: bold;
+}
 .btn-primary{
     width: 200px;
     height: 50px;

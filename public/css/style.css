@@ -24,6 +24,11 @@ html, body {
   display: block;
 }
 
+h2 {
+  color: #F99401;
+  font-weight: bold;
+}
+
 .btn-primary {
   width: 200px;
   height: 50px;

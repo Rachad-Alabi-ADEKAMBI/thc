@@ -180,6 +180,69 @@
             </div>
         </div>
 
+        <div class="pricing">
+            <div class="pricing__content">
+                <div class="pricing__Content___item">
+                    <span>
+                        Offre 1
+                    </span>
+
+                    <p>
+                        <ul>
+                            <li>1 pot * 2 livraisons / semaine</li>
+                        </ul>
+                    </p>
+
+                    <strong>
+                        6.000 XOF
+                    </strong>
+                </div>
+                <div class="pricing__Content___item">
+                    <span>
+                        Offre 2
+                    </span>
+
+                    <p>
+                        <ul>
+                            <li>2 pots * 2 livraisons / semaine</li>
+                        </ul>
+                    </p>
+
+                    <strong>
+                        9.000 XOF
+                    </strong>
+                </div>
+                <div class="pricing__Content___item">
+                    <span>
+                        Offre 3
+                    </span>
+
+                    <p>
+                        <ul>
+                            <li>3 pots * livraisons / semaine</li>
+                        </ul>
+                    </p>
+
+                    <strong>
+                        11.000 XOF
+                    </strong>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="testimonies">
+            <div class="testimonies__content">
+                <div class="testimony">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="contact">
+            
+        </div>
+
     </main>
 
     <?php include 'parts/footer.php'; ?>
