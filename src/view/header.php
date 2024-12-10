@@ -9,6 +9,9 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mx-auto">
+      <li class="nav-item active">
+          <a class="nav-link" href="index.php?action=homePage">Accueil</a>
+        </li>
         <li class="nav-item active">
           <a class="nav-link" href="/">Logistique</a>
         </li>

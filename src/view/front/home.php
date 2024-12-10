@@ -97,7 +97,7 @@ ob_start(); ?>
             <div class="reason__content">
                 <div class="reason__content__text">
                     <h2>
-                        Comme vous le voulez
+                        <i class="fas fa-heart"></i> Comme vous le voulez
                     </h2>
                     
                     <p>
@@ -110,24 +110,23 @@ ob_start(); ?>
 
                     <ul>
                         <li>
-                            <i></i>Choix de vos fruits préféreés
+                            <i class="fas fa-check-circle"></i>Choix de vos fruits préférés
                         </li>
                         <li>
-                            <i></i> Livraisons simples au lieu de votre choix
+                            <i class="fas fa-truck"></i>Livraisons simples au lieu de votre choix
                         </li>
-
                         <li>
-                            <i></i> Cash back de 10% reversés chaque mois pour chaque nouveau filleul
+                            <i class="fas fa-gift"></i>Cash back de 10% reversés chaque mois pour chaque nouveau filleul
                         </li>
                     </ul>
 
                     <button class="btn btn-primary">
-                        En savoir plus
+                        <i class="fas fa-info-circle"></i> En savoir plus
                     </button>
                 </div>
 
                 <div class="reason__content__image">
-                    <img src="./public/images/logo-carre.webp" alt="">
+                    <img src="./public/images/logo-carre.webp" alt="Logo carré">
                 </div>
             </div>
         </div>
@@ -177,55 +176,48 @@ ob_start(); ?>
         </div>
 
         <div class="pricing">
-            <div class="pricing__content">
-                <div class="pricing__Content___item">
-                    <span>
-                        Offre 1
-                    </span>
-
-                    <p>
-                        <ul>
-                            <li>1 pot * 2 livraisons / semaine</li>
-                        </ul>
-                    </p>
-
-                    <strong>
-                        6.000 XOF
-                    </strong>
-                </div>
-                <div class="pricing__Content___item">
-                    <span>
-                        Offre 2
-                    </span>
-
-                    <p>
-                        <ul>
-                            <li>2 pots * 2 livraisons / semaine</li>
-                        </ul>
-                    </p>
-
-                    <strong>
-                        9.000 XOF
-                    </strong>
-                </div>
-                <div class="pricing__Content___item">
-                    <span>
-                        Offre 3
-                    </span>
-
-                    <p>
-                        <ul>
-                            <li>3 pots * livraisons / semaine</li>
-                        </ul>
-                    </p>
-
-                    <strong>
-                        11.000 XOF
-                    </strong>
-                </div>
-
-            </div>
+    <h2>
+        <i class="fas fa-tags"></i> Tarifs
+    </h2>
+    <div class="pricing__content">
+        <div class="pricing__content__item">
+            <span class="offer-name">
+                <i class="fas fa-leaf"></i> Offre 1
+            </span>
+            <ul>
+                <li><i class="fas fa-check"></i> 1 pot * 2 livraisons / semaine</li>
+            </ul>
+            <strong class="price">
+                <i class="fas fa-coins"></i> 6.000 XOF
+            </strong>
+            <button class="btn-select">Choisir</button>
         </div>
+        <div class="pricing__content__item featured">
+            <span class="offer-name">
+                <i class="fas fa-star"></i> Offre 2
+            </span>
+            <ul>
+                <li><i class="fas fa-check"></i> 2 pots * 2 livraisons / semaine</li>
+            </ul>
+            <strong class="price">
+                <i class="fas fa-coins"></i> 9.000 XOF
+            </strong>
+            <button class="btn-select">Choisir</button>
+        </div>
+        <div class="pricing__content__item">
+            <span class="offer-name">
+                <i class="fas fa-gem"></i> Offre 3
+            </span>
+            <ul>
+                <li><i class="fas fa-check"></i> 3 pots * 3 livraisons / semaine</li>
+            </ul>
+            <strong class="price">
+                <i class="fas fa-coins"></i> 11.000 XOF
+            </strong>
+            <button class="btn-select">Choisir</button>
+        </div>
+    </div>
+</div>
 
         <div class="testimonies">
             <div class="testimonies__content">
