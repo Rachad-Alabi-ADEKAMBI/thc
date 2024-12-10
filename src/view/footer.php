@@ -1,4 +1,4 @@
- <div class="footer">
+<div class="footer">
             <div class="row footer__top">
                 <div class="col-sm-12 col-md-3 footer__top__content">
                     logo

@@ -9,3 +9,4 @@
     <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="public/css/style.css">
+    <link rel="icon" type="image/x-icon" href="./public/images/logo-carre.webp">
