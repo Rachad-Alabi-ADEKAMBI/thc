@@ -137,41 +137,31 @@ ob_start(); ?>
             </div>
         </div>
 
-        <div class="cashback">
-            <div class="cashback__content">
-                <div class="cashback__content__image">
-                    <img src="./public/images/logo-carre.webp" alt="">
-                </div>
+        <div class="reason">
+            <div class="reason__content">
 
-                <div class="cashback__content__text">
+            <div class="reason__content__image">
+                    <img src="./public/images/logo-carre.webp" alt="Logo carré">
+                </div>
+                <div class="reason__content__text">
                     <h2>
-                        Notre programme de parrainage
+                        <i class="fas fa-money"></i> 
+                        Des récompenses pour votre générosité ! 🍍
                     </h2>
+                    
+                    <p class="text-justify">
 
-                    <p>
-                        Lorem ipsum dolor sit, amet consectetur 
-                        adipisicing elit. Eveniet eius suscipit nesciunt 
-                        consectetur, aperiam odit maiores facere numquam ad!
-                         Nam delectus porro explicabo atque quisquam quasi
-                          maxime reiciendis ipsa in?
-                    </p>
+                Avec THC, des fruits pour vous et des récompenses pour votre générosité ! 🍍
 
-                    <ul>
-                        <li>
-                            <i></i> Le programme ne vous engage en rien
-                        </li>
-                        <li>
-                            <i></i> Les retraits se font chaque Lundi
-                        </li>
-                        <li>
-                            <i></i> Possibilité de renouveller votre abonnment directement avec votre cashback
-                        </li>
-                    </ul>
+                Prendre des fruits régulièrement, c’est bon pour la santé et encore meilleur avec THC ! Chaque mois, recevez une délicieuse salade de fruits, livrée directement chez vous pour faire le plein de vitamines.
 
-                    <button class="btn btn-primary">
-                        En savoir plus
-                    </button>
+                Mais ce n’est pas tout : en parrainant vos proches, vous bénéficiez d’un système de cashback simple et avantageux. Chaque mois, 10% de l’abonnement de votre filleul vous est reversé.
+
+                Un geste pour votre bien-être, un plaisir à partager, et une récompense à la clé. Alors, prêt à croquer dans le bonheur avec THC ? 🍓🍎
+                                    </p>
                 </div>
+
+
             </div>
         </div>
 
@@ -219,17 +209,136 @@ ob_start(); ?>
     </div>
 </div>
 
-        <div class="testimonies">
-            <div class="testimonies__content">
-                <div class="testimony">
+        
+<section class="testimonials">
+  <h2><i class="fas fa-quote-left"></i> Témoignages</h2>
+  <div class="testimonial-slider">
+    <div class="testimonial-track">
+      <div class="testimonial-card">
+        <img src="https://i.pravatar.cc/150?img=1" alt="Avatar 1" class="avatar">
+        <p class="quote">"Le service de livraison de fruits est incroyable ! Toujours frais et à l'heure."</p>
+        <p class="author">Marie D.</p>
+        <div class="rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <img src="https://i.pravatar.cc/150?img=2" alt="Avatar 2" class="avatar">
+        <p class="quote">"J'adore la variété des fruits proposés. Ça égaye mes journées !"</p>
+        <p class="author">Thomas L.</p>
+        <div class="rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <img src="https://i.pravatar.cc/150?img=3" alt="Avatar 3" class="avatar">
+        <p class="quote">"Excellent rapport qualité-prix. Je recommande vivement !"</p>
+        <p class="author">Sophie M.</p>
+        <div class="rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="far fa-star"></i>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <img src="https://i.pravatar.cc/150?img=4" alt="Avatar 4" class="avatar">
+        <p class="quote">"Le service client est top ! Ils sont toujours à l'écoute et réactifs."</p>
+        <p class="author">Lucas P.</p>
+        <div class="rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slider-nav">
+    <button class="prev"><i class="fas fa-chevron-left"></i></button>
+    <button class="next"><i class="fas fa-chevron-right"></i></button>
+  </div>
+</section>
+
+
+
+        <section class="section">
+            <div class="row">
+                <div class="col-12">
+                <div class="contact-container">
+  <div class="contact-form-container">
+    <h2><i class="fas fa-envelope-open-text"></i> Contactez-nous</h2>
+    <form class="contact-form" action="#" method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nom">
+            <i class="fas fa-user"></i> Nom
+          </label>
+          <input type="text" id="nom" name="nom" required>
+        </div>
+        <div class="form-group">
+          <label for="prenoms">
+            <i class="fas fa-user"></i> Prénoms
+          </label>
+          <input type="text" id="prenoms" name="prenoms" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">
+            <i class="fas fa-envelope"></i> Email
+          </label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="telephone">
+            <i class="fas fa-phone"></i> Téléphone
+          </label>
+          <input type="tel" id="telephone" name="telephone" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="objet">
+          <i class="fas fa-tag"></i> Objet
+        </label>
+        <input type="text" id="objet" name="objet" required>
+      </div>
+      <div class="form-group">
+        <label for="message">
+          <i class="fas fa-comment"></i> Message
+        </label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+      </div>
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="cgu" name="cgu" required>
+        <label for="cgu">
+          J'accepte les <a href="#">conditions générales d'utilisation</a>
+        </label>
+      </div>
+      <button type="submit" class="submit-btn w-50">
+        <i class="fas fa-paper-plane"></i> Envoyer
+      </button>
+    </form>
+  </div>
+  <div class="contact-image">
+    <img src="https://source.unsplash.com/random/800x600?fruit+salad" alt="Salade de fruits">
+  </div>
+</div>
+
 
                 </div>
             </div>
-        </div>
-
-        <div class="contact">
-            
-        </div>
+        </section>
 
     </main>
 
