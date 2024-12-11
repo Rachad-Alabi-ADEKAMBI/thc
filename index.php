@@ -36,5 +36,5 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
 <?php
   }
 } else {
-  home();
+  homePage();
 }

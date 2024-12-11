@@ -45,10 +45,12 @@ html, body{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Roboto';font-size: 20px;
-    display: block;
+    font-family: 'Raleway';font-size: 20px;
+ //   display: block;
     color: $white;
     background-color: #1a1a1a;
+    line-height: 1.1em;
+    text-align: justify;
 }
 
 h2{
@@ -67,8 +69,12 @@ h2{
     width: 100%;
     padding-left: 10px;
     padding-right: 10px;
-    margin: 0;
-
+    margin-bottom: 0;
+    position: fixed;
+    z-index: 99999;
+    background: $white;
+    color: $white;
+    text-align: left;
 
     .logo{
         width: 80px;
@@ -84,6 +90,32 @@ h2{
         color: $white;
         font-weight: bold;
         background-color: $tertiary;
+        margin: 5px;
+    }
+
+    .btn-discovery:hover{
+      background-color: $primary;
+      color: $white;
+    }
+
+    ul{
+      li{
+       a:hover{
+        color: $primary;
+
+        i{
+          color: $primary;
+        }
+       }
+      }
+    }
+
+    &__list{
+    
+
+      a:hover{
+        color: $primary;
+      }
     }
 }
 
@@ -98,6 +130,8 @@ h2{
         align-items: center;
         padding: 2rem;
         font-family: 'Arial', sans-serif;
+        margin-top: 50px;
+        text-align: justify;
       }
       
       .hero__content {
@@ -130,7 +164,8 @@ h2{
       
       .star {
         color: #50AF47;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+        font-weight: bold;
         margin-right: 0.5rem;
       }
       
@@ -142,9 +177,10 @@ h2{
         animation: fadeInUp 0.8s ease-out 0.4s backwards;
       }
       
-      .call span {
+      .call strong {
         font-weight: bold;
         color: #50AF47;
+        font-size: 1.3em;
       }
       
       .btn {
@@ -161,7 +197,7 @@ h2{
       }
       
       .btn:hover {
-        background-color: #3d8a36;
+        background-color: $primary;
         transform: translateY(-3px);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       }
@@ -273,6 +309,16 @@ h2{
     position: relative;
     z-index: 1;
   }
+
+  .prrocess__content__text h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #FD4F65, #50AF47);
+}
   
   @media (min-width: 768px) {
     .process__content {
@@ -748,7 +794,6 @@ li i {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  color: #F99401;
 }
 
 .testimonials h2 i {
@@ -862,7 +907,7 @@ li i {
   animation: fadeIn 0.5s ease-out;
 
   h2 {
-    color: $secondary;
+    color: $white;
     text-align: center;
     margin-bottom: 2rem;
     font-size: 2.2rem;
@@ -1039,9 +1084,133 @@ li i {
     height: 300px;
   }
 }
-
-
     /*contact ends*/
+
+
+    /*pack starts*/
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      width: 100%;
+  }
+
+  .pack {
+    border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s ease;
+      position: relative;
+      overflow: hidden;
+
+  }
+
+  .pack i{
+    color: $white;
+  }
+
+  .pack:hover {
+      transform: translateY(-10px);
+  }
+
+  .pack::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      transition: transform 0.3s ease;
+      transform: scaleX(0);
+  }
+
+  .pack:hover::before {
+      transform: scaleX(1);
+  }
+
+  .pack1::before {
+      background: #FD4F65;
+  }
+
+  .pack2::before {
+      background: #F99401;
+  }
+
+  .pack3::before {
+      background: #50AF47;
+  }
+
+  .pack img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease;
+  }
+
+  .pack:hover img {
+      transform: scale(1.05);
+  }
+
+  .fruits h2 {
+      font-size: 2.8em;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+      color: $white;
+      
+  }
+
+  .pack1 h2 {
+      color: #FD4F65;
+  }
+
+  .pack2 h2 {
+      color: #F99401;
+  }
+
+  .pack3 h2 {
+      color: #50AF47;
+  }
+
+  .description {
+      color: #ccc;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+  }
+
+  .price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-top: 1rem;
+  }
+
+  @keyframes fadeIn {
+      from {
+          opacity: 0;
+          transform: translateY(20px);
+      }
+      to {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  }
+
+  .pack {
+      animation: fadeIn 0.6s ease forwards;
+  }
+
+  .pack:nth-child(2) {
+      animation-delay: 0.2s;
+  }
+
+  .pack:nth-child(3) {
+      animation-delay: 0.4s;
+  }
+    /*pack ends*/
+
 }
 
 

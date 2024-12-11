@@ -6,44 +6,41 @@ ob_start(); ?>
   
     <main class="main">
         <div class="hero">
-            <div class="hero__content">
-                <div class="hero__content__text">
-                   <h1> The Healthy <br> Choice 
-                     (THC)
-                   </h1> 
-                   <p>La solution pour des salades <br> 
-                   de fruits livrées à domicile  <br> <p>
+                      <div class="hero__content">
+                  <div class="hero__content__text">
+                      <h1> Le Choix <br> Healthy (THC) </h1> 
+                      <p>Votre solution pour des salades <br> 
+                      de fruits livrées à domicile ou au bureau à Cotonou</p>
 
-                   <p> <span class="star">*</span>Une livraison régulière et simplifiée <br>
-                   <span class="star">*</span>Choix de vos fruits préférés <br>
-                   <span class="star">*</span>Un abonnement sur mesure
-                   </p>
-                
-                <p class="call">
-                    Laissez-nous un message sur whatsapp au : <span>+ 229 41 59 76 42</span>
-                </p>
-                   
-                   
-                   <button class="btn">
-                        C'est parti !
-                   </button>
+                      <p>
+                          <span class="star"><i class="fas fa-check"></i></span>Livraison régulière et simplifiée<br>
+                          <span class="star"><i class="fas fa-check"></i></span>Personnalisez votre sélection de fruits<br>
+                          <span class="star"><i class="fas fa-check"></i></span>Abonnement adapté à vos besoins
+                      </p>
                   
-                </div>
+                     
+                      <a href="index.php?action=homePage#offers" class="btn">
+                  <i class="fas fa-arrow-right"></i> Voir les offres
+              </a>
 
-                <div class="hero__content__image">
-                    <img src="public/images/logo-carre.webp" alt="logo thc">
-                </div>
-            </div>
-        </div>
+      </div>
+
+      <div class="hero__content__image">
+          <img src="public/images/logo-carre.webp" alt="Logo THC">
+      </div>
+  </div>
+
+          </div>
 
         <div class="process">
             <div class="process__title">
-                <h2>
-                Comment ça marche ?
-                </h2>
+            <h2>
+    Comment ça marche ? 🍎
+</h2>
 
                 <p>
-                Choisissez vos fruits préférés, créez un mélange unique, et programmez vos livraisons.
+                Choisissez votre pack avec les fruits de votre choix 
+                et programmez vos livraisons.
                  Nous nous occupons du reste.
                 </p>
             </div>
@@ -69,7 +66,7 @@ ob_start(); ?>
                     </span>
 
                     <span class="action">
-                    Sélectionnez vos fruits
+                    Sélectionnez votre pack en fonction de vos goûts
                     </span>
 
                     <span class="easy">
@@ -96,9 +93,10 @@ ob_start(); ?>
         <div class="reason">
             <div class="reason__content">
                 <div class="reason__content__text">
-                    <h2>
-                        <i class="fas fa-heart"></i> Comme vous le voulez
-                    </h2>
+                <h2>
+    Comme vous voulez 🍇
+</h2>
+
                     
                     <p>
                     Parce que nous adapter à vos besoins 
@@ -131,9 +129,71 @@ ob_start(); ?>
             </div>
         </div>
 
-        <div class="fruits">
-            <div class="fruits__slider">
+        <div class="fruits" id="offers">
+            <div class="fruits__content">
+               
 
+                <div class="fruits__content__text">
+                <h2 class="mt-4"  style="color: white">
+                  Catalogue 🍌
+                </h2>
+                <div class="container">
+        <div class="pack pack1">
+            <img src="public/images/pack1.jpg" alt="Pack 1"> <br>
+            <h2>Pack Vitaminé</h2>
+            <p class="description">
+              <ul>
+                <li><i class="fas fa-check"></i>Ananas</li>
+                <li> <i class="fas fa-check"></i>Pastèque</li>
+                <li><i class="fas fa-check"></i>Papaye</li>
+                <li> <i class="fas fa-check"></i>Orange</li>
+              </ul>
+
+              <strong>
+              Riche en vitamine C pour un boost d’énergie.
+              </strong>
+            </p>
+           
+        </div>
+        
+        <div class="pack pack2">
+            <img src="public/images/pack2.jpg" alt="Pack 1"> <br>
+            <h2>Pack Tropical</h2>
+            <p class="description">
+              <ul>
+                <li><i class="fas fa-check"></i> Noix de coco</li>
+                <li><i class="fas fa-check"></i> Pastèque</li>
+                <li><i class="fas fa-check"></i> Mangue</li>
+                <li><i class="fas fa-check"></i> Ananas</li>
+              </ul>
+
+              <strong>
+              Une escapade exotique avec des saveurs tropicales.
+              </strong>
+            </p>
+           
+        </div>
+        
+        <div class="pack pack3">
+            <img src="public/images/pack3.jpg" alt="Pack 1"> <br>
+            <h2>Pack Croquant</h2>
+            <p class="description">
+              <ul>
+                <li><i class="fas fa-check"></i> Pomme verte</li>
+                <li><i class="fas fa-check"></i> Pastèque</li>
+                <li><i class="fas fa-check"></i> Banane</li>
+                <li><i class="fas fa-check"></i> Papaye</li>
+              </ul>
+            </p>
+
+            <strong>
+            Un mélange croquant et savoureux.
+            </strong>
+           
+        </div>
+    </div>
+
+                </div>
             </div>
         </div>
 
@@ -155,7 +215,7 @@ ob_start(); ?>
 
                 Prendre des fruits régulièrement, c’est bon pour la santé et encore meilleur avec THC ! Chaque mois, recevez une délicieuse salade de fruits, livrée directement chez vous pour faire le plein de vitamines.
 
-                Mais ce n’est pas tout : en parrainant vos proches, vous bénéficiez d’un système de cashback simple et avantageux. Chaque mois, 10% de l’abonnement de votre filleul vous est reversé.
+                Mais ce n’est pas tout : en parrainant vos proches, vous bénéficiez d’un système de cashback simple et avantageux. Chaque mois, <strong>10%</strong> de l’abonnement de votre filleul vous est reversé.
 
                 Un geste pour votre bien-être, un plaisir à partager, et une récompense à la clé. Alors, prêt à croquer dans le bonheur avec THC ? 🍓🍎
                                     </p>
@@ -166,56 +226,59 @@ ob_start(); ?>
         </div>
 
         <div class="pricing">
-    <h2>
-        <i class="fas fa-tags"></i> Tarifs
+    <h2 style="color: white">
+         Tarifs 🍉
     </h2>
     <div class="pricing__content">
         <div class="pricing__content__item">
             <span class="offer-name">
-                <i class="fas fa-leaf"></i> Offre 1
+                <i class="fas fa-leaf"></i> Starter
             </span>
             <ul>
-                <li><i class="fas fa-check"></i> 1 pot * 2 livraisons / semaine</li>
+                <li><i class="fas fa-check"></i> 1 pack</li>
+                <li><i class="fas fa-check"></i> 2 livraisons/semaine</li>
             </ul>
             <strong class="price">
                 <i class="fas fa-coins"></i> 6.000 XOF
             </strong>
-            <button class="btn-select">Choisir</button>
+            <a href="index.php?action=registerPage" class="btn-select">Choisir</a>
         </div>
         <div class="pricing__content__item featured">
             <span class="offer-name">
-                <i class="fas fa-star"></i> Offre 2
+                <i class="fas fa-star"></i> Premium
             </span>
             <ul>
-                <li><i class="fas fa-check"></i> 2 pots * 2 livraisons / semaine</li>
+                <li><i class="fas fa-check"></i> 2 packs</li>
+                <li><i class="fas fa-check"></i> 2 livraisons/semaine</li>
             </ul>
             <strong class="price">
                 <i class="fas fa-coins"></i> 9.000 XOF
             </strong>
-            <button class="btn-select">Choisir</button>
+            <a href="index.php?action=registerPage" class="btn-select">Choisir</a>
         </div>
         <div class="pricing__content__item">
             <span class="offer-name">
-                <i class="fas fa-gem"></i> Offre 3
+                <i class="fas fa-gem"></i> Gold
             </span>
             <ul>
-                <li><i class="fas fa-check"></i> 3 pots * 3 livraisons / semaine</li>
-            </ul>
+            <li><i class="fas fa-check"></i> 3 packs</li>
+            <li><i class="fas fa-check"></i> 3 livraisons/semaine</li>     
+          </ul>
             <strong class="price">
                 <i class="fas fa-coins"></i> 11.000 XOF
             </strong>
-            <button class="btn-select">Choisir</button>
+            <a href="index.php?action=registerPage" class="btn-select">Choisir</a>
         </div>
     </div>
 </div>
 
         
 <section class="testimonials">
-  <h2><i class="fas fa-quote-left"></i> Témoignages</h2>
+  <h2 style="color: white"> Témoignages 🥭</h2>
   <div class="testimonial-slider">
     <div class="testimonial-track">
       <div class="testimonial-card">
-        <img src="https://i.pravatar.cc/150?img=1" alt="Avatar 1" class="avatar">
+        <img src="public/images/user1.jpg" alt="Avatar 1" class="avatar">
         <p class="quote">"Le service de livraison de fruits est incroyable ! Toujours frais et à l'heure."</p>
         <p class="author">Marie D.</p>
         <div class="rating">
@@ -277,7 +340,7 @@ ob_start(); ?>
                 <div class="col-12">
                 <div class="contact-container">
   <div class="contact-form-container">
-    <h2><i class="fas fa-envelope-open-text"></i> Contactez-nous</h2>
+    <h2> Contactez-nous 🍑</h2>
     <form class="contact-form" action="#" method="POST">
       <div class="form-row">
         <div class="form-group">
@@ -325,7 +388,7 @@ ob_start(); ?>
           J'accepte les <a href="#">conditions générales d'utilisation</a>
         </label>
       </div>
-      <button type="submit" class="submit-btn w-50">
+      <button type="submit" class="submit-btn">
         <i class="fas fa-paper-plane"></i> Envoyer
       </button>
     </form>
