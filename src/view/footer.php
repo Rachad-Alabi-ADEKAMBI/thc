@@ -1,7 +1,9 @@
 <div class="footer">
     <div class="row footer__top">
         <div class="col-sm-12 col-md-3 footer__top__content">
-            <img src="path/to/your/logo.png" alt="Logo" class="footer__logo">
+            <a href="index.php?action=homePage">
+            <img src="public/images/logo-rond.png" alt="Logo" class="footer__logo">
+            </a>
         </div>
 
         <div class="col-sm-12 col-md-3 footer__top__content">

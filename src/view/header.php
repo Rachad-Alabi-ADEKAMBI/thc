@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg header">
     <a class="navbar-brand" href="index.php?action=homePage">
-      <img src="./public/images/logo-carre.webp" alt="Service de livraisons de salades de fruits au benin" class="logo">
+      <img src="public/images/logo-rond.png" alt="Service de livraisons de salades de fruits au benin" class="logo">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" style="color: white" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon" style="color: white"></span>

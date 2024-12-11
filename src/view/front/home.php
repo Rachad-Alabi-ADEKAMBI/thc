@@ -10,7 +10,7 @@ ob_start(); ?>
                   <div class="hero__content__text">
                       <h1> Le Choix <br> Healthy (THC) </h1> 
                       <p>Votre solution pour des salades <br> 
-                      de fruits livrées à domicile ou au bureau à Cotonou</p>
+                      de fruits livrées à domicile ou au boulot à Cotonou</p>
 
                       <p>
                           <span class="star"><i class="fas fa-check"></i></span>Livraison régulière et simplifiée<br>
@@ -26,7 +26,7 @@ ob_start(); ?>
       </div>
 
       <div class="hero__content__image">
-          <img src="public/images/logo-carre.webp" alt="Logo THC">
+          <img src="public/images/logo-rond.png" alt="Logo THC">
       </div>
   </div>
 
@@ -124,7 +124,7 @@ ob_start(); ?>
                 </div>
 
                 <div class="reason__content__image">
-                    <img src="./public/images/logo-carre.webp" alt="Logo carré">
+                    <img src="./public/images/fruits0.jpeg" alt="Logo carré">
                 </div>
             </div>
         </div>
@@ -201,7 +201,7 @@ ob_start(); ?>
             <div class="reason__content">
 
             <div class="reason__content__image">
-                    <img src="./public/images/logo-carre.webp" alt="Logo carré">
+                    <img src="./public/images/fruits1.jpeg" alt="Logo carré">
                 </div>
                 <div class="reason__content__text">
                     <h2>
@@ -213,11 +213,11 @@ ob_start(); ?>
 
                 Avec THC, des fruits pour vous et des récompenses pour votre générosité ! 🍍
 
-                Prendre des fruits régulièrement, c’est bon pour la santé et encore meilleur avec THC ! Chaque mois, recevez une délicieuse salade de fruits, livrée directement chez vous pour faire le plein de vitamines.
+                Prendre des fruits régulièrement, c’est bon pour la santé et encore meilleur avec THC ! Chaque semaine, recevez des délicieux packs de salade de fruits, livrés directement chez vous ou à votre boulot. <strong>Mais ce n’est pas tout;</strong>
 
-                Mais ce n’est pas tout : en parrainant vos proches, vous bénéficiez d’un système de cashback simple et avantageux. Chaque mois, <strong>10%</strong> de l’abonnement de votre filleul vous est reversé.
+                 <br> <br>En parrainant vos proches, vous bénéficiez d’un système de cashback simple et avantageux. Chaque mois, <strong>10% de l’abonnement de votre filleul vous est reversé </strong>.
 
-                Un geste pour votre bien-être, un plaisir à partager, et une récompense à la clé. Alors, prêt à croquer dans le bonheur avec THC ? 🍓🍎
+                Un geste pour votre bien-être, un plaisir à partager, et une récompense à la clé. 
                                     </p>
                 </div>
 
@@ -339,7 +339,7 @@ ob_start(); ?>
             <div class="row">
                 <div class="col-12">
                 <div class="contact-container">
-  <div class="contact-form-container">
+  <div class="contact-form-container" id="contact">
     <h2> Contactez-nous 🍑</h2>
     <form class="contact-form" action="#" method="POST">
       <div class="form-row">
@@ -385,7 +385,7 @@ ob_start(); ?>
       <div class="form-group checkbox-group">
         <input type="checkbox" id="cgu" name="cgu" required>
         <label for="cgu">
-          J'accepte les <a href="#">conditions générales d'utilisation</a>
+          J'accepte les <a hreff="#">conditions générales d'utilisation</a>
         </label>
       </div>
       <button type="submit" class="submit-btn">
@@ -393,8 +393,25 @@ ob_start(); ?>
       </button>
     </form>
   </div>
-  <div class="contact-image">
-    <img src="https://source.unsplash.com/random/800x600?fruit+salad" alt="Salade de fruits">
+  <div class="contact-image" id="about">
+    <h3>
+      A-propos
+    </h3>
+
+    <strong>
+    THC – Votre Livraison de Salades de Fruits à Cotonou
+</strong>
+
+    <p>
+    Nous vous offrons un service de livraison rapide et pratique de salades de fruits fraîches à domicile ou au bureau à Cotonou. Que vous soyez à la recherche 
+    d'une collation saine ou d'un déjeuner léger, nous vous 
+    proposons une sélection de fruits frais soigneusement 
+    choisis, livrés directement à votre porte.  <br>
+    
+    <br>Profitez de nos options d'abonnement flexibles et personnalisées pour satisfaire vos envies tout au long de la semaine. Avec THC, la santé et le goût sont à portée de main !
+    </p>
+
+
   </div>
 </div>
 

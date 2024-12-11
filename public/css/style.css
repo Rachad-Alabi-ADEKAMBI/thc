@@ -62,9 +62,8 @@ h2 {
   text-align: left;
 }
 .header .logo {
-  width: 80px;
-  height: 40px;
-  border-radius: 15px;
+  width: 50px;
+  height: 50px;
   margin: auto 10px;
 }
 .header .btn-discovery {
@@ -392,6 +391,9 @@ h2 {
   flex-direction: column;
   align-items: center;
   gap: 3rem;
+}
+.main .reason__content__text p {
+  text-align: justify;
 }
 @media (min-width: 768px) {
   .main .reason__content {
@@ -822,7 +824,7 @@ h2 {
   font-weight: 600;
 }
 .main .contact-form .form-group label i {
-  color: #F99401;
+  color: #FD4F65;
   margin-right: 0.5rem;
 }
 .main .contact-form .form-group input,
@@ -879,7 +881,7 @@ h2 {
   margin-right: 0.5rem;
 }
 .main .contact-form .submit-btn:hover {
-  background-color: #fc1d39;
+  background-color: #50AF47;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -890,6 +892,9 @@ h2 {
   flex: 2;
   overflow: hidden;
   position: relative;
+  text-align: justify;
+  padding: 15px;
+  padding-top: 60px;
 }
 .main .contact-image::after {
   content: "";
@@ -898,18 +903,11 @@ h2 {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, rgba(249, 148, 1, 0.3), rgba(80, 175, 71, 0.3));
   z-index: 1;
 }
-.main .contact-image img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  transition: transform 0.5s ease;
-}
-.main .contact-image img:hover {
-  transform: scale(1.05);
+.main .contact-image p {
+  line-height: 1.4em;
+  margin-top: 20px;
 }
 @media (max-width: 968px) {
   .main .contact-container {
