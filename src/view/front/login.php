@@ -4,20 +4,41 @@
 
 ob_start(); ?>
   
-    <main class="main">
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 col-md-8 m-auto">
-                        <div class="login">
-                            login
-                        </div>
+  <main class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-container">
+                    <div class="contact-form-container" id="contact">
+                        <h2> Connexion 🍇</h2>
+                        <form class="contact-form" action="#" method="POST">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="nom">
+                                        <i class="fas fa-user"></i> Email
+                                    </label>
+                                    <input type="text" id="nom" name="nom" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="password">
+                                        <i class="fas fa-lock"></i> Mot de passe
+                                    </label>
+                                    <input type="password" id="password" name="password" required>
+                                </div>
+                            </div>
+                            <br>
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-paper-plane"></i> Connexion
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-
+        </div>
+    </section>
+</main>
 
 
 <?php $content = ob_get_clean(); ?>

@@ -12,10 +12,10 @@
           <a class="nav-link" href="index.php?action=homePage"><i class="fas fa-house"></i> Accueil</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="/"><i class="fas fa-truck"></i> Logistique</a>
+          <a class="nav-link" href="index.php?action=homePage#process"><i class="fas fa-truck"></i> Logistique</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.php?action=homePage#offers"> <i class="fas fa-book-open"></i> Catalogues</a>
+          <a class="nav-link" href="index.php?action=homePage#offers"> <i class="fas fa-book-open"></i> Catalogue</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="index.php?action=homePage#pricing"><i class="fas fa-tags"></i> Abonnements</a>

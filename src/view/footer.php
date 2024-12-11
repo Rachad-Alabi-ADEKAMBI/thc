@@ -23,7 +23,7 @@
                 </h4>
                 
                 <p>
-                    <a href="about.php">En savoir plus</a>
+                    <a href="index.php?action=homePage#contact">Contactez-nous</a>
                 </p>
             </div>
         </div>
@@ -35,8 +35,9 @@
                 </h4>
                 
                 <p>
-                    <a href="index.php#potA">Pot standard</a> <br>
-                    <a href="index.php#potB">Mélange personnalisé</a>
+                    <a href="index.php?action=homePage#offers">Pack vitaminé</a> <br>
+                    <a href="index.php?action=homePage#offers">Pack Tropical</a> <br>
+                    <a href="index.php?action=homePage#offers">Pack Croquant</a> <br>
                 </p>
             </div>
 
@@ -46,8 +47,8 @@
                 </h4>
                 
                 <p>
-                    <a href="about.php">Politique de confidentialité</a><br>
-                    <a href="">Conditions générales</a>
+                    <a href="#">Politique de confidentialité</a><br>
+                    <a href="#">Conditions générales</a>
                 </p>
             </div>
         </div>
@@ -59,9 +60,9 @@
                 </h4>
                 
                 <p>
-                    <a href="about.php#values">Nos engagements</a> <br>
-                    <a href="about.php#about">Qui sommes-nous ?</a> <br>
-                    <a href="career.php">Carrière</a>
+                    <a href="index.php?action=homePage">Qui sommes-nous ?</a> <br>
+                    <a href="index.php?action=pricing">Abonnement ?</a> 
+                    
                 </p>
             </div>
 
@@ -70,10 +71,7 @@
                     <i class="fas fa-share-alt"></i> Suivez-nous
                 </h4>
                 
-                <p>
-                    <a href=""><i class="fab fa-linkedin"></i> LinkedIn</a> <br>
-                    <a href=""><i class="fab fa-facebook-square"></i> Facebook</a> <br>
-                    <a href=""><i class="fab fa-tiktok"></i> TikTok</a>
+                <p> <a href="tiktok.com"><i class="fab fa-tiktok"></i> TikTok</a>
                 </p>
             </div>
         </div>
@@ -81,7 +79,8 @@
 
     <div class="row footer__bottom">
         <p>
-        © 2024. The healthy choice. All rights reserved. <br>
+        © 2024. The Healthy c
+        Choice. All rights reserved. <br>
         Made with <i class="fas fa-heart"></i> by <span>Codeur Créatif</span>
         </p>
     </div>

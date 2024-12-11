@@ -8,7 +8,7 @@ ob_start(); ?>
         <div class="hero">
                       <div class="hero__content">
                   <div class="hero__content__text">
-                      <h1> Le Choix <br> Healthy (THC) </h1> 
+                      <h1> The <br> Healthy Choice (THC) </h1> 
                       <p>Votre solution pour des salades <br> 
                       de fruits livrées à domicile ou au boulot à Cotonou</p>
 
@@ -32,7 +32,7 @@ ob_start(); ?>
 
           </div>
 
-        <div class="process">
+        <div class="process" id="process">
             <div class="process__title">
             <h2>
     Comment ça marche ? 🍎
@@ -225,7 +225,7 @@ ob_start(); ?>
             </div>
         </div>
 
-        <div class="pricing">
+        <div class="pricing" id="pricing">
     <h2 style="color: white">
          Tarifs 🍉
     </h2>
