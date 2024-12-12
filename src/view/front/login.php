@@ -30,7 +30,7 @@ ob_start(); ?>
                             </div>
                             <br>
                             <button type="submit" class="submit-btn">
-                                <i class="fas fa-paper-plane"></i> Connexion
+                            <i class="fas fa-sign-in-alt"></i> Connexion
                             </button>
                         </form>
                     </div>

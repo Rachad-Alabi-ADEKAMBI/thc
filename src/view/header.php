@@ -9,8 +9,9 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mx-auto">
       <li class="nav-item active">
-          <a class="nav-link" href="index.php?action=homePage"><i class="fas fa-house"></i> Accueil</a>
-        </li>
+  <a class="nav-link" href="index.php?action=homePage"><i class="fas fa-home"></i> Accueil</a>
+</li>
+
         <li class="nav-item active">
           <a class="nav-link" href="index.php?action=homePage#process"><i class="fas fa-truck"></i> Logistique</a>
         </li>

@@ -115,7 +115,7 @@ h2 {
   align-items: center;
   font-family: "Arial", sans-serif;
   margin-top: 50px;
-  text-align: justify;
+  text-align: left;
 }
 .main .hero__content {
   display: flex;
@@ -123,6 +123,8 @@ h2 {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .main .hero__content__text {
   color: #fff;
@@ -267,6 +269,9 @@ h2 {
   gap: 2rem;
   position: relative;
   z-index: 1;
+}
+.main .process__content__item {
+  line-height: 1.6em;
 }
 .main .prrocess__content__text h2::after {
   content: "";

@@ -30,7 +30,7 @@ ob_start(); ?>
                             </div>
                             <br>
                             <button type="submit" class="submit-btn">
-                                <i class="fas fa-paper-plane"></i> Inscription
+                            <i class="fas fa-user-plus"></i> Inscription
                             </button>
                         </form>
                     </div>

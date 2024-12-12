@@ -130,7 +130,7 @@ h2{
       //  padding: 2rem;
         font-family: 'Arial', sans-serif;
         margin-top: 50px;
-        text-align: justify;
+        text-align: left;
       }
       
       .hero__content {
@@ -139,6 +139,8 @@ h2{
         align-items: center;
         max-width: 1200px;
         margin: 0 auto;
+        padding-top: 20px;
+        padding-bottom: 20px;
       }
       
       .hero__content__text {
@@ -307,6 +309,10 @@ h2{
     gap: 2rem;
     position: relative;
     z-index: 1;
+
+    &__item{
+      line-height: 1.6em;
+    }
   }
 
   .prrocess__content__text h2::after {

@@ -79,7 +79,7 @@
 
     <div class="row footer__bottom">
         <p>
-        © 2024. The Healthy c
+        © 2024. The Healthy
         Choice. All rights reserved. <br>
         Made with <i class="fas fa-heart"></i> by <span>Codeur Créatif</span>
         </p>

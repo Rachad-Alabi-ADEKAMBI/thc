@@ -20,7 +20,7 @@ ob_start(); ?>
                   
                      
                       <a href="index.php?action=homePage#offers" class="btn">
-                  <i class="fas fa-arrow-right"></i> Voir les offres
+                  <i class="fas fa-arrow-right"></i> Voir le catalogue
               </a>
 
       </div>
