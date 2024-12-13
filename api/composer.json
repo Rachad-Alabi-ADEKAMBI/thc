@@ -1,0 +1,16 @@
+{
+    "name": "root/api",
+    "description": "ong 2a2d",
+    "type": "project",
+    "license": "none",
+    "authors": [
+        {
+            "name": "Rachad-Alabi-ADEKAMBI",
+            "email": "adekambirachad@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}
