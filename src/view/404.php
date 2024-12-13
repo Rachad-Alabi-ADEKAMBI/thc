@@ -7,7 +7,7 @@ ob_start(); ?>
 <main class="main">
     <section class="section">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12">@3/2\''
                 <div class="page">
                     introuvable
                 </div>

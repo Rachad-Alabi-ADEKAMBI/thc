@@ -172,10 +172,22 @@ function login()
         if (password_verify($password, $user['password'])) {
             session_start();
             // start a session called user
+
+            $role = $user['role'];
+            
             $_SESSION['user'] = [
-                'user_id' => $user['id']
+                'user_id' => $user['id'],
+                'email' => $user['email'],
+                'first_name' => $user['first_name'],
+                'last_name' => $user['last_name']
             ];
-            header("Location: ../index.php?action=dashboard_adminPage");
+
+            if($role = 'user'){
+                header("Location: ../index.php?action=dashboardPage");
+            } else{
+                header("Location: ../index.php?action=dashboardPageAdmin");
+            }
+
             exit();
         } else {
             $_SESSION['login']['email'] = $email;
@@ -200,67 +212,68 @@ function login()
 
 function register()
 {
-  
     // Establish database connection
     $pdo = getConnexion();
 
+    // Check if all required fields are filled
+    if (empty($_POST['email']) || empty($_POST['first_name']) ||
+         empty($_POST['last_name']) || empty($_POST['password']) || empty($_POST['password2']) ||
+          empty($_POST['adress']) || empty($_POST['phone']) || !isset($_POST['cgu'])) {
+        echo "<script>
+            alert('Tous les champs doivent être remplis, et les conditions générales doivent être acceptées !');
+            window.history.back();
+        </script>";
+        exit();
+    }
+
     // Retrieve and sanitize input
     $email = verifyInput($_POST['email']);
+    $first_name = verifyInput($_POST['first_name']);
+    $last_name = verifyInput($_POST['last_name']);
     $password = verifyInput($_POST['password']);
-    $confirmPassword = verifyInput($_POST['confirm_password']);
-
-
-   // echo $email.' '.$password;
+    $password2 = verifyInput($_POST['password2']);
+    $adress = verifyInput($_POST['adress']);
+    $phone = verifyInput($_POST['phone']);
 
     // Check if passwords match
-    if ($password !== $confirmPassword) {
-        ?>
-<script>
-    alert('Les mots de passe ne correspondent pas !');
-    window.history.back();
-</script>
-<?php
+    if ($password !== $password2) {
+        echo "<script>
+            alert('Les mots de passe ne correspondent pas !');
+            window.history.back();
+        </script>";
         exit();
     }
 
     // Check if the email is already registered
-    $req = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-    $req->execute(array($email));
-    $user = $req->fetch(PDO::FETCH_ASSOC);
-
-    if ($user) {
-        ?>
-<script>
-    alert('Cet email est déjà enregistré !');
-    window.history.back();
-</script>
-<?php
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    if ($stmt->fetch()) {
+        echo "<script>
+            alert('Cet email est déjà enregistré !');
+            window.history.back();
+        </script>";
         exit();
     }
 
-    // Hash the password using bcrypt
+    // Hash the password
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-    // Insert the new user into the database with the default role as 'user'
-    $insert = $pdo->prepare("INSERT INTO users (email, password, role) VALUES (?, ?, ?)");
-    $isInserted = $insert->execute(array($email, $hashedPassword, 'user'));
-
-    if ($isInserted) {
-        ?>
-<script>
-    alert('Inscription réussie ! Veuillez vous connecter.');
-    window.location.href = '../index.php?action=loginPage';
-</script>
-<?php
+    // Insert new user into the database
+    $insert = $pdo->prepare("INSERT INTO users (email, first_name, last_name, password, adress, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    if ($insert->execute([$email, $first_name, $last_name, $hashedPassword, $adress, $phone, 'user'])) {
+        echo "<script>
+            alert('Inscription réussie ! Veuillez vous connecter.');
+            window.location.href = '../index.php?action=loginPage';
+        </script>";
     } else {
-        ?>
-<script>
-    alert('Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.');
-    window.history.back();
-</script>
-<?php
+        echo "<script>
+            alert('Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.');
+            window.history.back();
+        </script>";
     }
 }
+
+
 
 
 function contact()
