@@ -1285,6 +1285,8 @@ li i {
                   display: table-cell;
                   vertical-align: middle;
                   margin: auto;
+                  
+                padding-left: 10px;
                 }
               }
             }
@@ -1318,7 +1320,7 @@ li i {
                   margin: 10px auto;
 
                   h4{
-                    color: $white;
+                    color: $tertiary;
                     font-size: 1.1em;
                     font-weight: bold;
                   }

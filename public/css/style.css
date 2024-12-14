@@ -1090,6 +1090,7 @@ h2 {
   display: table-cell;
   vertical-align: middle;
   margin: auto;
+  padding-left: 10px;
 }
 .main .dashboard__content__menu .form label {
   margin: 10px;
@@ -1116,7 +1117,7 @@ h2 {
   margin: 10px auto;
 }
 .main .dashboard__content__main .next-orders .flex-between h4 {
-  color: white;
+  color: #50AF47;
   font-size: 1.1em;
   font-weight: bold;
 }

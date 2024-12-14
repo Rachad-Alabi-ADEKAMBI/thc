@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <?php include 'meta.php'; ?>
-    
-    <title><?= $title ?></title>
-</head>
+    <head>
+        <?php include 'meta.php'; ?>
+
+        <title><?= $title ?></title>
+    </head>
 
 
-<body>
-    <div class="app">
-    <?php include 'header.php'; ?><br>
+    <body>
+        <div class="app">
+            <?php include 'header.php'; ?><br>
 
-        <div class="main" id='main'>
-            <?= $content ?>
+            <div class="main">
+                <?= $content ?>
+            </div>
+
+            <?php include 'footer.php'; ?>
         </div>
-
-        <?php include 'footer.php'; ?>
-    </div>
-</body>
+    </body>
 
 </html>

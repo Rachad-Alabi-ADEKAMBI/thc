@@ -1,0 +1,98 @@
+
+
+.table-container {
+        overflow-x: auto;
+        /* Enable horizontal scroll for smaller screens */
+        margin: 20px 0;
+        border-radius: 15px;
+    }
+
+    .orders-table {
+        width: 90%;
+        border-collapse: collapse;
+        margin: 0 auto;
+        background-color: #2A2A2A;
+        color: #FFF;
+        border: 1px solid #444;
+        border-radius: 15px;
+    }
+
+    tr th{
+        color:  #F99401;
+    }
+
+    .orders-table th,
+    .orders-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border: 1px solid #444;
+        /* Add borders to cells */
+    }
+
+
+
+    .orders-table th {
+        background-color: #333;
+        /* Slightly darker background for headers */
+        font-weight: bold;
+        /* Make headers bold */
+    }
+
+    .orders-table td i {
+        margin-right: 5px;
+        /* Add space between icon and text */
+    }
+
+    .orders-table .status {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.9em;
+        font-weight: bold;
+        color: #FFF;
+    }
+
+    .orders-table .status.delivered {
+        background-color: #50AF47;
+        /* Green for delivered */
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .pagination .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #272222;
+        color: #FFF;
+        border: 1px solid #444;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .pagination .btn:hover {
+        background-color: #444;
+    }
+
+    .pagination span {
+        color: #FFF;
+        font-weight: bold;
+    }
+
+   .orders-table th,
+    .orders-table td {
+        font-size: 0.9em;
+        /* Adjust font size for smaller screens */
+    }
+
+    .pagination span {
+        font-size: 0.85em;
+    }

@@ -15,30 +15,12 @@ if (!isset($_SESSION['user'])) {
 
 ob_start(); ?>
 
-<main class="main">
+<main class="main" id='app'>
     <section class="section">
         <div class="row ">
             <div class="col-12"> <br><br><br><br>
                 <div class="dashboard">
-                    <div class="dashboard__menu">
-                        <div class="dashboard__menu__content">
-                            <a class="link btn btn-primary">
-                                <i data-lucide="shopping-bag" aria-hidden="true"></i>
-                                Mes commandes
-                            </a>
-
-                            <a class="link btn btn-primary">
-                                <i data-lucide="shopping-bag" aria-hidden="true"></i>
-                                Affiliation
-                            </a>
-
-                            <a class="link btn btn-primary">
-                                <i data-lucide="shopping-bag" aria-hidden="true"></i>
-                                Mon abonnement
-                            </a>
-
-                        </div>
-                    </div>
+                    <?php include 'menu.php'; ?>
 
                     <div class="dashboard__content">
                         <div class="dashboard__content__top">
@@ -48,25 +30,25 @@ ob_start(); ?>
 
                             <div class="profil">
                                 <p>
-                                    Bonjour <?=  $_SESSION['user']['first_name'].' '.$_SESSION['user']['last_name']?>
-                                </p>
+                                    Bonjour
+                                    {{ capitalizeFirstLetter(details.first_name) }}
                             </div>
                         </div>
 
                         <div class="dashboard__content__menu">
                             <form class="form">
                                 <label for="newRadio" class="ml-5">
-                                    <input type="radio" id="newRadio" name="options" @click="displayNewsletters()">
+                                    <input type="radio" id="newRadio" name="options" @click="displayNextOrders()">
                                     Prochaine commande
                                 </label>
                                 <label for="allRadio" class="ml-5">
-                                    <input type="radio" id="allRadio" name="options" @click="displaySurveys()">
+                                    <input type="radio" id="allRadio" name="options" @click="displayOrders()">
                                     Mes commandes
                                 </label>
                             </form>
                         </div>
 
-                        <div class="dashboard__content__main">
+                        <div class="dashboard__content__main" v-if='showNextOrders'>
                             <h3>
                                 Commande à venir
                             </h3>
@@ -97,7 +79,7 @@ ob_start(); ?>
 
                         </div>
 
-                        <div class="dashboard__content__main">
+                        <div class="dashboard__content__main" v-if='showOrders'>
                             <div class="top">
                                 <h3>
                                     Mes commandes
@@ -105,7 +87,9 @@ ob_start(); ?>
                             </div>
 
                             <div class="table-container">
+
                                 <table class="orders-table">
+
                                     <thead>
                                         <tr>
                                             <th>Date</th>
@@ -143,12 +127,15 @@ ob_start(); ?>
                                 </table>
                             </div>
                             <div class="pagination">
-                                <button class="btn btn-icon"><i data-lucide="chevron-left"
-                                        aria-hidden="true"></i></button>
+                                <button class="btn btn-icon">
+                                    Precedent
+                                </button>
                                 <span>Page 1 sur 3</span>
-                                <button class="btn btn-icon"><i data-lucide="chevron-right"
-                                        aria-hidden="true"></i></button>
+                                <button class="btn btn-icon">
+                                    Suivant
+                                </button>
                             </div>
+
 
                         </div>
                     </div>
@@ -160,11 +147,104 @@ ob_start(); ?>
 </main>
 
 
+
+
 <?php $content = ob_get_clean(); ?>
 
 <?php require './src/view/layout.php'; ?>
 
-<?php include 'parts/footer.php'; ?>
-</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                showOrders: false,
+                showNextOrders: false,
+                showBooking: false,
+                showEdit: false,
+                details: [],
+                currentPage: 1,
+                itemsPerPage: 10,
+                selectedDetail: null,
+            };
+        },
+        mounted() {
+            this.displayOrders();
+        },
+        computed: {
+            totalPages() {
+                return Math.ceil(this.details.length / this.itemsPerPage);
+            },
+            paginatedData() {
+                const start = (this.currentPage - 1) * this.itemsPerPage;
+                const end = start + this.itemsPerPage;
+                return this.details.slice(start, end);
+            },
+        },
+        methods: {
+            getUSerDatas() {
+                axios.get('api/script.php?action=getMyDatas')
+                    .then((response) => {
+                        console.log(response.data);
+                        this.details = response.data;
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
 
-</html>
+            },
+            displayNextOrders() {
+                this.showNextOrders = true;
+                this.showOrders = false;
+                this.showBooking = false;
+                this.showEdit = false;
+                axios.get('api/script.php?action=nextOrders')
+                    .then((response) => {
+                        console.log(response.data);
+                        this.details = response.data;
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            },
+            displayOrders() {
+                this.showNextOrders = false;
+                this.showOrders = true;
+                this.showBooking = false;
+                this.showEdit = false;
+                axios.get('api/script.php?action=nextOrders')
+                    .then((response) => {
+                        console.log(response.data);
+                        this.details = response.data;
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            },
+            formatDate(date) {
+                const [year, month, day] = date.split('-');
+                return `${day}-${month}-${year}`;
+            },
+            capitalize(string) {
+                return string.toUpperCase();
+            },
+            capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+            },
+            previousPage() {
+                if (this.currentPage > 1) {
+                    this.currentPage--;
+                }
+            },
+            nextPage() {
+                if (this.currentPage < this.totalPages) {
+                    this.currentPage++;
+                }
+            },
+            gotoPage(page) {
+                this.currentPage = page;
+            },
+        },
+    });
+
+    app.mount('#app');
+</script>
