@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
         // Exit to stop further execution of the script after the redirect
         exit();
     }
-    $title = "THC - Affiliation";
+    $title = "THC - Mon abonnement";
 
 ob_start(); ?>
 
@@ -25,7 +25,7 @@ ob_start(); ?>
                     <div class="dashboard__content">
                         <div class="dashboard__content__top">
                             <h2>
-                                Affiliation
+                                Mon abonnement
                             </h2>
 
                             <div class="profil">
@@ -36,55 +36,14 @@ ob_start(); ?>
                             </div>
                         </div>
 
-                        <div class="dashboard__content__menu">
-                            <form class="form">
-                                <label for="newRadio" class="ml-5">
-                                    <input type="radio" id="newRadio" name="options" @click="displayNextOrders()">
-                                    Mes affiliés
-                                </label>
-                                <label for="allRadio" class="ml-5">
-                                    <input type="radio" id="allRadio" name="options" @click="displayOrders()">
-                                    Payements
-                                </label>
-                            </form>
-                        </div>
+                        <div class="dashboard__content__main" v-if='showFormula'>
+                            <h3>
+                                Mon abonnement
+                            </h3>
 
-                        <div class="dashboard__content__main" v-if='showOrders'>
-                            <div class="top">
-                                <h3>
-                                    Mes affiliés
-                                </h3>
-                            </div>
-
-                            <div class="table-container">
-
-                                <table class="orders-table">
-
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Nom</th>
-                                            <th>Abonnement</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>15/06/2023</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> john Lenon</td>
-                                            <td><span class="status delivered">Livrée</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="pagination">
-                                <button class="btn btn-icon">
-                                    Precedent
-                                </button>
-                                <span>Page 1 sur 3</span>
-                                <button class="btn btn-icon">
-                                    Suivant
-                                </button>
-                            </div>
+                            <p>
+                                formule actuelle
+                            </p>
 
 
                         </div>
@@ -107,9 +66,11 @@ ob_start(); ?>
     const app = Vue.createApp({
         data() {
             return {
-                showMyAffiliations: false,
+                showOrders: false,
+                showNextOrders: false,
+                showBooking: false,
+                showEdit: false,
                 details: [],
-                affiliated: [],
                 currentPage: 1,
                 itemsPerPage: 10,
                 selectedDetail: null,
@@ -117,7 +78,7 @@ ob_start(); ?>
         },
         mounted() {
             this.getUserDatas();
-            this.displayMyAfffiliations();
+            this.displayOrders();
         },
         computed: {
             totalPages() {
@@ -141,12 +102,29 @@ ob_start(); ?>
                     });
 
             },
-            displayMyAffiliations() {
-                this.showNextOrders = false;
-                axios.get('api/script.php?action=getMyAffiliations')
+            displayNextOrders() {
+                this.showNextOrders = true;
+                this.showOrders = false;
+                this.showBooking = false;
+                this.showEdit = false;
+                axios.get('api/script.php?action=nextOrders')
                     .then((response) => {
                         console.log(response.data);
-                        this.affiliated = response.data;
+                        this.details = response.data;
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            },
+            displayOrders() {
+                this.showNextOrders = false;
+                this.showOrders = true;
+                this.showBooking = false;
+                this.showEdit = false;
+                axios.get('api/script.php?action=nextOrders')
+                    .then((response) => {
+                        console.log(response.data);
+                        this.details = response.data;
                     })
                     .catch((error) => {
                         console.error(error);

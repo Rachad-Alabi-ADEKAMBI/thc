@@ -18,8 +18,9 @@
     integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
+<!--
 <script src="https://unpkg.com/lucide@latest"></script>
+-->
 
 <link rel="stylesheet" href="public/css/style.css">
 <link rel="stylesheet" href="public/css/table.css">

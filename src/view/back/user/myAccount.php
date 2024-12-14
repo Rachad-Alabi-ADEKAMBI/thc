@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
         // Exit to stop further execution of the script after the redirect
         exit();
     }
-    $title = "THC - Affiliation";
+    $title = "THC - Mon compte";
 
 ob_start(); ?>
 
@@ -25,7 +25,7 @@ ob_start(); ?>
                     <div class="dashboard__content">
                         <div class="dashboard__content__top">
                             <h2>
-                                Affiliation
+                                Mon compte
                             </h2>
 
                             <div class="profil">
@@ -41,10 +41,6 @@ ob_start(); ?>
                                 <label for="newRadio" class="ml-5">
                                     <input type="radio" id="newRadio" name="options" @click="displayNextOrders()">
                                     Mes affiliés
-                                </label>
-                                <label for="allRadio" class="ml-5">
-                                    <input type="radio" id="allRadio" name="options" @click="displayOrders()">
-                                    Payements
                                 </label>
                             </form>
                         </div>

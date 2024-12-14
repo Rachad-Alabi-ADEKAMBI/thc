@@ -13,7 +13,7 @@
                 </h4>
 
                 <p>
-                    <a href="logistique.php">Logistique</a>
+                    <a href="index.php?action=homePage#process">Logistique</a>
                 </p>
             </div>
 
@@ -47,8 +47,8 @@
                 </h4>
 
                 <p>
-                    <a href="#">Politique de confidentialité</a><br>
-                    <a href="#">Conditions générales</a>
+                    <a href="index.php?action=policyPage">Politique de confidentialité</a><br>
+                    <a href="index.php?action=termsPage">Conditions générales</a>
                 </p>
             </div>
         </div>
@@ -60,8 +60,8 @@
                 </h4>
 
                 <p>
-                    <a href="index.php?action=homePage">Qui sommes-nous ?</a> <br>
-                    <a href="index.php?action=pricing">Abonnement ?</a>
+                    <a href="index.php?action=homePage#about">Qui sommes-nous ?</a> <br>
+                    <a href="index.php?action=pricing">Abonnement</a>
 
                 </p>
             </div>

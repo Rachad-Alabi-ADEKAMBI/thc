@@ -11,11 +11,13 @@ ini_set('display_errors', 1);
 require_once 'src/controller/front/home.php';
 require_once 'src/controller/front/login.php';
 require_once 'src/controller/front/register.php';
-
+require_once 'src/controller/front/terms.php';
+require_once 'src/controller/front/policy.php';
 
 require_once 'src/controller/back/user/dashboard.php';
-require_once 'src/controller/back/user/affiliated.php';
-
+require_once 'src/controller/back/user/myAffiliations.php';
+require_once 'src/controller/back/user/myFormula.php';
+require_once 'src/controller/back/user/myAccount.php';
 
 //require_once 'src/controller/back/admin/dashboard.php';
 
@@ -32,10 +34,31 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
             homePage();
             break;
 
+            case 'myAffiliationsPage':
+                myAffiliationsPage();
+                break;
+
             case 'dashboardPage':
                 dashboardPage();
                 break;
 
+            case 'myFormulaPage':
+                   myFormulaPage();
+                    break;
+
+            case 'myAccountPage':
+                        myAccountPage();
+                         break;
+
+            case 'policyPage':
+                            policyPage();
+                             break;
+
+                             
+            case 'termsPage':
+                                termsPage();
+                                 break;
+        
 
         default:
             echo '<script>
