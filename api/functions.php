@@ -132,16 +132,33 @@ function newSurvey()
     }
 }
 
-function surveys()
+function getMyDatas()
 {
-    $pdo = getConnexion();
-    $req = $pdo->prepare("SELECT * FROM survey ORDER BY id DESC");
-    $req->execute();
-    $datas = $req->fetchAll();
-    $req->closeCursor();
+    // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
+    if (!isset($_SESSION['user']['user_id'])) {
+        header("Location: index.php?action=loginPage");
+        exit();
+    }
 
-    sendJSON($datas);
+    try {
+        $pdo = getConnexion();
+        $req = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+        
+        // Assurez-vous de transmettre un tableau pour le paramètre
+        $req->execute([$_SESSION['user']['user_id']]);
+        $datas = $req->fetch(); // Option pour obtenir un tableau associatif
+
+        $req->closeCursor();
+
+        // Envoyer les données au format JSON
+        sendJSON($datas);
+    } catch (PDOException $e) {
+        // Gérer les erreurs de la base de données
+        http_response_code(500); // Code HTTP d'erreur interne
+        sendJSON(['error' => 'Une erreur s\'est produite : ' . $e->getMessage()]);
+    }
 }
+
 
 function newsletters()
 {

@@ -19,8 +19,8 @@ if ($action == 'contact') {
     contact();
 }
 
-if ($action == 'surveys') {
-    surveys();
+if ($action == 'getMyDatas') {
+    getMyDatas();
 }
 
 if ($action == 'login') {

@@ -14,6 +14,9 @@ require_once 'src/controller/front/register.php';
 
 
 require_once 'src/controller/back/user/dashboard.php';
+require_once 'src/controller/back/user/affiliated.php';
+
+
 //require_once 'src/controller/back/admin/dashboard.php';
 
 // Vérifie si une action est définie dans l'URL

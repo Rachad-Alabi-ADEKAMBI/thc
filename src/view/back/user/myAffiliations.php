@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
         // Exit to stop further execution of the script after the redirect
         exit();
     }
-    $title = "THC - Tableau de bord";
+    $title = "THC - Affiliation";
 
 ob_start(); ?>
 
@@ -25,7 +25,7 @@ ob_start(); ?>
                     <div class="dashboard__content">
                         <div class="dashboard__content__top">
                             <h2>
-                                Tableau de bord
+                                Affiliation
                             </h2>
 
                             <div class="profil">
@@ -40,50 +40,19 @@ ob_start(); ?>
                             <form class="form">
                                 <label for="newRadio" class="ml-5">
                                     <input type="radio" id="newRadio" name="options" @click="displayNextOrders()">
-                                    Prochaine commande
+                                    Mes affiliés
                                 </label>
                                 <label for="allRadio" class="ml-5">
                                     <input type="radio" id="allRadio" name="options" @click="displayOrders()">
-                                    Mes commandes
+                                    Payements
                                 </label>
                             </form>
-                        </div>
-
-                        <div class="dashboard__content__main" v-if='showNextOrders'>
-                            <h3>
-                                Commande à venir
-                            </h3>
-
-                            <div class="next-orders">
-                                <div class="flex-between">
-                                    <div>
-                                        <h4>Salade Tropicale</h3>
-                                            <p>Livraison prévue le <strong>lundi 18/06/2023</strong>
-                                                a <strong>10 h</strong></p>
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <div class="flex-between">
-                                    <div>
-                                        <h4>Salade Tropicale</h3>
-                                            <p>Livraison prévue le <strong>lundi 18/06/2023</strong>
-                                                a <strong>10 h</strong></p>
-                                    </div>
-
-                                    <div>
-                                        <button class="btn btn-secondary">Modifier</button>
-                                    </div>
-                                </div>
-                            </div>
-
-
                         </div>
 
                         <div class="dashboard__content__main" v-if='showOrders'>
                             <div class="top">
                                 <h3>
-                                    Mes commandes
+                                    Mes affiliés
                                 </h3>
                             </div>
 
@@ -94,36 +63,14 @@ ob_start(); ?>
                                     <thead>
                                         <tr>
                                             <th>Date</th>
-                                            <th>Salade</th>
-                                            <th>Statut</th>
+                                            <th>Nom</th>
+                                            <th>Abonnement</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>15/06/2023</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> Salade Tropicale</td>
-                                            <td><span class="status delivered">Livrée</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>12/06/2023</td>
-                                            <td><i data-lucide="banana" aria-hidden="true"></i> Salade Vitaminée
-                                            </td>
-                                            <td><span class="status delivered">Livrée</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>09/06/2023</td>
-                                            <td><i data-lucide="cherry" aria-hidden="true"></i> Salade Gourmande
-                                            </td>
-                                            <td><span class="status delivered">Livrée</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>06/06/2023</td>
-                                            <td><i data-lucide="grape" aria-hidden="true"></i> Salade Exotique</td>
-                                            <td><span class="status delivered">Livrée</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>03/06/2023</td>
-                                            <td><i data-lucide="lemon" aria-hidden="true"></i> Salade Agrumes</td>
+                                            <td><i data-lucide="apple" aria-hidden="true"></i> john Lenon</td>
                                             <td><span class="status delivered">Livrée</span></td>
                                         </tr>
                                     </tbody>
@@ -160,11 +107,9 @@ ob_start(); ?>
     const app = Vue.createApp({
         data() {
             return {
-                showOrders: false,
-                showNextOrders: false,
-                showBooking: false,
-                showEdit: false,
+                showAffiliated: false,
                 details: [],
+                affiliated: [],
                 currentPage: 1,
                 itemsPerPage: 10,
                 selectedDetail: null,
@@ -172,7 +117,7 @@ ob_start(); ?>
         },
         mounted() {
             this.getUserDatas();
-            this.displayOrders();
+            this.displayAffiliated();
         },
         computed: {
             totalPages() {
@@ -196,29 +141,12 @@ ob_start(); ?>
                     });
 
             },
-            displayNextOrders() {
-                this.showNextOrders = true;
-                this.showOrders = false;
-                this.showBooking = false;
-                this.showEdit = false;
-                axios.get('api/script.php?action=nextOrders')
-                    .then((response) => {
-                        console.log(response.data);
-                        this.details = response.data;
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            },
-            displayOrders() {
+            displayAffiliated() {
                 this.showNextOrders = false;
-                this.showOrders = true;
-                this.showBooking = false;
-                this.showEdit = false;
-                axios.get('api/script.php?action=nextOrders')
+                axios.get('api/script.php?action=getMyAffiliated')
                     .then((response) => {
                         console.log(response.data);
-                        this.details = response.data;
+                        this.affiliated = response.data;
                     })
                     .catch((error) => {
                         console.error(error);
