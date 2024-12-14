@@ -5,7 +5,7 @@ session_start();
 error_reporting(E_ALL & ~E_WARNING);
 
 // Désactive l'affichage des erreurs
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 
 // Inclusion des contrôleurs nécessaires
 require_once 'src/controller/front/home.php';

@@ -75,6 +75,15 @@ h2 {
   background-color: #50AF47;
   margin: 5px;
 }
+.header .btn-exit {
+  width: 230px;
+  height: 50px;
+  border-radius: 30px;
+  color: white;
+  font-weight: bold;
+  background-color: #FD4F65;
+  margin: 5px;
+}
 .header .btn-discovery:hover {
   background-color: #FD4F65;
   color: white;
@@ -107,6 +116,8 @@ h2 {
   /*contact ends*/
   /*pack starts*/
   /*pack ends*/
+  /*dashboard starts*/
+  /*dashboard starts*/
 }
 .main .hero {
   background: linear-gradient(135deg, #FD4F65, #F99401);
@@ -740,6 +751,11 @@ h2 {
 .main .slider-nav button:hover {
   background-color: #FD4F65;
 }
+@media (min-width: 768px) {
+  .main .testimonial {
+    box-sizing: border-box;
+  }
+}
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -1030,6 +1046,79 @@ h2 {
 }
 .main .pack:nth-child(3) {
   animation-delay: 0.4s;
+}
+.main .dashboard {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+.main .dashboard__menu {
+  width: 300px;
+  background-color: #2A2A2A;
+  padding: 1em;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+}
+.main .dashboard__menu__content {
+  display: block;
+}
+.main .dashboard__menu__content a {
+  margin: 10px auto;
+  width: 250px;
+  border-radius: 5px;
+}
+.main .dashboard__content {
+  display: block;
+  text-align: left;
+  background-color: #1A1A1A;
+  width: 100%;
+  padding-left: 20px;
+}
+.main .dashboard__content__top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.main .dashboard__content__top h2 {
+  color: #FD4F65;
+}
+.main .dashboard__content__top .profil {
+  display: table;
+}
+.main .dashboard__content__top .profil p {
+  display: table-cell;
+  vertical-align: middle;
+  margin: auto;
+}
+.main .dashboard__content__menu .form label {
+  margin: 10px;
+}
+.main .dashboard__content__main h3 {
+  color: #F99401;
+  font-weight: bold;
+  font-size: 1.4em;
+}
+.main .dashboard__content__main .next-orders {
+  width: 90%;
+  border-radius: 10px;
+  background-color: #2A2A2A;
+  height: auto;
+  padding: 10px;
+  margin: 10px auto;
+  display: block;
+}
+.main .dashboard__content__main .next-orders .flex-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 10px auto;
+}
+.main .dashboard__content__main .next-orders .flex-between h4 {
+  color: white;
+  font-size: 1.1em;
+  font-weight: bold;
 }
 
 .footer {
