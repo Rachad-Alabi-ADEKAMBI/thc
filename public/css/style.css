@@ -94,6 +94,9 @@ h2 {
 .header ul li a:hover i {
   color: #FD4F65;
 }
+.header__list a {
+  color: black;
+}
 .header__list a:hover {
   color: #FD4F65;
 }

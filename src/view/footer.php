@@ -79,9 +79,9 @@
 
     <div class="row footer__bottom">
         <p>
-            © 2024. The Healthy
-            Choice. All rights reserved. <br>
-            Made with <i class="fas fa-heart"></i> by <span>Codeur Créatif</span>
+            © 2024 All rights reserved | The Healthy
+            Choice <br>
+            <i class="fas fa-heart"></i> <span>The Lazy Company</span>
         </p>
     </div>
 </div>
