@@ -36,11 +36,18 @@
 
       <?php
      if ($_SESSION['user']['role'] == 'user') {?>
-      <a class="" href="index.php?action=dashboardPage"><i class="fas fa-sign-in-alt"></i> Tableau de bord |</a> |
+      <a class="" href="index.php?action=dashboardPage">
+        <i class="fas fa-tachometer-alt"></i> Tableau de bord |
+      </a> |
       <?php } else if($_SESSION['user']['role'] == 'admin'){ ?>
-      <a class="" href="index.php?action=dashboardPageAdmin"><i class="fas fa-sign-in-alt"></i> Tableau de bord |</a> |
-      <?php } ?>
-      <a class="btn btn-exit" href="api/script.php?action=logout"><i class="fas fa-user-less"></i> Deconnexion</a>
+      <a class="" href="index.php?action=dashboardPage">
+        <i class="fas fa-tachometer-alt"></i> Tableau de bord
+      </a>
+      <?php } ?> |
+      <a class="btn btn-exit" href="api/script.php?action=logout">
+        <i class="fas fa-sign-out-alt"></i>
+      </a>
+
     </div>
     <?php } else { ?>
     <div class="header__list">

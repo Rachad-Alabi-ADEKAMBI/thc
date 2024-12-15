@@ -31,7 +31,9 @@ ob_start(); ?>
                             <div class="profil">
                                 <p>
                                     Bonjour
-                                    {{ details.first_name }}
+                                    <?php echo ucfirst($_SESSION['user']['first_name']); ?>
+
+                                    <?php echo strtoupper($_SESSION['user']['last_name']); ?>
                                 </p>
                             </div>
                         </div>
@@ -47,6 +49,12 @@ ob_start(); ?>
                                     Mes commandes
                                 </label>
                             </form>
+
+                            <div class="newOrder">
+                                <btn class="btn btn-secondary">
+                                    <i class="fas fa-plus-circle"></i> Programmer
+                                </btn>
+                            </div>
                         </div>
 
                         <div class="dashboard__content__main" v-if='showNextOrders'>
@@ -72,7 +80,10 @@ ob_start(); ?>
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-secondary">Modifier</button>
+                                        <button class="btn btn-primary" @click="displayNewOrder">
+                                            <i class="fas fa-edit"></i> Modifier
+                                        </button>
+
                                     </div>
                                 </div>
                             </div>
