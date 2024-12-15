@@ -143,7 +143,6 @@ h2 {
   /*pack starts*/
   /*pack ends*/
   /*dashboard starts*/
-  /*dashboard ends*/
 }
 .main .hero {
   background: linear-gradient(135deg, #FD4F65, #F99401);
@@ -1079,9 +1078,11 @@ h2 {
   min-height: 100vh;
 }
 .main .dashboard__menu {
-  width: 250px;
+  width: 260px;
   background-color: #2A2A2A;
+  margin: -30px auto;
   padding: 1em;
+  height: 100%;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
 }
 .main .dashboard__menu__content {
@@ -1093,8 +1094,36 @@ h2 {
   width: 220px;
   background-color: #FD4F65;
 }
+.main .dashboard__menu__content .menu .btn:hover {
+  background-color: #50AF47;
+}
 .main .dashboard__menu__content .menu-mobile {
   position: relative;
+  display: none;
+}
+.main .dashboard__menu-mobile-open {
+  display: none;
+  background-color: #FD4F65;
+  height: 50px;
+  width: 60px;
+  border-radius: 30px;
+  padding-left: 5px;
+  padding-top: 15px;
+  color: white;
+  cursor: pointer;
+}
+.main .dashboard__menu-mobile-close {
+  display: none;
+  background-color: #FD4F65;
+  height: 50px;
+  width: 60px;
+  border-radius: 30px;
+  padding-left: 5px;
+  padding-top: 15px;
+  color: white;
+  cursor: pointer;
+}
+.main .dashboard__menu-mobile {
   display: none;
 }
 .main .dashboard__content {
@@ -1103,6 +1132,7 @@ h2 {
   background-color: #1A1A1A;
   width: 100%;
   padding-left: 20px;
+  padding-right: 10px;
 }
 .main .dashboard__content__top {
   display: flex;
@@ -1122,6 +1152,9 @@ h2 {
   vertical-align: middle;
   margin: auto;
   padding-left: 10px;
+}
+.main .dashboard__content__top .profil p span {
+  font-weight: bold;
 }
 .main .dashboard__content__menu {
   display: flex;
@@ -1162,10 +1195,23 @@ h2 {
   font-size: 1.1em;
   font-weight: bold;
 }
+@media (max-width: 768px) {
+  .main .dashboard {
+    flex-direction: column;
+  }
+  .main .dashboard__menu {
+    display: none;
+  }
+  .main .dashboard__menu-mobile-open {
+    display: block;
+  }
+}
 
+/*dashboard ends*/
 .footer {
   display: block;
   font-family: "Arial", sans-serif;
+  z-index: 9999;
 }
 .footer__top {
   background-color: var(--grey-dark);

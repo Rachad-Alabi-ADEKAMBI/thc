@@ -25,4 +25,6 @@
 <link rel="stylesheet" href="public/css/style.css">
 <link rel="stylesheet" href="public/css/table.css">
 
+<script src="public/js/script.js"></script>
+
 <link rel="icon" type="image/x-icon" href="./public/images/logo-rond-simple.ico">

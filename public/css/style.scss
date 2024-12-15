@@ -1277,9 +1277,12 @@ li i {
 
         
           &__menu{
-            width: 250px;
+            width: 260px;
             background-color: #2A2A2A;
+            margin: -30px auto;
             padding: 1em;
+            height: 100%;
+          //  position: fixed;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
 
             &__content{
@@ -1293,6 +1296,10 @@ li i {
                   background-color: $primary;
                 //  text-transform: lowercase;
               }
+
+              .btn:hover{
+                background-color: $tertiary;
+              }
               
              }
 
@@ -1303,12 +1310,41 @@ li i {
             }
           }
 
+          &__menu-mobile-open{
+            display: none;
+          background-color: $primary;
+          height: 50px;
+          width: 60px;
+          border-radius: 30px;
+          padding-left: 5px;
+          padding-top: 15px;
+          color: $white;
+          cursor: pointer;
+          }
+
+          &__menu-mobile-close{
+            display: none;
+            background-color: $primary;
+            height: 50px;
+            width: 60px;
+            border-radius: 30px;
+            padding-left: 5px;
+            padding-top: 15px;
+            color: $white;
+            cursor: pointer;
+            }
+
+          &__menu-mobile{
+            display: none;
+          }
+
           &__content{
             display: block;
             text-align: left;
             background-color: #1A1A1A;
             width: 100%;
             padding-left: 20px;
+            padding-right: 10px;
 
             &__top{
              @include flex();
@@ -1325,8 +1361,11 @@ li i {
                   display: table-cell;
                   vertical-align: middle;
                   margin: auto;
-                  
-                padding-left: 10px;
+                  padding-left: 10px;
+
+                  span{
+                    font-weight: bold;
+                  }
                 }
               }
             }
@@ -1376,16 +1415,28 @@ li i {
               }
             }
           }
+
+          @media (max-width: 768px) {
+            flex-direction: column;
+            &__menu{
+              display: none;
+            }
+
+            &__menu-mobile-open{
+              display: block;
+            }
+          }
         }
-        
-     /*dashboard ends*/
 
 }
+
+/*dashboard ends*/
 
 
 .footer {
   display: block;
   font-family: 'Arial', sans-serif;
+  z-index: 9999;
 
   &__top {
     background-color: var(--grey-dark);

@@ -31,9 +31,11 @@ ob_start(); ?>
                             <div class="profil">
                                 <p>
                                     Bonjour
-                                    <?php echo ucfirst($_SESSION['user']['first_name']); ?>
+                                    <span>
+                                        <?php echo ucfirst($_SESSION['user']['first_name']); ?>
 
-                                    <?php echo strtoupper($_SESSION['user']['last_name']); ?>
+                                        <?php echo strtoupper($_SESSION['user']['last_name']); ?>
+                                    </span>
                                 </p>
                             </div>
                         </div>
@@ -42,7 +44,7 @@ ob_start(); ?>
                             <form class="form">
                                 <label for="newRadio" class="ml-5">
                                     <input type="radio" id="newRadio" name="options" @click="displayNextOrders()">
-                                    Prochaine commande
+                                    Prochaines commandes
                                 </label>
                                 <label for="allRadio" class="ml-5">
                                     <input type="radio" id="allRadio" name="options" @click="displayOrders()">
@@ -51,7 +53,7 @@ ob_start(); ?>
                             </form>
 
                             <div class="newOrder">
-                                <btn class="btn btn-secondary">
+                                <btn class="btn btn-secondary" @click='displayNewOrder()'>
                                     <i class="fas fa-plus-circle"></i> Programmer
                                 </btn>
                             </div>
@@ -59,7 +61,7 @@ ob_start(); ?>
 
                         <div class="dashboard__content__main" v-if='showNextOrders'>
                             <h3>
-                                Commande à venir
+                                Commandes à venir
                             </h3>
 
                             <div class="next-orders">
@@ -80,7 +82,7 @@ ob_start(); ?>
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-primary" @click="displayNewOrder">
+                                        <button class="btn btn-primary" @click="displayEditOrder">
                                             <i class="fas fa-edit"></i> Modifier
                                         </button>
 
@@ -152,6 +154,14 @@ ob_start(); ?>
 
 
                         </div>
+
+                        <div class="dashboard__content__main" v-if='showNewOrder'>
+                            new order
+                        </div>
+
+                        <div class="dashboard__content__main" v-if='showEditOrder'>
+                            option en cours
+                        </div>
                     </div>
                 </div>
             </div>
@@ -174,7 +184,8 @@ ob_start(); ?>
                 showOrders: false,
                 showNextOrders: false,
                 showBooking: false,
-                showEdit: false,
+                showEditOrder: false,
+                showNewOrder: false,
                 details: [],
                 currentPage: 1,
                 itemsPerPage: 10,
@@ -212,6 +223,7 @@ ob_start(); ?>
                 this.showOrders = false;
                 this.showBooking = false;
                 this.showEdit = false;
+                this.showNewOrder = false;
                 axios.get('api/script.php?action=nextOrders')
                     .then((response) => {
                         console.log(response.data);
@@ -226,6 +238,7 @@ ob_start(); ?>
                 this.showOrders = true;
                 this.showBooking = false;
                 this.showEdit = false;
+                this.showNewOrder = false;
                 axios.get('api/script.php?action=nextOrders')
                     .then((response) => {
                         console.log(response.data);
@@ -234,6 +247,20 @@ ob_start(); ?>
                     .catch((error) => {
                         console.error(error);
                     });
+            },
+            displayNewOrder() {
+                this.showNextOrders = false;
+                this.showOrders = false;
+                this.showBooking = false;
+                this.showEdit = false;
+                this.showNewOrder = true;
+            },
+            displayEditOrder() {
+                this.showNextOrders = false;
+                this.showOrders = false;
+                this.showBooking = false;
+                this.showEditOrder = true;
+                this.showNewOrder = false;
             },
             formatDate(date) {
                 const [year, month, day] = date.split('-');
