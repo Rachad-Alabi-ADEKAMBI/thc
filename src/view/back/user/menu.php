@@ -24,9 +24,6 @@
 
 
         <div class="menu-mobile">
-            <div class="icon">
-                >>> xxx
-            </div>
 
             <div class="menu-mobile__list">
                 <a class="btn" href="index.php?action=dashboardPage">

@@ -52,7 +52,7 @@ ob_start(); ?>
                                 </label>
                             </form>
 
-                            <div class="newOrder">
+                            <div class="newOrder" v-if="showNewOrderBtn">
                                 <btn class="btn btn-secondary" @click='displayNewOrder()'>
                                     <i class="fas fa-plus-circle"></i> Programmer
                                 </btn>
@@ -156,7 +156,114 @@ ob_start(); ?>
                         </div>
 
                         <div class="dashboard__content__main" v-if='showNewOrder'>
-                            new order
+                            <br>
+                            <div class="reservation-component">
+                                <div class="close-btn" @click='closeNewOrder()'>
+                                    <i class="fas fa-times"></i>
+
+                                </div>
+                                <h2 class="title">Programmez vos livraisons</h2>
+
+
+                                <div class="reservation-layout">
+                                    <div class="days-selection">
+                                        <div class="day-item">
+                                            <h3 class="day-title">Lundi</h3>
+                                            <div class="form-group">
+                                                <label for="salade-0">Salade :</label>
+                                                <select id="salade-0" class="salade-select">
+                                                    <option value="">Choisir</option>
+                                                    <option value="Salade Tropicale"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Tropicale</option>
+                                                    <option value="Salade Estivale"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Estivale</option>
+                                                    <option value="Salade Exotique"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Exotique</option>
+                                                    <option value="Salade Vitaminée"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Vitaminée</option>
+                                                </select>
+                                                <select id="heure-0" class="heure-select">
+                                                    <option value="">Heure</option>
+                                                    <option value="10:00">10h</option>
+                                                    <option value="12:00">12h</option>
+                                                    <option value="14:00">14h</option>
+                                                    <option value="16:00">16h</option>
+                                                    <option value="18:00">18h</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="day-item">
+                                            <h3 class="day-title">Mardi</h3>
+                                            <div class="form-group">
+                                                <label for="salade-1">Salade :</label>
+                                                <select id="salade-1" class="salade-select">
+                                                    <option value="">Choisir</option>
+                                                    <option value="Salade Tropicale"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Tropicale</option>
+                                                    <option value="Salade Estivale"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Estivale</option>
+                                                    <option value="Salade Exotique"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Exotique</option>
+                                                    <option value="Salade Vitaminée"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Vitaminée</option>
+                                                </select>
+                                                <select id="heure-1" class="heure-select">
+                                                    <option value="">Heure</option>
+                                                    <option value="10:00">10h</option>
+                                                    <option value="12:00">12h</option>
+                                                    <option value="14:00">14h</option>
+                                                    <option value="16:00">16h</option>
+                                                    <option value="18:00">18h</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="day-item">
+                                            <h3 class="day-title">Mercredi</h3>
+                                            <div class="form-group">
+                                                <label for="salade-2">Salade :</label>
+                                                <select id="salade-2" class="salade-select">
+                                                    <option value="">Choisir</option>
+                                                    <option value="Salade Tropicale"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Tropicale</option>
+                                                    <option value="Salade Estivale"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Estivale</option>
+                                                    <option value="Salade Exotique"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Exotique</option>
+                                                    <option value="Salade Vitaminée"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Vitaminée</option>
+                                                </select>
+                                                <select id="heure-2" class="heure-select">
+                                                    <option value="">Heure</option>
+                                                    <option value="10:00">10h</option>
+                                                    <option value="12:00">12h</option>
+                                                    <option value="14:00">14h</option>
+                                                    <option value="16:00">16h</option>
+                                                    <option value="18:00">18h</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="recap">
+                                        <h3>Récapitulatif de vos réservations</h3>
+                                        <p id="recap-lundi">Lundi : Aucune salade sélectionnée</p>
+                                        <p id="recap-mardi">Mardi : Aucune salade sélectionnée</p>
+                                        <p id="recap-mercredi">Mercredi : Aucune salade sélectionnée</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-secondary">Confirmer</button>
+                            </div> <br><br>
                         </div>
 
                         <div class="dashboard__content__main" v-if='showEditOrder'>
@@ -186,6 +293,7 @@ ob_start(); ?>
                 showBooking: false,
                 showEditOrder: false,
                 showNewOrder: false,
+                showNewOrderBtn: false,
                 details: [],
                 currentPage: 1,
                 itemsPerPage: 10,
@@ -224,6 +332,7 @@ ob_start(); ?>
                 this.showBooking = false;
                 this.showEdit = false;
                 this.showNewOrder = false;
+                this.showNewOrderBtn = true;
                 axios.get('api/script.php?action=nextOrders')
                     .then((response) => {
                         console.log(response.data);
@@ -239,6 +348,7 @@ ob_start(); ?>
                 this.showBooking = false;
                 this.showEdit = false;
                 this.showNewOrder = false;
+                this.showNewOrderBtn = true;
                 axios.get('api/script.php?action=nextOrders')
                     .then((response) => {
                         console.log(response.data);
@@ -254,6 +364,15 @@ ob_start(); ?>
                 this.showBooking = false;
                 this.showEdit = false;
                 this.showNewOrder = true;
+                this.showNewOrderBtn = false;
+            },
+            closeNewOrder() {
+                this.showNextOrders = true;
+                this.showOrders = false;
+                this.showBooking = false;
+                this.showEdit = false;
+                this.showNewOrder = false;
+                this.showNewOrderBtn = true;
             },
             displayEditOrder() {
                 this.showNextOrders = false;
