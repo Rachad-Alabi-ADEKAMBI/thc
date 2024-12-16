@@ -31,28 +31,28 @@ ob_start(); ?>
                             <div class="profil">
                                 <p>
                                     Bonjour
-                                    {{ details.first_name }}
+                                    <span>
+                                        <?php echo ucfirst($_SESSION['user']['first_name']); ?>
+
+                                        <?php echo strtoupper($_SESSION['user']['last_name']); ?>
+                                    </span>
                                 </p>
                             </div>
                         </div>
 
                         <div class="dashboard__content__menu">
-                            <form class="form">
-                                <label for="newRadio" class="ml-5">
-                                    <input type="radio" id="newRadio" name="options" @click="displayNextOrders()">
-                                    Mes affiliés
-                                </label>
-                                <label for="allRadio" class="ml-5">
-                                    <input type="radio" id="allRadio" name="options" @click="displayOrders()">
-                                    Payements
-                                </label>
-                            </form>
+
+                            <div class="newOrder" v-if="showNewOrderBtn">
+                                <btn class="btn btn-secondary" @click='displayNewOrder()'>
+                                    <i class="fas fa-share"></i> Partager mon lien
+                                </btn>
+                            </div>
                         </div>
 
-                        <div class="dashboard__content__main" v-if='showOrders'>
+                        <div class="dashboard__content__main" v-if='showAffilited'>
                             <div class="top">
                                 <h3>
-                                    Mes affiliés
+                                    Mes filleuls
                                 </h3>
                             </div>
 
@@ -63,14 +63,38 @@ ob_start(); ?>
                                     <thead>
                                         <tr>
                                             <th>Date</th>
-                                            <th>Nom</th>
+                                            <th>Nom et prenoms</th>
                                             <th>Abonnement</th>
+                                            <th>Cashback</th>
+                                            <th>Statut</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>15/06/2023</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> john Lenon</td>
+                                            <td><i data-lucide="apple" aria-hidden="true"></i> John Doe</td>
+                                            <td><span class="status delivered">Livrée</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>12/06/2023</td>
+                                            <td><i data-lucide="banana" aria-hidden="true"></i> Salade Vitaminée
+                                            </td>
+                                            <td><span class="status delivered">Livrée</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>09/06/2023</td>
+                                            <td><i data-lucide="cherry" aria-hidden="true"></i> Salade Gourmande
+                                            </td>
+                                            <td><span class="status delivered">Livrée</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>06/06/2023</td>
+                                            <td><i data-lucide="grape" aria-hidden="true"></i> Salade Exotique</td>
+                                            <td><span class="status delivered">Livrée</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>03/06/2023</td>
+                                            <td><i data-lucide="lemon" aria-hidden="true"></i> Salade Agrumes</td>
                                             <td><span class="status delivered">Livrée</span></td>
                                         </tr>
                                     </tbody>
@@ -87,6 +111,121 @@ ob_start(); ?>
                             </div>
 
 
+                        </div>
+
+                        <div class="dashboard__content__main" v-if='showNewOrder'>
+                            <br>
+                            <div class="reservation-component">
+                                <div class="close-btn" @click='closeNewOrder()'>
+                                    <i class="fas fa-times"></i>
+
+                                </div>
+                                <h2 class="title">Programmez vos livraisons</h2>
+
+
+                                <div class="reservation-layout">
+                                    <div class="days-selection">
+                                        <div class="day-item">
+                                            <h3 class="day-title">Lundi</h3>
+                                            <div class="form-group">
+                                                <label for="salade-0">Salade :</label>
+                                                <select id="salade-0" class="salade-select">
+                                                    <option value="">Choisir</option>
+                                                    <option value="Salade Tropicale"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Tropicale</option>
+                                                    <option value="Salade Estivale"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Estivale</option>
+                                                    <option value="Salade Exotique"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Exotique</option>
+                                                    <option value="Salade Vitaminée"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Vitaminée</option>
+                                                </select>
+                                                <select id="heure-0" class="heure-select">
+                                                    <option value="">Heure</option>
+                                                    <option value="10:00">10h</option>
+                                                    <option value="12:00">12h</option>
+                                                    <option value="14:00">14h</option>
+                                                    <option value="16:00">16h</option>
+                                                    <option value="18:00">18h</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="day-item">
+                                            <h3 class="day-title">Mardi</h3>
+                                            <div class="form-group">
+                                                <label for="salade-1">Salade :</label>
+                                                <select id="salade-1" class="salade-select">
+                                                    <option value="">Choisir</option>
+                                                    <option value="Salade Tropicale"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Tropicale</option>
+                                                    <option value="Salade Estivale"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Estivale</option>
+                                                    <option value="Salade Exotique"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Exotique</option>
+                                                    <option value="Salade Vitaminée"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Vitaminée</option>
+                                                </select>
+                                                <select id="heure-1" class="heure-select">
+                                                    <option value="">Heure</option>
+                                                    <option value="10:00">10h</option>
+                                                    <option value="12:00">12h</option>
+                                                    <option value="14:00">14h</option>
+                                                    <option value="16:00">16h</option>
+                                                    <option value="18:00">18h</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="day-item">
+                                            <h3 class="day-title">Mercredi</h3>
+                                            <div class="form-group">
+                                                <label for="salade-2">Salade :</label>
+                                                <select id="salade-2" class="salade-select">
+                                                    <option value="">Choisir</option>
+                                                    <option value="Salade Tropicale"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Tropicale</option>
+                                                    <option value="Salade Estivale"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Estivale</option>
+                                                    <option value="Salade Exotique"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Exotique</option>
+                                                    <option value="Salade Vitaminée"
+                                                        data-image="/placeholder.svg?height=30&width=30">
+                                                        Vitaminée</option>
+                                                </select>
+                                                <select id="heure-2" class="heure-select">
+                                                    <option value="">Heure</option>
+                                                    <option value="10:00">10h</option>
+                                                    <option value="12:00">12h</option>
+                                                    <option value="14:00">14h</option>
+                                                    <option value="16:00">16h</option>
+                                                    <option value="18:00">18h</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="recap">
+                                        <h3>Récapitulatif de vos réservations</h3>
+                                        <p id="recap-lundi">Lundi : Aucune salade sélectionnée</p>
+                                        <p id="recap-mardi">Mardi : Aucune salade sélectionnée</p>
+                                        <p id="recap-mercredi">Mercredi : Aucune salade sélectionnée</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-secondary">Confirmer</button>
+                            </div> <br><br>
+                        </div>
+
+                        <div class="dashboard__content__main" v-if='showEditOrder'>
+                            option en cours
                         </div>
                     </div>
                 </div>
@@ -107,9 +246,13 @@ ob_start(); ?>
     const app = Vue.createApp({
         data() {
             return {
-                showMyAffiliations: false,
+                showOrders: false,
+                showNextOrders: false,
+                showBooking: false,
+                showEditOrder: false,
+                showNewOrder: false,
+                showNewOrderBtn: false,
                 details: [],
-                affiliated: [],
                 currentPage: 1,
                 itemsPerPage: 10,
                 selectedDetail: null,
@@ -117,7 +260,7 @@ ob_start(); ?>
         },
         mounted() {
             this.getUserDatas();
-            this.displayMyAfffiliations();
+            this.displayOrders();
         },
         computed: {
             totalPages() {
@@ -141,16 +284,60 @@ ob_start(); ?>
                     });
 
             },
-            displayMyAffiliations() {
-                this.showNextOrders = false;
-                axios.get('api/script.php?action=getMyAffiliations')
+            displayNextOrders() {
+                this.showNextOrders = true;
+                this.showOrders = false;
+                this.showBooking = false;
+                this.showEdit = false;
+                this.showNewOrder = false;
+                this.showNewOrderBtn = true;
+                axios.get('api/script.php?action=nextOrders')
                     .then((response) => {
                         console.log(response.data);
-                        this.affiliated = response.data;
+                        this.details = response.data;
                     })
                     .catch((error) => {
                         console.error(error);
                     });
+            },
+            displayOrders() {
+                this.showNextOrders = false;
+                this.showOrders = true;
+                this.showBooking = false;
+                this.showEdit = false;
+                this.showNewOrder = false;
+                this.showNewOrderBtn = true;
+                axios.get('api/script.php?action=nextOrders')
+                    .then((response) => {
+                        console.log(response.data);
+                        this.details = response.data;
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            },
+            displayNewOrder() {
+                this.showNextOrders = false;
+                this.showOrders = false;
+                this.showBooking = false;
+                this.showEdit = false;
+                this.showNewOrder = true;
+                this.showNewOrderBtn = false;
+            },
+            closeNewOrder() {
+                this.showNextOrders = true;
+                this.showOrders = false;
+                this.showBooking = false;
+                this.showEdit = false;
+                this.showNewOrder = false;
+                this.showNewOrderBtn = true;
+            },
+            displayEditOrder() {
+                this.showNextOrders = false;
+                this.showOrders = false;
+                this.showBooking = false;
+                this.showEditOrder = true;
+                this.showNewOrder = false;
             },
             formatDate(date) {
                 const [year, month, day] = date.split('-');

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catalogue de Fruits Exotiques</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fruits.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -14,7 +14,7 @@
                 <h2 class="mt-4">
                     Découvrez Nos Packs de Fruits 🍌🍍🥭
                 </h2>
-                <div class="containerr">
+                <div class="container">
                     <div class="pack pack1">
                         <div class="pack__image">
                             <img src="public/images/pack1.jpg" alt="Pack Vitaminé">

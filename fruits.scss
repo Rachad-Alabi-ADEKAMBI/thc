@@ -6,7 +6,6 @@ $grey-light: #333333;
 $white: #ffffff;
 $black: #000000;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 * {
     margin: 0;
@@ -56,7 +55,7 @@ body {
     }
 }
 
-.containerr {
+.container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
