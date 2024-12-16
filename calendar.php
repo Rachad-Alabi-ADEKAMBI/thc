@@ -1,103 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue de Fruits Exotiques</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="fruits" id="offers">
+        <div class="fruits__content">
+            <div class="fruits__content__text">
+                <h2 class="mt-4">
+                    Découvrez Nos Packs de Fruits 🍌🍍🥭
+                </h2>
+                <div class="containerr">
+                    <div class="pack pack1">
+                        <div class="pack__image">
+                            <img src="public/images/pack1.jpg" alt="Pack Vitaminé">
+                        </div>
+                        <h3>Pack Vitaminé</h3>
+                        <div class="description">
+                            <ul>
+                                <li><i class="fas fa-lemon"></i>Ananas</li>
+                                <li><i class="fas fa-apple-alt"></i>Pastèque</li>
+                                <li><i class="fas fa-seedling"></i>Papaye</li>
+                                <li><i class="fas fa-carrot"></i>Orange</li>
+                            </ul>
+                            <strong>
+                                Riche en vitamine C pour un boost d'énergie.
+                            </strong>
+                        </div>
+                        <a href="#" class="btn">Choisir ce pack</a>
+                    </div>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="calendar.css">
-    </head>
+                    <div class="pack pack2">
+                        <div class="pack__image">
+                            <img src="public/images/pack2.jpg" alt="Pack Tropical">
+                        </div>
+                        <h3>Pack Tropical</h3>
+                        <div class="description">
+                            <ul>
+                                <li><i class="fas fa-tree"></i>Noix de coco</li>
+                                <li><i class="fas fa-apple-alt"></i>Pastèque</li>
+                                <li><i class="fas fa-leaf"></i>Mangue</li>
+                                <li><i class="fas fa-lemon"></i>Ananas</li>
+                            </ul>
+                            <strong>
+                                Une escapade exotique avec des saveurs tropicales.
+                            </strong>
+                        </div>
+                        <a href="#" class="btn">Choisir ce pack</a>
+                    </div>
 
-    <body>
-        <div class="reservation-component">
-            <h2 class="title">Réservez vos livraisons de salades de fruits</h2>
-            <div class="reservation-layout">
-                <div class="days-selection">
-                    <div class="day-item">
-                        <h3 class="day-title">Lundi</h3>
-                        <div class="form-group">
-                            <label for="salade-0">Salade :</label>
-                            <select id="salade-0" class="salade-select">
-                                <option value="">Choisir</option>
-                                <option value="Salade Tropicale" data-image="/placeholder.svg?height=30&width=30">
-                                    Tropicale</option>
-                                <option value="Salade Estivale" data-image="/placeholder.svg?height=30&width=30">
-                                    Estivale</option>
-                                <option value="Salade Exotique" data-image="/placeholder.svg?height=30&width=30">
-                                    Exotique</option>
-                                <option value="Salade Vitaminée" data-image="/placeholder.svg?height=30&width=30">
-                                    Vitaminée</option>
-                            </select>
-                            <select id="heure-0" class="heure-select">
-                                <option value="">Heure</option>
-                                <option value="10:00">10h</option>
-                                <option value="12:00">12h</option>
-                                <option value="14:00">14h</option>
-                                <option value="16:00">16h</option>
-                                <option value="18:00">18h</option>
-                            </select>
+                    <div class="pack pack3">
+                        <div class="pack__image">
+                            <img src="public/images/pack3.jpg" alt="Pack Croquant">
                         </div>
-                    </div>
-                    <div class="day-item">
-                        <h3 class="day-title">Mardi</h3>
-                        <div class="form-group">
-                            <label for="salade-1">Salade :</label>
-                            <select id="salade-1" class="salade-select">
-                                <option value="">Choisir</option>
-                                <option value="Salade Tropicale" data-image="/placeholder.svg?height=30&width=30">
-                                    Tropicale</option>
-                                <option value="Salade Estivale" data-image="/placeholder.svg?height=30&width=30">
-                                    Estivale</option>
-                                <option value="Salade Exotique" data-image="/placeholder.svg?height=30&width=30">
-                                    Exotique</option>
-                                <option value="Salade Vitaminée" data-image="/placeholder.svg?height=30&width=30">
-                                    Vitaminée</option>
-                            </select>
-                            <select id="heure-1" class="heure-select">
-                                <option value="">Heure</option>
-                                <option value="10:00">10h</option>
-                                <option value="12:00">12h</option>
-                                <option value="14:00">14h</option>
-                                <option value="16:00">16h</option>
-                                <option value="18:00">18h</option>
-                            </select>
+                        <h3>Pack Croquant</h3>
+                        <div class="description">
+                            <ul>
+                                <li><i class="fas fa-apple-alt"></i>Pomme verte</li>
+                                <li><i class="fas fa-apple-alt"></i>Pastèque</li>
+                                <li><i class="fas fa-lemon"></i>Banane</li>
+                                <li><i class="fas fa-seedling"></i>Papaye</li>
+                            </ul>
+                            <strong>
+                                Un mélange croquant et savoureux.
+                            </strong>
                         </div>
+                        <a href="#" class="btn">Choisir ce pack</a>
                     </div>
-                    <div class="day-item">
-                        <h3 class="day-title">Mercredi</h3>
-                        <div class="form-group">
-                            <label for="salade-2">Salade :</label>
-                            <select id="salade-2" class="salade-select">
-                                <option value="">Choisir</option>
-                                <option value="Salade Tropicale" data-image="/placeholder.svg?height=30&width=30">
-                                    Tropicale</option>
-                                <option value="Salade Estivale" data-image="/placeholder.svg?height=30&width=30">
-                                    Estivale</option>
-                                <option value="Salade Exotique" data-image="/placeholder.svg?height=30&width=30">
-                                    Exotique</option>
-                                <option value="Salade Vitaminée" data-image="/placeholder.svg?height=30&width=30">
-                                    Vitaminée</option>
-                            </select>
-                            <select id="heure-2" class="heure-select">
-                                <option value="">Heure</option>
-                                <option value="10:00">10h</option>
-                                <option value="12:00">12h</option>
-                                <option value="14:00">14h</option>
-                                <option value="16:00">16h</option>
-                                <option value="18:00">18h</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="recap">
-                    <h3>Récapitulatif de vos réservations</h3>
-                    <p id="recap-lundi">Lundi : Aucune salade sélectionnée</p>
-                    <p id="recap-mardi">Mardi : Aucune salade sélectionnée</p>
-                    <p id="recap-mercredi">Mercredi : Aucune salade sélectionnée</p>
                 </div>
             </div>
-            <button class="submit-btn">Confirmer les réservations</button>
         </div>
-    </body>
-
+    </div>
+</body>
 </html>
