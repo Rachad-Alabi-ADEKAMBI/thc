@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
         // Exit to stop further execution of the script after the redirect
         exit();
     }
-    $title = "THC - Mon abonnement";
+    $title = "THC - Abonnement";
 
 ob_start(); ?>
 
@@ -25,25 +25,76 @@ ob_start(); ?>
                     <div class="dashboard__content">
                         <div class="dashboard__content__top">
                             <h2>
-                                Mon abonnement
+                                Abonnement
                             </h2>
 
                             <div class="profil">
                                 <p>
                                     Bonjour
-                                    {{ details.first_name }}
+                                    <span>
+                                        <?php echo ucfirst($_SESSION['user']['first_name']); ?>
+
+                                        <?php echo strtoupper($_SESSION['user']['last_name']); ?>
+                                    </span>
                                 </p>
                             </div>
                         </div>
 
-                        <div class="dashboard__content__main" v-if='showFormula'>
-                            <h3>
-                                Mon abonnement
-                            </h3>
+                        <div class="dashboard__content__main mt-2" v-if='showAffiliated'>
+                            <div class="top">
+                                <h3>
+                                    Abonnement en cours
+                                </h3>
+                            </div>
 
-                            <p>
-                                formule actuelle
-                            </p>
+                            <div class="table-container">
+
+                                <table class="orders-table">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Abonnement</th>
+                                            <th>Date d'expiration</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>15/06/2023</td>
+                                            <td><i data-lucide="apple" aria-hidden="true"></i> Pack starter</td>
+                                            <td><span class="status delivered">Actif</span></td>
+                                            <td><span class="status">600 XOF</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>15/06/2023</td>
+                                            <td><i data-lucide="apple" aria-hidden="true"></i> hjjj Doe</td>
+                                            <td><span class="status delivered">Actif</span></td>
+                                            <td><span class="status">1600 XOF</span></td>
+                                            <td><span class="status delivered">
+                                                Transféré
+                                            </span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>15/06/2023</td>
+                                            <td><i data-lucide="apple" aria-hidden="true"></i> John Doe</td>
+                                            <td><span class="status delivered">Actif</span></td>
+                                            <td><span class="status ">1200 XOF</span></td>
+                                            <td><span class="status delivered">
+                                                Transféré
+                                            </span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pagination">
+                                <button class="btn btn-icon">
+                                    Precedent
+                                </button>
+                                <span>Page 1 sur 3</span>
+                                <button class="btn btn-icon">
+                                    Suivant
+                                </button>
+                            </div>
 
 
                         </div>
@@ -66,10 +117,7 @@ ob_start(); ?>
     const app = Vue.createApp({
         data() {
             return {
-                showOrders: false,
-                showNextOrders: false,
-                showBooking: false,
-                showEdit: false,
+                showAffiliated: false,
                 details: [],
                 currentPage: 1,
                 itemsPerPage: 10,
@@ -78,7 +126,7 @@ ob_start(); ?>
         },
         mounted() {
             this.getUserDatas();
-            this.displayOrders();
+            this.displayAffiliated();
         },
         computed: {
             totalPages() {
@@ -102,26 +150,9 @@ ob_start(); ?>
                     });
 
             },
-            displayNextOrders() {
-                this.showNextOrders = true;
-                this.showOrders = false;
-                this.showBooking = false;
-                this.showEdit = false;
-                axios.get('api/script.php?action=nextOrders')
-                    .then((response) => {
-                        console.log(response.data);
-                        this.details = response.data;
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            },
-            displayOrders() {
-                this.showNextOrders = false;
-                this.showOrders = true;
-                this.showBooking = false;
-                this.showEdit = false;
-                axios.get('api/script.php?action=nextOrders')
+            displayAffiliated() {
+                this.showAffiliated = true;
+                axios.get('api/script.php?action=myAffiliated')
                     .then((response) => {
                         console.log(response.data);
                         this.details = response.data;
