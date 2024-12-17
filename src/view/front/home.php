@@ -129,10 +129,7 @@ ob_start(); ?>
     </div>
   </div>
 
-
-
-  <?php include './././fruits.php' ?>
- 
+  <?php include './././fruits.php' ?> 
 
   <div class="reason">
     <div class="reason__content">

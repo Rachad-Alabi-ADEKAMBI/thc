@@ -28,72 +28,81 @@ ob_start(); ?>
                                 Abonnement
                             </h2>
 
-                            <div class="profil">
-                                <p>
-                                    Bonjour
-                                    <span>
-                                        <?php echo ucfirst($_SESSION['user']['first_name']); ?>
-
-                                        <?php echo strtoupper($_SESSION['user']['last_name']); ?>
-                                    </span>
-                                </p>
-                            </div>
+                            <?php include 'profile_name.php'; ?>
                         </div>
 
-                        <div class="dashboard__content__main mt-2" v-if='showAffiliated'>
+                        <div class="dashboard__content__main mt-2">
                             <div class="top">
                                 <h3>
                                     Abonnement en cours
                                 </h3>
                             </div>
 
-                            <div class="table-container">
+                            <div class="pricing" id="pricing" style="margin-top: -20px;">
+                                <div class="pricing__content">
+                                <div class="pricing__content__item">
+                                    <span class="offer-name">
+                                    <i class="fas fa-leaf"></i> Starter
+                                    </span>
+                                    <ul>
+                                    <li><i class="fas fa-check"></i> 2 livraisons / semaine</li>
+                                    </ul>
+                                    <strong class="price">
+                                    <i class="fas fa-coins"></i> 6.000 XOF
+                                    </strong>
 
-                                <table class="orders-table">
-
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Abonnement</th>
-                                            <th>Date d'expiration</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>15/06/2023</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> Pack starter</td>
-                                            <td><span class="status delivered">Actif</span></td>
-                                            <td><span class="status">600 XOF</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>15/06/2023</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> hjjj Doe</td>
-                                            <td><span class="status delivered">Actif</span></td>
-                                            <td><span class="status">1600 XOF</span></td>
-                                            <td><span class="status delivered">
-                                                Transféré
-                                            </span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>15/06/2023</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> John Doe</td>
-                                            <td><span class="status delivered">Actif</span></td>
-                                            <td><span class="status ">1200 XOF</span></td>
-                                            <td><span class="status delivered">
-                                                Transféré
-                                            </span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <span>
+                                        Expiration: <strong>
+                                            15/01/2025
+                                        </strong>
+                                    </span>
+                                </div>
+                                </div>
                             </div>
-                            <div class="pagination">
-                                <button class="btn btn-icon">
-                                    Precedent
-                                </button>
-                                <span>Page 1 sur 3</span>
-                                <button class="btn btn-icon">
-                                    Suivant
-                                </button>
+
+                            <h3>
+                                Choisir un abonnement
+                            </h3>
+
+                            <div class="pricing" id="pricing" style="margin-top: -20px;">
+                                <div class="pricing__content">
+                                <div class="pricing__content__item">
+                                    <span class="offer-name">
+                                    <i class="fas fa-leaf"></i> Starter
+                                    </span>
+                                    <ul>
+                                    <li><i class="fas fa-check"></i> 2 livraisons / semaine</li>
+                                    </ul>
+                                    <strong class="price">
+                                    <i class="fas fa-coins"></i> 6.000 XOF
+                                    </strong>
+                                    <a href="index.php?action=registerPage" class="btn-select">Choisir</a>
+                                </div>
+                                <div class="pricing__content__item featured">
+                                    <span class="offer-name">
+                                    <i class="fas fa-star"></i> Premium
+                                    </span>
+                                    <ul>
+                                    <li><i class="fas fa-check"></i> 3 livraisons / semaine</li>
+                                    </ul>
+                                    <strong class="price">
+                                    <i class="fas fa-coins"></i> 7.000 XOF
+                                    </strong>
+                                    <a href="index.php?action=registerPage" class="btn-select">Choisir</a>
+                                </div>
+                                <div class="pricing__content__item">
+                                    <span class="offer-name">
+                                    <i class="fas fa-gem"></i> Gold
+                                    </span>
+                                    <ul>
+                                    <li><i class="fas fa-check"></i> 5 livraisons / semaine</li>
+                                    </ul>
+                                    <strong class="price">
+                                    <i class="fas fa-coins"></i> 10.000 XOF
+                                    </strong>
+                                    <a href="index.php?action=registerPage" class="btn-select">Choisir</a>
+                                </div>
+                                </div>
                             </div>
 
 

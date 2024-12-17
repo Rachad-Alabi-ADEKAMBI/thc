@@ -25,64 +25,52 @@ ob_start(); ?>
                     <div class="dashboard__content">
                         <div class="dashboard__content__top">
                             <h2>
-                                Mon compte
+                                Paramètres du compte
                             </h2>
 
-                            <div class="profil">
-                                <p>
-                                    Bonjour
-                                    {{ details.first_name }}
-                                </p>
-                            </div>
+                            <?php include 'profile_name.php'; ?>
                         </div>
 
-                        <div class="dashboard__content__menu">
-                            <form class="form">
-                                <label for="newRadio" class="ml-5">
-                                    <input type="radio" id="newRadio" name="options" @click="displayNextOrders()">
-                                    Mes affiliés
-                                </label>
-                            </form>
-                        </div>
-
-                        <div class="dashboard__content__main" v-if='showOrders'>
-                            <div class="top">
-                                <h3>
-                                    Mes affiliés
-                                </h3>
+                        <div class="dashboard__content__main"> 
+                            <div class="row">
+                                <div class="col-md-10 col-sm-12 mx-auto p-5 mt-3" style="border: 2px solid #000;" >
+                                    <form class="contact-form" action="api/script.php?action=updateAccount" method="POST">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="password">
+                                                    <i class="fas fa-lock"></i> Nouveau mot de passe
+                                                </label>
+                                                <input type="password" id="password" name="password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="confirm_password">
+                                                    <i class="fas fa-lock"></i> Confirmez le mot de passe
+                                                </label>
+                                                <input type="password" id="password2" name="password2" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="adress">
+                                                    <i class="fas fa-map-marker-alt"></i> Adresse de livraison
+                                                </label>
+                                                <input type="text" id="adress" name="adress" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="phone">
+                                                    <i class="fas fa-phone"></i> Téléphone
+                                                </label>
+                                                <input type="tel" id="phone" name="phone" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 text-center mx-auto">
+                                            <button type="submit" class="submit-btn mx-auto">
+                                                <i class="fas fa-check-plus"></i> Valider
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-
-                            <div class="table-container">
-
-                                <table class="orders-table">
-
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Nom</th>
-                                            <th>Abonnement</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>15/06/2023</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> john Lenon</td>
-                                            <td><span class="status delivered">Livrée</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="pagination">
-                                <button class="btn btn-icon">
-                                    Precedent
-                                </button>
-                                <span>Page 1 sur 3</span>
-                                <button class="btn btn-icon">
-                                    Suivant
-                                </button>
-                            </div>
-
-
                         </div>
                     </div>
                 </div>

@@ -12,6 +12,7 @@ ob_start(); ?>
                     <div class="contact-form-container" id="contact">
                         <h2> Inscription 🍋 </h2>
                         <form class="contact-form" action="api/script.php?action=register" method="POST">
+                            
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="email">
