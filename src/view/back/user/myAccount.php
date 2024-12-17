@@ -56,7 +56,7 @@ ob_start(); ?>
                                         </div>
                                         <div class="col-6 text-center mx-auto">
                                             <button type="submit" class="submit-btn mx-auto">
-                                                <i class="fas fa-check-plus"></i> Valider
+                                                <i class="fas fa-check-double"></i> Valider
                                             </button>
                                         </div>
                                     </form>

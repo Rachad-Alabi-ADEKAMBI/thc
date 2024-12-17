@@ -1,33 +1,35 @@
 <?php 
-include 'check_session.php'; 
 
-$title = "THC - Abonnement";
-ob_start(); 
-?>
+ include 'check_session.php'; 
 
-<main class="main" id="app">
-    <section class="section">
-        <div class="row">
-            <div class="col-12">
-                <br><br><br><br>
+    $title = "THC - Abonnement";
+
+ob_start(); ?>
+
+<main class="main" id='app'>
+    <section class="section" >
+        <div class="row ">
+            <div class="col-12"> <br><br><br><br>
                 <div class="dashboard">
-                    <!-- Inclusion du menu -->
                     <?php include 'menu.php'; ?>
 
                     <div class="dashboard__content">
-                        <!-- En-tête de la page -->
                         <div class="dashboard__content__top">
-                            <h2>Abonnement</h2>
+                            <h2>
+                                Abonnement
+                            </h2>
+
                             <?php include 'profile_name.php'; ?>
                         </div>
 
-                        <!-- Contenu principal -->
-                        <div class="dashboard__content__main mt-2" v-for="detail in details" :key="detail.id">
+                        <div class="dashboard__content__main mt-2" v-for='detail in details' :key='detail.id'>
                             <div class="top">
-                                <h3>Abonnement en cours</h3>
+                                <h3>
+                                    Abonnement en cours
+                                </h3>
                             </div>
 
-                            <div class="pricing" id="pricing" style='margin-top: -50px;'  v-if="detail.subscription_status === 'active'">    
+                            <div class="pricing" id="pricing"  >    
                                 <div class="pricing__content">
                                 <div class="pricing__content__item">
                                     <span class="offer-name">
@@ -49,10 +51,11 @@ ob_start();
                                 </div>
                             </div>
 
-                            <div class="pricing" id="pricing" style='margin-top: -50px;'  v-if="detail.subscription_status === 'inactive'">
-                                <p class='mx-auto'>
-                                    Vous n'avez aucun abonnement en cours
-                                </p> <br>
+                            <h3>
+                                Choisir un abonnement
+                            </h3>
+
+                            <div class="pricing" id="pricing" style="margin-top: -20px;">
                                 <div class="pricing__content">
                                 <div class="pricing__content__item">
                                     <span class="offer-name">
@@ -92,56 +95,83 @@ ob_start();
                                 </div>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
-            </div> <!-- .col-12 -->
-        </div> <!-- .row -->
+            </div>
+        </div>
+        </div>
     </section>
 </main>
 
-<?php 
-$content = ob_get_clean();
-require './src/view/layout.php'; 
-?>
+
+
+
+<?php $content = ob_get_clean(); ?>
+
+<?php require './src/view/layout.php'; ?>
 
 <script>
-const app = Vue.createApp({
-    data() {
-        return {
-            details: [], // Contient les données des abonnements
-            currentPage: 1,
-            itemsPerPage: 10,
-        };
-    },
-    mounted() {
-        this.getUserDatas();
-    },
-    methods: {
-        // Récupération des données utilisateur depuis l'API
-        getUserDatas() {
-            axios.get('api/script.php?action=getMyDatas')
-                .then(response => {
-                    this.details = response.data;
-                })
-                .catch(error => {
-                    console.error("Erreur lors de la récupération des données : ", error);
-                });
+    const app = Vue.createApp({
+        data() {
+            return {
+                showAffiliated: false,
+                details: [],
+                currentPage: 1,
+                itemsPerPage: 10,
+                selectedDetail: null,
+            };
         },
-        // Formatage de la date
-        formatDate(date) {
-            if (!date) return '';
-            const [year, month, day] = date.split('-');
-            return `${day}-${month}-${year}`;
+        mounted() {
+            this.getUserDatas();
+            this.displayAffiliated();
         },
-        capitalize(string) {
-            return string ? string.toUpperCase() : '';
+        computed: {
+            totalPages() {
+                return Math.ceil(this.details.length / this.itemsPerPage);
+            },
+            paginatedData() {
+                const start = (this.currentPage - 1) * this.itemsPerPage;
+                const end = start + this.itemsPerPage;
+                return this.details.slice(start, end);
+            },
         },
-        capitalizeFirstLetter(string) {
-            return string ? string.charAt(0).toUpperCase() + string.slice(1).toLowerCase() : '';
-        },
-    },
-});
+        methods: {
+            getUserDatas() {
+                axios.get('api/script.php?action=getMyDatas')
+                    .then((response) => {
+                        this.details = response.data;
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
 
-app.mount('#app');
+            },
+            displayAffiliated() {
+                this.showAffiliated = true;
+                axios.get('api/script.php?action=myAffiliated')
+                    .then((response) => {
+                        console.log(response.data);
+                        this.details = response.data;
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            },
+            formatDate(date) {
+                const [year, month, day] = date.split('-');
+                return `${day}-${month}-${year}`;
+            },
+            capitalize(string) {
+                return string.toUpperCase();
+            },
+            capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+            },
+        },
+    });
+
+    app.mount('#app');
 </script>

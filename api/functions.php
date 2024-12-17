@@ -146,7 +146,7 @@ function getMyDatas()
         
         // Assurez-vous de transmettre un tableau pour le paramètre
         $req->execute([$_SESSION['user']['user_id']]);
-        $datas = $req->fetch(); // Option pour obtenir un tableau associatif
+        $datas = $req->fetchAll(); // Option pour obtenir un tableau associatif
 
         $req->closeCursor();
 
