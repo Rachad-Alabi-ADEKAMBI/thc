@@ -1,16 +1,7 @@
 <?php 
 
-// Check if the user is not logged in (i.e., if $_SESSION['login'] does not exist)
-if (!isset($_SESSION['user'])) {
-    ?>
-<script>
-    alert('Veuillez vous connecter d\'abord');
-    window.location.replace('index.php?action=loginPage');
-</script>
-<?php
-        // Exit to stop further execution of the script after the redirect
-        exit();
-    }
+ include 'check_session.php'; 
+
     $title = "THC - Mon compte";
 
 ob_start(); ?>

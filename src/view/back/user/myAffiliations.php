@@ -1,16 +1,7 @@
 <?php 
 
-// Check if the user is not logged in (i.e., if $_SESSION['login'] does not exist)
-if (!isset($_SESSION['user'])) {
-    ?>
-<script>
-    alert('Veuillez vous connecter d\'abord');
-    window.location.replace('index.php?action=loginPage');
-</script>
-<?php
-        // Exit to stop further execution of the script after the redirect
-        exit();
-    }
+    include 'check_session.php';
+
     $title = "THC - Affiliation";
 
 ob_start(); ?>
@@ -28,16 +19,7 @@ ob_start(); ?>
                                 Affiliation
                             </h2>
 
-                            <div class="profil">
-                                <p>
-                                    Bonjour
-                                    <span>
-                                        <?php echo ucfirst($_SESSION['user']['first_name']); ?>
-
-                                        <?php echo strtoupper($_SESSION['user']['last_name']); ?>
-                                    </span>
-                                </p>
-                            </div>
+                            <?php include 'profile_name.php'; ?>
                         </div>
 
                         <div class="dashboard__content__menu">
