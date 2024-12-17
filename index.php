@@ -16,7 +16,7 @@ require_once 'src/controller/front/policy.php';
 
 require_once 'src/controller/back/user/dashboard.php';
 require_once 'src/controller/back/user/myAffiliations.php';
-require_once 'src/controller/back/user/myFormula.php';
+require_once 'src/controller/back/user/mySubscription.php';
 require_once 'src/controller/back/user/myAccount.php';
 
 //require_once 'src/controller/back/admin/dashboard.php';
@@ -42,8 +42,8 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
                 dashboardPage();
                 break;
 
-            case 'myFormulaPage':
-                   myFormulaPage();
+            case 'mySubscriptionPage':
+                   mySubscriptionPage();
                     break;
 
             case 'myAccountPage':

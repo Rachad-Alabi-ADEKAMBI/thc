@@ -67,7 +67,7 @@
                 <i class="fas fa-users"></i> Affiliation
             </a>
 
-            <a class="btn" href="index.php?action=myFormulaPage">
+            <a class="btn" href="index.php?action=mySubscriptionPage">
                 <i class="fas fa-credit-card"></i>
                 <script>
                     document.write("Abonnement".replace(/^./, c => c.toLowerCase()));
