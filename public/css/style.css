@@ -617,7 +617,7 @@ h2 {
 }
 .main .pricing__content {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   gap: 2rem;
   flex-wrap: wrap;
 }
@@ -1248,6 +1248,26 @@ h2 {
   color: #50AF47;
   font-size: 1.1em;
   font-weight: bold;
+}
+.main .dashboard__content__main .subscription {
+  margin-top: -50px;
+  width: auto;
+}
+.main .dashboard__content__main .subscription strong {
+  color: #F99401;
+}
+.main .dashboard__content__main .subscription .options__payment {
+  display: flex();
+  flex-direction: row;
+}
+.main .dashboard__content__main .subscription .options__payment .btn {
+  margin: 10px;
+}
+.main .dashboard__content__main .subscription .options__payment .btn-Wallet {
+  background-color: #FD4F65;
+}
+.main .dashboard__content__main .subscription .options__payment .btn-Mobile {
+  background-color: #F99401;
 }
 @media (max-width: 768px) {
   .main .dashboard {

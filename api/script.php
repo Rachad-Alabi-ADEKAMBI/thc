@@ -7,6 +7,10 @@ if ($action == 'subscribe') {
     subscribe();
 }
 
+if ($action == 'getOffer') {
+    getOffer();
+}
+
 if ($action == 'newSurvey') {
     newSurvey();
 }

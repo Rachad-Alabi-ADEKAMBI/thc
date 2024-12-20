@@ -729,7 +729,7 @@ h2{
 
 .pricing__content {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     gap: 2rem;
     flex-wrap: wrap;
 }
@@ -1456,6 +1456,37 @@ li i {
                   }
                 }
               }
+
+             .subscription{
+              margin-top: -50px;
+              width: auto;
+
+              strong{
+                color: $secondary;
+              }
+
+              .options{
+              
+                &__payment{
+                  display: flex();
+                  flex-direction: row;
+
+                  .btn{
+                    margin: 10px;
+                  }
+
+                  .btn-Wallet{
+                    background-color: $primary;
+                  }
+
+                  .btn-Mobile{
+                    background-color: $secondary;
+                  }
+
+
+                }
+              }
+             }
             }
           }
 

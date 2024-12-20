@@ -159,6 +159,23 @@ function getMyDatas()
     }
 }
 
+function getOffer(){
+    $id = verifyInput($_GET['id']);
+   
+    try {
+        $pdo = getConnexion();
+        $req = $pdo->prepare("SELECT * FROM offers WHERE id = ?");
+        $req->execute([$id]);
+        $datas = $req->fetchAll();
+        $req->closeCursor();
+
+        sendJSON($datas);
+    } catch (PDOException $e) {
+        http_response_code(500); 
+        sendJSON(['error' => 'Une erreur s\'est produite : ' . $e->getMessage()]);
+    }
+}
+
 
 function newsletters()
 {
