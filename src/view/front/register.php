@@ -107,13 +107,29 @@ ob_start();
                             <div class="col-6 text-center mx-auto">
                                 <button type="submit" class="submit-btn mx-auto">
                                     <i class="fas fa-user-plus"></i> Inscription
-                                </button>
-                            </div>
-                        </form>
+                                </button> <br>
+                                
                         <hr>
                         <p>
                             Vous avez déjà un compte ? <a href="index.php?action=loginPage">Connexion</a>
-                        </p>
+                        </p> <hr>
+                                <p class="fw-bold mt-2">
+                                    Ou
+                                </p>
+                                <p>S'inscrire avec :</p>
+                                    <div class="social-buttons">
+                                        <!-- Gmail Button -->
+                                        <a href="#" class="btn gmail-btn mx-auto">
+                                            <i class="fa fa-google"></i> Gmail
+                                        </a>
+                                        <!-- Facebook Button -->
+                                        <a href="#" class="btn facebook-btn mx-auto">
+                                            <i class="fa fa-facebook"></i> Facebook
+                                        </a>
+                                    </div>
+
+                            </div> 
+                        </form>
                     </div>
                 </div>
             </div>
@@ -214,3 +230,31 @@ const app = Vue.createApp({
 app.mount('#app');
 */
 </script>
+
+
+<style>
+
+    .social-buttons{
+        display: inline;
+        width: 100%;
+    }
+
+    .fcbk{
+        background-color: blue;
+    }
+
+    a{
+        color: #50AF47;
+        color: #F99401;
+    }
+    
+    
+
+    .gmail-btn{
+        margin: 10px;
+    }
+
+    .facebook-btn{
+        margin: 10px;
+    }
+</style>

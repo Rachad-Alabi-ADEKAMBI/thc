@@ -23,18 +23,37 @@ ob_start(); ?>
                         </div>
 
                         <div class="dashboard__content__menu">
+                        <form class="form">
+                                <label for="newRadio" class="ml-5">
+                                    <input type="radio" id="newRadio" name="options" @click="displayCashback()">
+                                    Historique Cashback
+                                </label>
+                                <label for="allRadio" class="ml-5">
+                                    <input type="radio" id="allRadio" name="options" @click="displayAffiliated()">
+                                    Mes affiliés
+                                </label>
+                            </form>
 
-                            <div class="newOrder">
-                                <btn class="btn btn-secondary" @click='displayNewOrder()'>
-                                    <i class="fas fa-share"></i> Partager mon lien
-                                </btn>
+                            <div class="newOrder mr-0">
+                                <p>
+                                    vhjfhgjsfgjsjkfhdjkghfjk
+                                </p> <br>
+                                <div class="btns">
+                                    <div class="btn">
+                                    <i class="fa fa-google"></i> Gmail
+                                    </div>
+
+                                    <div class="btn">
+                                    <i class="fa fa-google"></i> fACEBOOK
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="dashboard__content__main mt-2" v-if='showAffiliated'>
+                        <div class="dashboard__content__main mt-2" v-if='showCashback'>
                             <div class="top">
                                 <h3>
-                                    Mes filleuls
+                                   Historique Cashback
                                 </h3>
                             </div>
 
@@ -52,13 +71,13 @@ ob_start(); ?>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>15/06/2023</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> John Doe</td>
-                                            <td><span class="status delivered">Actif</span></td>
+                                        <tr v-for="detail in affiliated" :key="detail.id">
+                                            <td>{{ formatDate(detail.date_of_insertion) }}</td>
+                                            <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.first_name }} {{ detail.last_name }} </td>
+                                            <td><span class="status delivered">{{ detail.subscription_status }}</span></td>
                                             <td><span class="status">600 XOF</span></td>
                                             <td><span class="status delivered">
-                                                Transféré
+                                                {{ detail.status}}
                                             </span></td>
                                         </tr>
                                         <tr>
@@ -113,11 +132,15 @@ ob_start(); ?>
     const app = Vue.createApp({
         data() {
             return {
-                showAffiliated: false,
+                showCashback: false,
                 details: [],
+                cashback: [],
+                affiliated: [],
                 currentPage: 1,
                 itemsPerPage: 10,
                 selectedDetail: null,
+                showCashback: false,
+                showAffiliated: true
             };
         },
         mounted() {
@@ -146,12 +169,23 @@ ob_start(); ?>
                     });
 
             },
+            displayCashback() {
+                this.showCashback = true;
+                axios.get('api/script.php?action=myCashback')
+                    .then((response) => {
+                        console.log(response.data);
+                        this.cashback = response.data;
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            },
             displayAffiliated() {
-                this.showAffiliated = true;
+                this.showCashback = true;
                 axios.get('api/script.php?action=myAffiliated')
                     .then((response) => {
                         console.log(response.data);
-                        this.details = response.data;
+                        this.affiliated = response.data;
                     })
                     .catch((error) => {
                         console.error(error);

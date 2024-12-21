@@ -4,6 +4,7 @@
 
 ob_start(); ?>
 
+<br><br><br>
 <main class="main">
     <section class="section">
         <div class="row">
@@ -33,11 +34,37 @@ ob_start(); ?>
                                 </div>
                             </div>
                             <div class="col-6 text-center mx-auto">
-                                <button type="submit" class="submit-btn">
+                            <label for="">
+                               <input type="checkbox"> Se souvenir de moi
+                               </label> <br>
+                                <button type="submit" class="submit-btn mt-2">
                                     <i class="fas fa-sign-in-alt"></i> Connexion
-                                </button>
+                                </button> <br>
+                                <hr>
+                        <p>
+                            Mot de passe oublié ? <a href="index.php?action=resetPasswordPage">Réinitialiser le mot de passe</a> <br>
+                            Pas encore de compte ? <span><a href="index.php?action=registerPage">Inscription</a></span>
+                        </p>
+                        
+                                <hr>
+                              
+                                <p class='mt-3 fw-bold'>
+                                    Ou
+                                </p>
+                                    <p>Se connecter avec :</p>
+                                    <div class="social-buttons">
+                                        <!-- Gmail Button -->
+                                        <a href="#" class="btn gmail-btn mx-auto">
+                                            <i class="fa fa-google"></i> Gmail
+                                        </a>
+                                        <!-- Facebook Button -->
+                                        <a href="#" class="btn facebook-btn mx-auto">
+                                            <i class="fa fa-facebook"></i> Facebook
+                                        </a>
+                                    </div>
+
                             </div>
-                        </form>
+                        </form> 
                     </div>
                 </div>
             </div>
@@ -50,7 +77,29 @@ ob_start(); ?>
 
 <?php require './src/view/layout.php'; ?>
 
-<?php include 'parts/footer.php'; ?>
-</body>
+<style>
 
-</html>
+    .social-buttons{
+        display: inline;
+        width: 100%;
+    }
+
+    .fcbk{
+        background-color: blue;
+    }
+
+    a{
+        color: #50AF47;
+        color: #F99401;
+    }
+    
+    
+
+    .gmail-btn{
+        margin: 10px;
+    }
+
+    .facebook-btn{
+        margin: 10px;
+    }
+</style>

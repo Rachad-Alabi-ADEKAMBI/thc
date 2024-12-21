@@ -159,6 +159,37 @@ function getMyDatas()
     }
 }
 
+function getMyAffiliated()
+{
+    // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
+    if (!isset($_SESSION['user']['user_id'])) {
+        header("Location: index.php?action=loginPage");
+        exit();
+    }
+
+    try {
+        $pdo = getConnexion();
+        $req = $pdo->prepare("SELECT * 
+        FROM sponsorships 
+        INNER JOIN users 
+        ON sponsorships.sponsored_id = users.id 
+        WHERE sponsorships.sponsor_id = ?");
+    
+        // Assurez-vous de transmettre un tableau pour le paramètre
+        $req->execute([$_SESSION['user']['user_id']]);
+        $datas = $req->fetchAll(); // Option pour obtenir un tableau associatif
+
+        $req->closeCursor();
+
+        // Envoyer les données au format JSON
+        sendJSON($datas);
+    } catch (PDOException $e) {
+        // Gérer les erreurs de la base de données
+        http_response_code(500); // Code HTTP d'erreur interne
+        sendJSON(['error' => 'Une erreur s\'est produite : ' . $e->getMessage()]);
+    }
+}
+
 function getOffer(){
     $id = verifyInput($_GET['id']);
    
@@ -316,8 +347,22 @@ function showErrorAndGoBack() {
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
     // Insert new user into the database
-   $insert = $pdo->prepare("INSERT INTO users (email, first_name, last_name, password, adress, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    if ($insert->execute([$email, $first_name, $last_name, $hashedPassword, $adress, $phone, 'user'])) {
+   $insert = $pdo->prepare("INSERT INTO users (email, first_name, last_name, password, adress, phone, subscription_status, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    if ($insert->execute([$email, $first_name, $last_name, $hashedPassword, $adress, $phone, 'inactive', 'user'])) {
+
+        $user_id = $pdo->lastInsertId();
+
+        if (isset($sponsor_id)) {
+            // Update the user's sponsor_id in the users table
+            $req = $pdo->prepare('UPDATE users SET sponsor_id = ? WHERE id = ?');
+            $req->execute([$sponsor_id, $user_id]);
+        
+            // Insert the sponsorship relationship into the sponsorships table
+            $req = $pdo->prepare('INSERT INTO sponsorships (sponsor_id, sponsored_id) VALUES (?, ?)');
+            $req->execute([$sponsor_id, $user_id]);
+        }
+
+
         echo "<script>
             alert('Inscription réussie ! Veuillez vous connecter.');
             window.location.href = '../index.php?action=loginPage';
@@ -329,18 +374,8 @@ function showErrorAndGoBack() {
         </script>";
     }
 
-    $user_id = last->pdo->insert();
-
-    //if sponsored 
-    if(isset($sponsor_id)){
-        //insert into users table
-        $req = $pdo->prepare('UPDATE users SET sponsor_id = ? WHERE id = ?');
-        $req->execute(array($ref, $sponsor_id));
-
-        //insert into sponsorships table
-        $req = $pdo->prepare("INSERT INTO sponsorships (sponsor_id, sponsored_id) VALUES (?, ?)");
-        $req->execute(array($sponsor_id, $user_id))
-    }
+   
+  
 
 }
 

@@ -27,6 +27,10 @@ if ($action == 'getMyDatas') {
     getMyDatas();
 }
 
+if ($action == 'getMyAffiliated') {
+    getMyAffiliated();
+}
+
 if ($action == 'login') {
     login();
 }
