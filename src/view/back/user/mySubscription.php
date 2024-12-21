@@ -173,7 +173,6 @@ ob_start();
     .options_payments{
         display: flex();
         flex-direction: row;
-        justify-conten
     }
 </style>
 

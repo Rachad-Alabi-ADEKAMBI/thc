@@ -251,15 +251,29 @@ function register()
     $pdo = getConnexion();
 
     // Check if all required fields are filled
-    if (empty($_POST['email']) || empty($_POST['first_name']) ||
-         empty($_POST['last_name']) || empty($_POST['password']) || empty($_POST['password2']) ||
-          empty($_POST['adress']) || empty($_POST['phone']) || !isset($_POST['cgu'])) {
-        echo "<script>
-            alert('Tous les champs doivent être remplis, et les conditions générales doivent être acceptées !');
-            window.history.back();
-        </script>";
-        exit();
+   // List of required fields
+$requiredFields = ['email', 'first_name', 'last_name', 'password', 'password2', 'adress', 'phone'];
+
+// Check if any required field is empty or if terms (cgu) are not accepted
+foreach ($requiredFields as $field) {
+    if (empty($_POST[$field])) {
+        showErrorAndGoBack();
     }
+}
+
+if (!isset($_POST['cgu'])) {
+    showErrorAndGoBack();
+}
+
+// Function to display an error message and go back to the previous page
+function showErrorAndGoBack() {
+    echo "<script>
+        alert('Tous les champs doivent être remplis, et les conditions générales doivent être acceptées !');
+        window.history.back();
+    </script>";
+    exit();
+}
+
 
     // Retrieve and sanitize input
     $email = verifyInput($_POST['email']);
@@ -269,6 +283,7 @@ function register()
     $password2 = verifyInput($_POST['password2']);
     $adress = verifyInput($_POST['adress']);
     $phone = verifyInput($_POST['phone']);
+    $sponsor_id = verifyInput($_POST['sponsor_id']);
 
     // Check if passwords match
     if ($password !== $password2) {
@@ -290,11 +305,18 @@ function register()
         exit();
     }
 
+    //check if ref exists
+    if (isset($ref)){
+        $ref = verifyInput($_POST['ref']);
+        $sponsor_id =  verifyInput($_POST['sponsor_id']);
+    }
+
+
     // Hash the password
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
     // Insert new user into the database
-    $insert = $pdo->prepare("INSERT INTO users (email, first_name, last_name, password, adress, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
+   $insert = $pdo->prepare("INSERT INTO users (email, first_name, last_name, password, adress, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
     if ($insert->execute([$email, $first_name, $last_name, $hashedPassword, $adress, $phone, 'user'])) {
         echo "<script>
             alert('Inscription réussie ! Veuillez vous connecter.');
@@ -306,6 +328,20 @@ function register()
             window.history.back();
         </script>";
     }
+
+    $user_id = last->pdo->insert();
+
+    //if sponsored 
+    if(isset($sponsor_id)){
+        //insert into users table
+        $req = $pdo->prepare('UPDATE users SET sponsor_id = ? WHERE id = ?');
+        $req->execute(array($ref, $sponsor_id));
+
+        //insert into sponsorships table
+        $req = $pdo->prepare("INSERT INTO sponsorships (sponsor_id, sponsored_id) VALUES (?, ?)");
+        $req->execute(array($sponsor_id, $user_id))
+    }
+
 }
 
 
