@@ -27,6 +27,10 @@ if ($action == 'getMyDatas') {
     getMyDatas();
 }
 
+if ($action == 'getMyCashback') {
+    getMyCashback();
+}
+
 if ($action == 'getMyAffiliated') {
     getMyAffiliated();
 }

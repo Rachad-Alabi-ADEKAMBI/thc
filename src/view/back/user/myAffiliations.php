@@ -13,7 +13,7 @@ ob_start(); ?>
                 <div class="dashboard">
                     <?php include 'menu.php'; ?>
 
-                    <div class="dashboard__content">
+                    <div class="dashboard__content" V-for='detail in details' :key='detail.id'>
                         <div class="dashboard__content__top">
                             <h2>
                                 Affiliation
@@ -34,17 +34,17 @@ ob_start(); ?>
                                 </label>
                             </form>
 
-                            <div class="newOrder mr-0">
+                            <div class="newOrder mr-0" >
                                 <p>
-                                    vhjfhgjsfgjsjkfhdjkghfjk
+                                   {{detail.ref}}
                                 </p> <br>
                                 <div class="btns">
-                                    <div class="btn">
+                                    <div class="share-btn">
                                     <i class="fa fa-google"></i> Gmail
                                     </div>
 
-                                    <div class="btn">
-                                    <i class="fa fa-google"></i> fACEBOOK
+                                    <div class="share-btn">
+                                    <i class="fa fa-facebook"></i>Facebook
                                     </div>
                                 </div>
                             </div>
@@ -65,9 +65,40 @@ ob_start(); ?>
                                         <tr>
                                             <th>Date</th>
                                             <th>Nom et prenoms</th>
-                                            <th>Abonnement</th>
                                             <th>Cashback</th>
                                             <th>Statut</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="detail in cashback" :key="detail.id">
+                                            <td>{{ formatDate(detail.date_of_insertion) }}</td>
+                                            <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.first_name }} {{ detail.last_name }} </td>
+                                            <td><span class="status">{{ formatNumber(detail.amount) }} XOF</span></td>
+                                            <td><span class="status delivered">
+                                                {{ detail.status}}
+                                            </span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="dashboard__content__main mt-2" v-if='showAffiliated'>
+                            <div class="top">
+                                <h3>
+                                   Mes affiliés
+                                </h3>
+                            </div>
+
+                            <div class="table-container">
+
+                                <table class="orders-table">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Nom et prenoms</th>
+                                            <th>Abonnement</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -75,42 +106,10 @@ ob_start(); ?>
                                             <td>{{ formatDate(detail.date_of_insertion) }}</td>
                                             <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.first_name }} {{ detail.last_name }} </td>
                                             <td><span class="status delivered">{{ detail.subscription_status }}</span></td>
-                                            <td><span class="status">600 XOF</span></td>
-                                            <td><span class="status delivered">
-                                                {{ detail.status}}
-                                            </span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>15/06/2023</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> hjjj Doe</td>
-                                            <td><span class="status delivered">Actif</span></td>
-                                            <td><span class="status">1600 XOF</span></td>
-                                            <td><span class="status delivered">
-                                                Transféré
-                                            </span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>15/06/2023</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> John Doe</td>
-                                            <td><span class="status delivered">Actif</span></td>
-                                            <td><span class="status ">1200 XOF</span></td>
-                                            <td><span class="status delivered">
-                                                Transféré
-                                            </span></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="pagination">
-                                <button class="btn btn-icon">
-                                    Precedent
-                                </button>
-                                <span>Page 1 sur 3</span>
-                                <button class="btn btn-icon">
-                                    Suivant
-                                </button>
-                            </div>
-
 
                         </div>
                     </div>
@@ -145,7 +144,7 @@ ob_start(); ?>
         },
         mounted() {
             this.getUserDatas();
-            this.displayAffiliated();
+            this.displayCashback();
         },
         computed: {
             totalPages() {
@@ -161,7 +160,6 @@ ob_start(); ?>
             getUserDatas() {
                 axios.get('api/script.php?action=getMyDatas')
                     .then((response) => {
-                        console.log(response.data.first_name);
                         this.details = response.data;
                     })
                     .catch((error) => {
@@ -171,7 +169,8 @@ ob_start(); ?>
             },
             displayCashback() {
                 this.showCashback = true;
-                axios.get('api/script.php?action=myCashback')
+                this.showAffiliated = false;
+                axios.get('api/script.php?action=getMyCashback')
                     .then((response) => {
                         console.log(response.data);
                         this.cashback = response.data;
@@ -181,7 +180,8 @@ ob_start(); ?>
                     });
             },
             displayAffiliated() {
-                this.showCashback = true;
+                this.showCashback = false;
+                this.showAffiliated = true;
                 axios.get('api/script.php?action=myAffiliated')
                     .then((response) => {
                         console.log(response.data);
@@ -195,6 +195,13 @@ ob_start(); ?>
                 const [year, month, day] = date.split('-');
                 return `${day}-${month}-${year}`;
             },
+            formatNumber(number) {
+      if (isNaN(number)) {
+        return '';
+      }
+      // Convert the number to a string and add thousand separators
+      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    },
             capitalize(string) {
                 return string.toUpperCase();
             },

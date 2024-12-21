@@ -159,6 +159,38 @@ function getMyDatas()
     }
 }
 
+function getMyCashback()
+{
+    // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
+    if (!isset($_SESSION['user']['user_id'])) {
+        header("Location: index.php?action=loginPage");
+        exit();
+    }
+
+    try {
+        $pdo = getConnexion();
+        $req = $pdo->prepare("SELECT * 
+        FROM cashback
+        INNER JOIN users 
+        ON cashback.sponsor_id = users.id 
+        WHERE cashback.sponsor_id = ?");
+    
+        // Assurez-vous de transmettre un tableau pour le paramètre
+        $req->execute([$_SESSION['user']['user_id']]);
+        $datas = $req->fetchAll(); // Option pour obtenir un tableau associatif
+
+        $req->closeCursor();
+
+        // Envoyer les données au format JSON
+        sendJSON($datas);
+    } catch (PDOException $e) {
+        // Gérer les erreurs de la base de données
+        http_response_code(500); // Code HTTP d'erreur interne
+        sendJSON(['error' => 'Une erreur s\'est produite : ' . $e->getMessage()]);
+    }
+}
+
+
 function getMyAffiliated()
 {
     // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
