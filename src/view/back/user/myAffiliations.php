@@ -40,11 +40,19 @@ ob_start(); ?>
                                 </p> <br>
                                 <div class="btns">
                                     <div class="share-btn">
-                                    <i class="fa fa-google"></i> Gmail
+                                    <i class="fa fa-google"></i> 
                                     </div>
 
                                     <div class="share-btn">
-                                    <i class="fa fa-facebook"></i>Facebook
+                                    <i class="fa fa-facebook"></i>
+                                    </div>
+
+                                    <div class="share-btn">
+                                    <i class="fa fa-message"></i> 
+                                    </div>
+
+                                    <div class="share-btn">
+                                    <i class="fa fa-whatsapp"></i> 
                                     </div>
                                 </div>
                             </div>
@@ -57,30 +65,31 @@ ob_start(); ?>
                                 </h3>
                             </div>
 
-                            <div class="table-container">
+                            <div class="table-container" v-if='cashback.length > 0'>
 
                                 <table class="orders-table">
 
                                     <thead>
                                         <tr>
                                             <th>Date</th>
-                                            <th>Nom et prenoms</th>
-                                            <th>Cashback</th>
-                                            <th>Statut</th>
+                                            <th>Nom et prénoms</th>
+                                            <th>Montant</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="detail in cashback" :key="detail.id">
                                             <td>{{ formatDate(detail.date_of_insertion) }}</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.first_name }} {{ detail.last_name }} </td>
+                                            <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.sponsored_first_name }}
+                                             {{ capitalize(detail.sponsored_last_name) }} </td>
                                             <td><span class="status">{{ formatNumber(detail.amount) }} XOF</span></td>
-                                            <td><span class="status delivered">
-                                                {{ detail.status}}
-                                            </span></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+
+                            <p v-if='cashback.length === 0'>
+                                Aucun historique pour l'instant
+                            </p>
                         </div>
 
                         <div class="dashboard__content__main mt-2" v-if='showAffiliated'>
@@ -90,26 +99,29 @@ ob_start(); ?>
                                 </h3>
                             </div>
 
-                            <div class="table-container">
+                            <div class="table-container" v-if="affiliated.length > 0">
 
                                 <table class="orders-table">
 
                                     <thead>
                                         <tr>
                                             <th>Date</th>
-                                            <th>Nom et prenoms</th>
-                                            <th>Abonnement</th>
+                                            <th>Nom et prénoms</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="detail in affiliated" :key="detail.id">
                                             <td>{{ formatDate(detail.date_of_insertion) }}</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.first_name }} {{ detail.last_name }} </td>
-                                            <td><span class="status delivered">{{ detail.subscription_status }}</span></td>
+                                            <td><i data-lucide="apple" aria-hidden="true"></i> {{ capitalizeFirstLetter(detail.sponsored_first_name)  }}
+                                             {{ capitalize(detail.sponsored_last_name) }} </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+
+                            <p v-if='affiliated.length === 0'> 
+                                Vous n'avez aucun affilié pour l'instant
+                            </p>
 
                         </div>
                     </div>
@@ -139,7 +151,7 @@ ob_start(); ?>
                 itemsPerPage: 10,
                 selectedDetail: null,
                 showCashback: false,
-                showAffiliated: true
+                showAffiliated: false,
             };
         },
         mounted() {
@@ -182,7 +194,7 @@ ob_start(); ?>
             displayAffiliated() {
                 this.showCashback = false;
                 this.showAffiliated = true;
-                axios.get('api/script.php?action=myAffiliated')
+                axios.get('api/script.php?action=getMyAffiliated')
                     .then((response) => {
                         console.log(response.data);
                         this.affiliated = response.data;
@@ -192,9 +204,20 @@ ob_start(); ?>
                     });
             },
             formatDate(date) {
-                const [year, month, day] = date.split('-');
-                return `${day}-${month}-${year}`;
-            },
+    const daysOfWeek = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+    
+    // Split the date and time parts
+    const [datePart, timePart] = date.split(' ');
+    const [year, month, day] = datePart.split('-');
+    const [hours, minutes] = timePart.split(':');
+    
+    // Create a Date object to find the day of the week
+    const dateObj = new Date(`${year}-${month}-${day}`);
+    const dayOfWeek = daysOfWeek[dateObj.getDay()];
+    
+    // Format the result
+    return `${dayOfWeek} ${String(Number(day) + 1).padStart(2, '0')}/${month}/${year.slice(-2)}`;
+},
             formatNumber(number) {
       if (isNaN(number)) {
         return '';

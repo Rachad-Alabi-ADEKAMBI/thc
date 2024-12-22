@@ -171,9 +171,7 @@ function getMyCashback()
         $pdo = getConnexion();
         $req = $pdo->prepare("SELECT * 
         FROM cashback
-        INNER JOIN users 
-        ON cashback.sponsor_id = users.id 
-        WHERE cashback.sponsor_id = ?");
+        WHERE sponsor_id = ?");
     
         // Assurez-vous de transmettre un tableau pour le paramètre
         $req->execute([$_SESSION['user']['user_id']]);
