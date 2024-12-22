@@ -5,6 +5,7 @@ $grey-dark: #272222;
 $white: white;
 $black: black;
 $grey-light: #333333;
+$blue: #0866FF;
 
 
   :root {
@@ -1424,9 +1425,17 @@ li i {
 
               .newOrder{
                margin-top: 20px;
+               @include flex();
+
+               p{
+                margin: auto;
+               }
 
                .btns{
                 @include flex();
+                margin-left: 10px;
+                height: 40px;
+                background-color: #2c2c2c;
 
                 .share-btn{
                   width: 50px;
@@ -1436,6 +1445,7 @@ li i {
                   display: table;
                   text-align: center;
                   margin: 2px;
+                  cursor: pointer;
 
                   i{
                     display: table-cell;
@@ -1445,6 +1455,100 @@ li i {
                 }
                }
               }
+
+              // Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin button-hover($color) {
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: darken($color, 10%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba($black, 0.2);
+  }
+}
+
+// Styles
+.ref {
+  background-color: $grey-dark;
+  border-radius: 12px;
+  padding: 20px;
+  margin-right: 50px;
+  box-shadow: 0 8px 16px rgba($black, 0.1);
+
+  p {
+    color: $white;
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 500;
+
+    strong{
+      color: $tertiary;
+      cursor: pointer;
+    }
+
+    strong:hover{
+      color: $primary;
+    }
+  }
+
+  .btns {
+    @include flex-center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .share-btn, .copy-btn {
+    @include flex-center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: $grey-light;
+    color: $white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .share-btn {
+    &:nth-child(1) { @include button-hover($primary); }
+    &:nth-child(2) { @include button-hover($tertiary); }
+    &:nth-child(3) { @include button-hover($blue); }
+    &:nth-child(4) { @include button-hover($grey-light); }
+  }
+
+  .copy-btn {
+    background-color: $primary;
+    @include button-hover($primary);
+    margin-left: auto;
+    
+    i {
+      font-size: 18px;
+    }
+  }
+
+  .copy-message {
+    margin-top: 10px;
+    color: $white;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+}
+
+// Dark theme styles
+body {
+  background-color: $black;
+  color: $white;
+}
             }
 
             &__main{

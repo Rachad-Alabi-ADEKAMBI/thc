@@ -34,28 +34,26 @@ ob_start(); ?>
                                 </label>
                             </form>
 
-                            <div class="newOrder mr-0" >
-                                <p>
-                                   {{detail.ref}}
-                                </p> <br>
-                                <div class="btns">
-                                    <div class="share-btn">
-                                    <i class="fa fa-google"></i> 
-                                    </div>
-
-                                    <div class="share-btn">
-                                    <i class="fa fa-facebook"></i>
-                                    </div>
-
-                                    <div class="share-btn">
-                                    <i class="fa fa-message"></i> 
-                                    </div>
-
-                                    <div class="share-btn">
-                                    <i class="fa fa-whatsapp"></i> 
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="ref">
+    <p>Mon lien d'affiliation <strong id="link">{{detail.ref}}</strong></p>
+    <div class="btns">
+       
+    <div class="copy-btn" id="copyBtn">
+            <i class="fa fa-copy"></i>
+        </div>
+        <div class="share-btn" data-platform="whatsapp">
+            <i class="fa fa-whatsapp"></i> 
+        </div>
+        <div class="share-btn" data-platform="facebook">
+            <i class="fa fa-facebook"></i>
+        </div>
+        <div class="share-btn" data-platform="email">
+            <i class="fa fa-envelope"></i>
+        </div>
+       
+    </div>
+    <div id="copyMessage" class="copy-message"></div>
+</div>
                         </div>
 
                         <div class="dashboard__content__main mt-2" v-if='showCashback'>
@@ -216,7 +214,7 @@ ob_start(); ?>
     const dayOfWeek = daysOfWeek[dateObj.getDay()];
     
     // Format the result
-    return `${dayOfWeek} ${String(Number(day) + 1).padStart(2, '0')}/${month}/${year.slice(-2)}`;
+    return ` ${String(Number(day) + 1).padStart(2, '0')}/${month}/${year.slice(-2)}`;
 },
             formatNumber(number) {
       if (isNaN(number)) {
