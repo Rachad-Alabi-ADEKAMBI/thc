@@ -110,33 +110,39 @@ ob_start();
                                         </div>
 
                                         <div class="pricing__content__item subscription ml-0" v-if="showPayWithMobile">
-                                            <form class="contact-form" action="api/script.php?action=register" method="POST">
-                                                <div class="form-row">
-                                                    <div class="form-group">
-                                                        <label for="nom">
-                                                            <i class="fas fa-signal"></i> Réseau mobile
-                                                        </label>
-                                                        <select name="network" id="" required>
-                                                            <option value="Mtn">MTN</option>
-                                                            <option value="Moov">Moov</option>
-                                                            <option value="Celtiis">Celtiis</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                        <form class="contact-form" @submit.prevent="pay">
+    <div class="form-row">
+        <div class="form-group">
+            <label for="network">
+                <i class="fas fa-signal"></i> Réseau mobile
+            </label>
+            <select v-model="form.network" id="network" required>
+                <option value="Mtn">MTN</option>
+                <option value="Moov">Moov</option>
+                <option value="Celtiis">Celtiis</option>
+            </select>
+        </div>
+    </div>
 
-                                                <div class="form-group">
-                                                    <label for="prenom">
-                                                        <i class="fas fa-phone"></i> Numéro
-                                                    </label>
-                                                    <input type="number" id="prenom" name="phone" required>
-                                                </div>
+    <div class="form-group">
+        <label for="phone">
+            <i class="fas fa-phone"></i> Numéro
+        </label>
+        <input type="number" id="phone" v-model="form.phone" required>
+    </div>
 
-                                                <div class="col-6 text-center mx-auto">
-                                                    <button type="submit" class="submit-btn mx-auto">
-                                                        <i class="fas fa-money-check-alt"></i> Payer
-                                                    </button>
-                                                </div>
-                                            </form>
+    <div class="col-6 text-center mx-auto">
+    <input type="hidden" v-model="form.offer_id">
+    <input type="hidden" v-model="form.offer_name">
+    <input type="hidden" v-model="form.offer_price">
+
+    <button type="submit" class="submit-btn mx-auto">
+        <i class="fas fa-money-check-alt"></i> Payer
+    </button>
+</div>
+
+</form>
+
 
                                         </div>
 
@@ -145,8 +151,8 @@ ob_start();
                                                 
 
                                                 <div class="form-group">
-                                                    <p>
-                                                        Solde: <strong>0 XOF</strong>
+                                                    <p v-for="detail in details" :key="detail.id">
+                                                        Solde: <strong> {{ formatNumber(detail.wallet) }} XOF</strong>
                                                     </p>
                                                 </div>
 
@@ -185,21 +191,28 @@ require './src/view/layout.php';
 <script>
 const app = Vue.createApp({
     data() {
-        return {
-            details: [], 
-            offers: [
-    { id: 1, name: 'Starter', price: 7000, days: ['Mardi', 'Jeudi'], number_of_days: 2, featured: 'no' },
-    { id: 2, name: 'Premium', price: 10000, days: ['Lundi', 'Mercredi', 'Vendredi'], number_of_days: 3, featured: 'yes' },
-    { id: 3, name: 'Gold', price: 15000, days: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'], number_of_days: 5, featured: 'no' }
-],
+            return {
+                details: [], 
+                offers: [
+                    { id: 1, name: 'Starter', price: 7000, days: ['Mardi', 'Jeudi'], number_of_days: 2, featured: 'no' },
+                    { id: 2, name: 'Premium', price: 10000, days: ['Lundi', 'Mercredi', 'Vendredi'], number_of_days: 3, featured: 'yes' },
+                    { id: 3, name: 'Gold', price: 15000, days: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'], number_of_days: 5, featured: 'no' }
+                ],
 
-            selectedOffer: null,  // Store the selected offer
-            showPayment: false,
-            showPaymentOptions: false,
-            showPayWithMobile: false,
-            showPayWithWallet: false,
-            showSubscription: false
-        };
+                selectedOffer: null,  // Store the selected offer
+                showPayment: false,
+                showPaymentOptions: false,
+                showPayWithMobile: false,
+                showPayWithWallet: false,
+                showSubscription: false,
+                form: {
+                network: '',
+                phone: '',
+                offer_id: '',
+                offer_name: '',
+                offer_price: ''
+            }
+            };
     },
     mounted() {
         this.getUserDatas();
@@ -218,13 +231,18 @@ const app = Vue.createApp({
                 });
         },
         displayPayment(selectedOffer) {
-            this.selectedOffer = selectedOffer;  // Set the selected offer
-            this.showSubscription = false;
-            this.showPayment = true;
-            this.showPayWithMobile = false;
-            this.showPayWithWallet = false;
-            this.showPaymentOptions = true;
-        },
+    this.selectedOffer = selectedOffer; // Set the selected offer
+    this.showSubscription = false;
+    this.showPayment = true;
+    this.showPayWithMobile = false;
+    this.showPayWithWallet = false;
+    this.showPaymentOptions = true;
+
+    // Populate the form object with the selected offer details
+    this.form.offer_id = selectedOffer.id;
+    this.form.offer_name = selectedOffer.name;
+    this.form.offer_price = selectedOffer.price;
+},
         payWithWallet() {
             this.showPayWithWallet = true;
             this.showPayWithMobile = false;
@@ -233,6 +251,46 @@ const app = Vue.createApp({
             this.showPayWithMobile = true;
             this.showPayWithWallet = false;
         }, 
+        pay() {
+    // Ensure the required fields are populated
+    if (!this.form.network || !this.form.phone || !this.form.offer_id) {
+        alert('Veuillez remplir tous les champs requis.');
+        return;
+    }
+
+    axios.post('api/script.php?action=pay', this.form)
+        .then(response => {
+            // Check the response for success
+            if (response.data && response.data.success) {
+                alert('Abonnement effectué avec succès');
+                this.resetForm(); // Reset the form after successful submission
+                this.getUserDatas(); // Refresh user data after payment
+            } else {
+                // Handle the case where the response indicates failure
+                alert(response.data.message || 'Une erreur est survenue lors de la soumission du formulaire.');
+            }
+        })
+        .catch(error => {
+            // Display a detailed error message
+            console.error('Une erreur est survenue lors de la soumission du formulaire :', error);
+            alert('Impossible de traiter votre demande pour le moment. Veuillez réessayer plus tard.');
+        });
+},
+
+        selectOffer(offer) {
+            this.form.offer_id = offer.id;
+            this.form.offer_name = offer.name;
+            this.form.offer_price = offer.price;
+        },
+        resetForm() {
+            this.form = {
+                network: '',
+                phone: '',
+                offer_id: '',
+                offer_name: '',
+                offer_price: ''
+            };
+        },
         formatNumber(number) {
             if (number === undefined || number === null) {
                 return '';

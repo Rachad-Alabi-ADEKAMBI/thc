@@ -377,8 +377,8 @@ function showErrorAndGoBack() {
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
     // Insert new user into the database
-   $insert = $pdo->prepare("INSERT INTO users (email, first_name, last_name, password, adress, phone, subscription_status, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    if ($insert->execute([$email, $first_name, $last_name, $hashedPassword, $adress, $phone, 'inactive', 'user'])) {
+   $insert = $pdo->prepare("INSERT INTO users (email, first_name, last_name, password, adress, phone, subscription_status, wallet, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    if ($insert->execute([$email, $first_name, $last_name, $hashedPassword, $adress, $phone, 'inactive', 0, 'user'])) {
 
         $user_id = $pdo->lastInsertId();
 
@@ -407,6 +407,20 @@ function showErrorAndGoBack() {
    
   
 
+}
+
+
+function pay()
+{
+   $pdo = getConnexion();
+
+   $user_id = $_SESSION['user']['id'];
+   $offer_id = verifyInput($_POST['offer_id']);
+   $offer_name = verifyInput($_POST['offer_name']);
+   $offer_price = verifyInput($_POST['offer_price']);
+
+   //insert into subscriptions table
+  // $req = $pdo
 }
 
 
