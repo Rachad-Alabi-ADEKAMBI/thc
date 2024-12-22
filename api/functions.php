@@ -422,20 +422,25 @@ function payWithMobile()
         $user_first_name = $_SESSION['user']['first_name'];
         $user_last_name = $_SESSION['user']['last_name'];
         $sponsor_id = $_SESSION['user']['sponsor_id'] ?? null; // Ensure sponsor_id exists or default to null
-        $amount = $offer_price * 0.1;
+        $amount = 1000;
         $date_of_expiration = date('Y-m-d', strtotime('+30 days'));
 
+        echo $amount;
+
         // Insert into subscriptions table
-        $req = $pdo->prepare(
+        $req = $pdo->prepare(   
             'INSERT INTO subscriptions (user_id, first_name, last_name, offer_id, offer_name, 
             offer_price, date_of_expiration, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
         );
-        $req->execute([
+     /*   $req->execute([ 
             $user_id, $user_first_name, $user_last_name, $offer_id, $offer_name, 
-            $offer_price, $date_of_expiration, 'Pending'
+            $offer_price, $date_of_expiration, 'Active'
         ]);
+        */
 
-        $subscription_id = $pdo->lastInsertId(); // Get the last inserted subscription ID
+      //  $subscription_id = $pdo->lastInsertId(); // Get the last inserted subscription ID
+
+        echo $subscription_id;
 
         // If user was sponsored, insert into cashback table and update sponsor wallet
         if (!empty($sponsor_id)) {
@@ -444,10 +449,11 @@ function payWithMobile()
                 'INSERT INTO cashback (sponsor_id, sponsored_id, sponsored_first_name, sponsored_last_name, 
                 subscription_id, offer_id, amount) VALUES (?, ?, ?, ?, ?, ?, ?)'
             );
-            $req->execute([
+        /*    $req->execute([
                 $sponsor_id, $user_id, $user_first_name, $user_last_name, 
                 $subscription_id, $offer_id, $amount
             ]);
+            */
 
             // Update sponsor wallet
             $req = $pdo->prepare('SELECT wallet FROM users WHERE id = ?');
@@ -456,22 +462,31 @@ function payWithMobile()
 
             $new_wallet = $old_wallet + $amount;
             $req = $pdo->prepare('UPDATE users SET wallet = ? WHERE id = ?');
-            $req->execute([$new_wallet, $sponsor_id]);
+         //   $req->execute([$new_wallet, $sponsor_id]);
         }
 
         // Update user's subscription status
         $req = $pdo->prepare(
             'UPDATE users SET subscription_status = ?, subscription_id = ?, offer_id = ? WHERE id = ?'
         );
-        $req->execute(['Active', $subscription_id, $offer_id, $user_id]);
+     //   $req->execute(['Active', $subscription_id, $offer_id, $user_id]);
 
         // Return a success message
         return ['status' => 'success', 'message' => 'Subscription processed successfully.'];
     } catch (Exception $e) {
-        // Return an error message with details
-        return ['status' => 'error', 'message' => 'An error occurred: ' . $e->getMessage()];
+        // Log the error in the PHP error log (visible in the console)
+        error_log('An error occurred: ' . $e->getMessage());
+
+        // Return an error message with detailed explanation
+        return [
+            'status' => 'error',
+            'message' => 'Une erreur est survenue lors du traitement de l\'abonnement : ' . $e->getMessage(),
+            'details' => 'Veillez à vérifier les informations saisies et réessayer. Si le problème persiste, contactez le support technique.'
+        ];
     }
 }
+
+
 
 
 

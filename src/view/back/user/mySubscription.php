@@ -252,21 +252,40 @@ const app = Vue.createApp({
             this.showPayWithWallet = false;
         }, 
         pay() {
-            // Ensure the required fields are populated
-            if (!this.form.network || !this.form.phone || !this.form.offer_id) {
-                alert('Veuillez remplir tous les champs requis.');
-                return;
-            }
+    // Ensure the required fields are populated
+    if (!this.form.network || !this.form.phone || !this.form.offer_id) {
+        alert('Veuillez remplir tous les champs requis.');
+        return;
+    }
 
-            axios.post('api/script.php?action=payWithMobile', this.form)
-                .then(response => {
-                    alert('Abonnement effectué avec succès');
-                    this.resetForm(); // Reset the form after successful submission
-                })
-                .catch(error => {
-                    console.error('Une erreur est survenue lors de la soumission du formulaire :', error);
-                });
-        },
+    axios.post('api/script.php?action=payWithMobile', this.form)
+    .then(response => {
+        if (response.data && response.data.status === 'success') {
+            alert('Abonnement effectué avec succès');
+            this.resetForm();
+        } else {
+            // Handle backend-reported failure
+            const message = response.data.message || 'Une erreur est survenue lors de l\'abonnement.';
+            console.log(message); // Log the error message from backend
+            alert('Erreur : ' + message); // Show the detailed error message in the alert
+        }
+    })
+    .catch(error => {
+        console.error('Une erreur est survenue lors de la soumission du formulaire :', error);
+        alert('Une erreur technique est survenue. Veuillez réessayer.');
+
+        // Log the specific error message from the catch block
+        if (error.response) {
+            console.log('Erreur du backend :', error.response.data);
+        } else if (error.request) {
+            console.log('Pas de réponse reçue du serveur :', error.request);
+        } else {
+            console.log('Erreur dans la configuration de la requête :', error.message);
+        }
+    });
+
+},
+
         selectOffer(offer) {
             this.form.offer_id = offer.id;
             this.form.offer_name = offer.name;
