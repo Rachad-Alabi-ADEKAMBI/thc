@@ -110,24 +110,19 @@ ob_start();
                                 </button> <br>
                                 
                         <hr>
+                                <div class="socials">
+                                    <!-- Gmail Button -->
+                                    <button @click.prevent="loginWithGoogle" class="connect-btn gmail-btn mx-auto">
+                                        <i class="fa fa-google"></i>
+                                    </button>
+                                    <!-- Facebook Button -->
+                                    <button @click.prevent="loginWithFacebook" class="connect-btn facebook-btn mx-auto">
+                                        <i class="fa fa-facebook"></i>
+                                    </button>
+                                </div>
                         <p>
                             Vous avez déjà un compte ? <a href="index.php?action=loginPage">Connexion</a>
-                        </p> <hr>
-                                <p class="fw-bold mt-2">
-                                    Ou
-                                </p>
-                                <p>S'inscrire avec :</p>
-                                    <div class="social-buttons">
-                                        <!-- Gmail Button -->
-                                        <a href="#" class="btn gmail-btn mx-auto">
-                                            <i class="fa fa-google"></i> Gmail
-                                        </a>
-                                        <!-- Facebook Button -->
-                                        <a href="#" class="btn facebook-btn mx-auto">
-                                            <i class="fa fa-facebook"></i> Facebook
-                                        </a>
-                                    </div>
-
+                        </p> 
                             </div> 
                         </form>
                     </div>
@@ -149,112 +144,89 @@ ob_start();
 <?php require './src/view/layout.php'; ?>
 
 <script>
-    /*
 const app = Vue.createApp({
     data() {
         return {
-            form: {
-                email: '',
-                first_name: '',
-                last_name: '',
-                password: '',
-                password2: '',
-                address: '',
-                phone: '',
-                cgu: false
-            },
-            errors: {}
+            showPassword: false
         };
     },
     methods: {
-        // Validation des champs avant soumission
-        validateForm() {
-            this.errors = {}; // Réinitialiser les erreurs
-
-            // Vérifications des champs obligatoires
-            if (!this.form.email) this.errors.email = "L'email est requis.";
-            else if (!this.isValidEmail(this.form.email)) this.errors.email = "L'email n'est pas valide.";
-
-            if (!this.form.first_name) this.errors.first_name = "Le prénom est requis.";
-            if (!this.form.last_name) this.errors.last_name = "Le nom est requis.";
-            if (!this.form.password) this.errors.password = "Le mot de passe est requis.";
-            if (!this.form.password2) this.errors.password2 = "La confirmation du mot de passe est requise.";
-            else if (this.form.password !== this.form.password2) this.errors.password2 = "Les mots de passe ne correspondent pas.";
-
-            if (!this.form.address) this.errors.address = "L'adresse est requise.";
-            if (!this.form.phone) this.errors.phone = "Le téléphone est requis.";
-            else if (!this.isValidPhone(this.form.phone)) this.errors.phone = "Le numéro de téléphone n'est pas valide.";
-
-            if (!this.form.cgu) this.errors.cgu = "Vous devez accepter les CGU.";
-
-            // Si aucune erreur, soumettre le formulaire
-            if (Object.keys(this.errors).length === 0) {
-                this.submitForm();
+        togglePasswordVisibility() {
+                this.showPassword = !this.showPassword;
+            },
+            loginWithGoogle() {
+                console.log('Google login initiated.');
+                // Implémentez ici l'intégration avec l'API de Google
+            },
+            loginWithFacebook() {
+                console.log('Facebook login initiated.');
+                // Implémentez ici l'intégration avec l'API de Facebook
             }
-        },
-        // Vérifie si l'email est valide
-        isValidEmail(email) {
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return regex.test(email);
-        },
-        // Vérifie si le numéro de téléphone est valide
-        isValidPhone(phone) {
-            const regex = /^\+?[0-9]{6,15}$/; // Format international ou local
-            return regex.test(phone);
-        },
-        // Envoi du formulaire au backend
-        submitForm() {
-            const formData = new FormData();
-            for (const key in this.form) {
-                formData.append(key, this.form[key]);
-            }
-
-            fetch("api/script.php?action=register", {
-                method: "POST",
-                body: formData,
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert("Inscription réussie !");
-                    } else {
-                        alert("Erreur lors de l'inscription : " + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error("Erreur lors de la soumission :", error);
-                });
-        },
     },
 });
 app.mount('#app');
-*/
 </script>
 
-
 <style>
+    .socials{
+        display: flex;
+        flex-direction: row;
+        width: 120px;
+        gap: 20px;
+        margin: 20px auto;
+    }
 
-    .social-buttons{
-        display: inline;
+    .gmail-btn {
+        background-color: #DB4437;
+        color: white;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .facebook-btn {
+        background-color: #3b5998;
+        color: white;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .connect-btn:hover{
+        background-color: #50AF47;
+    }
+
+    .password-container {
+        position: relative;
+    }
+
+    .password-container input {
         width: 100%;
+        padding-right: 30px;
     }
 
-    .fcbk{
-        background-color: blue;
+    .password-icon {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
     }
 
-    a{
-        color: #50AF47;
+    p span a{
         color: #F99401;
-    }
-    
-    
-
-    .gmail-btn{
-        margin: 10px;
-    }
-
-    .facebook-btn{
-        margin: 10px;
+        font-weight: bold;
     }
 </style>

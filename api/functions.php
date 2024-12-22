@@ -135,7 +135,7 @@ function newSurvey()
 function getMyDatas()
 {
     // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
-    if (!isset($_SESSION['user']['user_id'])) {
+    if (!isset($_SESSION['user']['id'])) {
         header("Location: index.php?action=loginPage");
         exit();
     }
@@ -145,7 +145,7 @@ function getMyDatas()
         $req = $pdo->prepare("SELECT * FROM users WHERE id = ?");
         
         // Assurez-vous de transmettre un tableau pour le paramètre
-        $req->execute([$_SESSION['user']['user_id']]);
+        $req->execute([$_SESSION['user']['id']]);
         $datas = $req->fetchAll(); // Option pour obtenir un tableau associatif
 
         $req->closeCursor();
@@ -271,7 +271,7 @@ function login()
             $role = $user['role'];
             
             $_SESSION['user'] = [
-                'user_id' => $user['id'],
+                'id' => $user['id'],
                 'email' => $user['email'],
                 'first_name' => $user['first_name'],
                 'last_name' => $user['last_name'],
@@ -379,7 +379,7 @@ function showErrorAndGoBack() {
 
     // Insert new user into the database
    $insert = $pdo->prepare("INSERT INTO users (email, first_name, last_name, password, adress, phone, subscription_status, wallet, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    if ($insert->execute([$email, $first_name, $last_name, $hashedPassword, $adress, $phone, 'inactive', 0, 'user'])) {
+    if ($insert->execute([$email, $first_name, $last_name, $hashedPassword, $adress, $phone, 'Inactive', 0, 'user'])) {
 
         $user_id = $pdo->lastInsertId();
 
@@ -410,6 +410,7 @@ function showErrorAndGoBack() {
 
 }
 
+
 function payWithMobile()
 {
     try {
@@ -425,22 +426,17 @@ function payWithMobile()
         $amount = 1000;
         $date_of_expiration = date('Y-m-d', strtotime('+30 days'));
 
-        echo $amount;
-
         // Insert into subscriptions table
         $req = $pdo->prepare(   
-            'INSERT INTO subscriptions (user_id, first_name, last_name, offer_id, offer_name, 
+            'INSERT INTO subscriptions (user_id, user_first_name, user_last_name, offer_id, offer_name, 
             offer_price, date_of_expiration, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
         );
-     /*   $req->execute([ 
+        $req->execute([ 
             $user_id, $user_first_name, $user_last_name, $offer_id, $offer_name, 
             $offer_price, $date_of_expiration, 'Active'
         ]);
-        */
 
       //  $subscription_id = $pdo->lastInsertId(); // Get the last inserted subscription ID
-
-        echo $subscription_id;
 
         // If user was sponsored, insert into cashback table and update sponsor wallet
         if (!empty($sponsor_id)) {
