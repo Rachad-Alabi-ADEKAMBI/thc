@@ -275,7 +275,8 @@ function login()
                 'email' => $user['email'],
                 'first_name' => $user['first_name'],
                 'last_name' => $user['last_name'],
-                'role' => $user['role']
+                'role' => $user['role'],
+                'sponsor_id' => $user['sponsor_id']
             ];
 
             if($role = 'user'){
@@ -409,20 +410,68 @@ function showErrorAndGoBack() {
 
 }
 
-
-function pay()
+function payWithMobile()
 {
-   $pdo = getConnexion();
+    try {
+        $pdo = getConnexion();
 
-   $user_id = $_SESSION['user']['id'];
-   $offer_id = verifyInput($_POST['offer_id']);
-   $offer_name = verifyInput($_POST['offer_name']);
-   $offer_price = verifyInput($_POST['offer_price']);
+        $user_id = $_SESSION['user']['id'];
+        $offer_id = verifyInput($_POST['offer_id']);
+        $offer_name = verifyInput($_POST['offer_name']);
+        $offer_price = verifyInput($_POST['offer_price']);
+        $user_first_name = $_SESSION['user']['first_name'];
+        $user_last_name = $_SESSION['user']['last_name'];
+        $sponsor_id = $_SESSION['user']['sponsor_id'] ?? null; // Ensure sponsor_id exists or default to null
+        $amount = $offer_price * 0.1;
+        $date_of_expiration = date('Y-m-d', strtotime('+30 days'));
 
-   //insert into subscriptions table
-  // $req = $pdo
+        // Insert into subscriptions table
+        $req = $pdo->prepare(
+            'INSERT INTO subscriptions (user_id, first_name, last_name, offer_id, offer_name, 
+            offer_price, date_of_expiration, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+        );
+        $req->execute([
+            $user_id, $user_first_name, $user_last_name, $offer_id, $offer_name, 
+            $offer_price, $date_of_expiration, 'Pending'
+        ]);
+
+        $subscription_id = $pdo->lastInsertId(); // Get the last inserted subscription ID
+
+        // If user was sponsored, insert into cashback table and update sponsor wallet
+        if (!empty($sponsor_id)) {
+            // Insert into cashback table
+            $req = $pdo->prepare(
+                'INSERT INTO cashback (sponsor_id, sponsored_id, sponsored_first_name, sponsored_last_name, 
+                subscription_id, offer_id, amount) VALUES (?, ?, ?, ?, ?, ?, ?)'
+            );
+            $req->execute([
+                $sponsor_id, $user_id, $user_first_name, $user_last_name, 
+                $subscription_id, $offer_id, $amount
+            ]);
+
+            // Update sponsor wallet
+            $req = $pdo->prepare('SELECT wallet FROM users WHERE id = ?');
+            $req->execute([$sponsor_id]);
+            $old_wallet = $req->fetchColumn();
+
+            $new_wallet = $old_wallet + $amount;
+            $req = $pdo->prepare('UPDATE users SET wallet = ? WHERE id = ?');
+            $req->execute([$new_wallet, $sponsor_id]);
+        }
+
+        // Update user's subscription status
+        $req = $pdo->prepare(
+            'UPDATE users SET subscription_status = ?, subscription_id = ?, offer_id = ? WHERE id = ?'
+        );
+        $req->execute(['Active', $subscription_id, $offer_id, $user_id]);
+
+        // Return a success message
+        return ['status' => 'success', 'message' => 'Subscription processed successfully.'];
+    } catch (Exception $e) {
+        // Return an error message with details
+        return ['status' => 'error', 'message' => 'An error occurred: ' . $e->getMessage()];
+    }
 }
-
 
 
 

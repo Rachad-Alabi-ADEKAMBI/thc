@@ -31,6 +31,10 @@ if ($action == 'getMyCashback') {
     getMyCashback();
 }
 
+if ($action == 'payWithMobile') {
+    payWithMobile();
+}
+
 if ($action == 'getMyAffiliated') {
     getMyAffiliated();
 }

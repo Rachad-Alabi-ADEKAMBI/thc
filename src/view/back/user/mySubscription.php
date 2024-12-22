@@ -252,31 +252,21 @@ const app = Vue.createApp({
             this.showPayWithWallet = false;
         }, 
         pay() {
-    // Ensure the required fields are populated
-    if (!this.form.network || !this.form.phone || !this.form.offer_id) {
-        alert('Veuillez remplir tous les champs requis.');
-        return;
-    }
-
-    axios.post('api/script.php?action=pay', this.form)
-        .then(response => {
-            // Check the response for success
-            if (response.data && response.data.success) {
-                alert('Abonnement effectué avec succès');
-                this.resetForm(); // Reset the form after successful submission
-                this.getUserDatas(); // Refresh user data after payment
-            } else {
-                // Handle the case where the response indicates failure
-                alert(response.data.message || 'Une erreur est survenue lors de la soumission du formulaire.');
+            // Ensure the required fields are populated
+            if (!this.form.network || !this.form.phone || !this.form.offer_id) {
+                alert('Veuillez remplir tous les champs requis.');
+                return;
             }
-        })
-        .catch(error => {
-            // Display a detailed error message
-            console.error('Une erreur est survenue lors de la soumission du formulaire :', error);
-            alert('Impossible de traiter votre demande pour le moment. Veuillez réessayer plus tard.');
-        });
-},
 
+            axios.post('api/script.php?action=payWithMobile', this.form)
+                .then(response => {
+                    alert('Abonnement effectué avec succès');
+                    this.resetForm(); // Reset the form after successful submission
+                })
+                .catch(error => {
+                    console.error('Une erreur est survenue lors de la soumission du formulaire :', error);
+                });
+        },
         selectOffer(offer) {
             this.form.offer_id = offer.id;
             this.form.offer_name = offer.name;

@@ -35,7 +35,7 @@ ob_start(); ?>
                             </form>
 
                             <div class="ref">
-    <p>Mon lien d'affiliation <strong id="link">{{detail.ref}}</strong></p>
+    <p>Lien d'affiliation: <strong id="link">{{detail.ref}}</strong></p>
     <div class="btns">
        
     <div class="copy-btn" id="copyBtn">
