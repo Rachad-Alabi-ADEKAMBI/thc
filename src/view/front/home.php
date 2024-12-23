@@ -166,8 +166,8 @@ ob_start(); ?>
     <h2 style="color: white">
       Tarifs 🍉
     </h2>
-    <div class="pricing__content">
-      <div class="pricing__content__item">
+    <div class="pricing__content text-center">
+      <div class="pricing__content__item mx-auto">
         <span class="offer-name">
           <i class="fas fa-leaf"></i> Starter
         </span>
@@ -175,11 +175,11 @@ ob_start(); ?>
           <li><i class="fas fa-check"></i> 2 livraisons / semaine</li>
         </ul>
         <strong class="price">
-          <i class="fas fa-coins"></i> 6.000 XOF
+          <i class="fas fa-coins"></i> 7.000 XOF
         </strong>
-        <a href="index.php?action=registerPage" class="btn-select">Choisir</a>
+        <a href="index.php?action=mySubscriptionPage" class="btn-select">Choisir</a>
       </div>
-      <div class="pricing__content__item featured">
+      <div class="pricing__content__item featured mx-auto">
         <span class="offer-name">
           <i class="fas fa-star"></i> Premium
         </span>
@@ -187,11 +187,11 @@ ob_start(); ?>
           <li><i class="fas fa-check"></i> 3 livraisons / semaine</li>
         </ul>
         <strong class="price">
-          <i class="fas fa-coins"></i> 7.000 XOF
+          <i class="fas fa-coins"></i> 9.000 XOF
         </strong>
-        <a href="index.php?action=registerPage" class="btn-select">Choisir</a>
+        <a href="index.php?action=mySubscriptionPage" class="btn-select">Choisir</a>
       </div>
-      <div class="pricing__content__item">
+      <div class="pricing__content__item mx-auto">
         <span class="offer-name">
           <i class="fas fa-gem"></i> Gold
         </span>
@@ -199,9 +199,9 @@ ob_start(); ?>
           <li><i class="fas fa-check"></i> 5 livraisons / semaine</li>
         </ul>
         <strong class="price">
-          <i class="fas fa-coins"></i> 10.000 XOF
+          <i class="fas fa-coins"></i> 15.000 XOF
         </strong>
-        <a href="index.php?action=registerPage" class="btn-select">Choisir</a>
+        <a href="index.php?action=mySubscriptionPage" class="btn-select">Choisir</a>
       </div>
     </div>
   </div>

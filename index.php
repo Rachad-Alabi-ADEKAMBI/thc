@@ -11,6 +11,7 @@ ini_set('display_errors', 1);
 require_once 'src/controller/front/home.php';
 require_once 'src/controller/front/login.php';
 require_once 'src/controller/front/register.php';
+require_once 'src/controller/front/resetPassword.php';
 require_once 'src/controller/front/terms.php';
 require_once 'src/controller/front/policy.php';
 
@@ -58,6 +59,10 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
             case 'termsPage':
                                 termsPage();
                                  break;
+
+                                 case 'resetPasswordPage':
+                                    resetPasswordPage();
+                                     break;
         
 
         default:

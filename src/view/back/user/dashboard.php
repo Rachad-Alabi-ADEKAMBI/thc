@@ -46,32 +46,22 @@ ob_start(); ?>
                                 Mes futures commandes
                             </h3>
 
-                            <table class="orders-table">
-
-<thead>
-    <tr>
-        <th>Date</th>
-        <th>Heure</th>
-        <th>Salade</th>
-    </tr>
-</thead>
-<tbody>
-    <tr v-for='detail in nextOrders' :key='detail.id'>
-        <td>{{ formatDate(detail.day) }}</td>
-        <td>{{ detail.time }}</td>
-        <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.salad_name }}</td>
-        <td>
-        <button class="btn btn-primary" @click="displayEditOrder(detail.id)">
-                                            <i class="fas fa-edit"></i> Modifier
-                                        </button>
-        </td>
-    </tr>
-</tbody>
-</table>
-
-                            <p v-if="nextOrders.length === 0">
-                            Aucune commande à afficher pour l'instant,  <br>programmez vos commandes avec le bouton "Progarammer" 
-                            </p>
+                            <table class="orders-table"  v-if='nextOrders.length > 0'>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Heure</th>
+                                        <th>Salade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for='detail in nextOrders' :key='detail.id'>
+                                        <td>{{ formatDate(detail.day) }}</td>
+                                        <td>{{ detail.time }}</td>
+                                        <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.salad_name }}</td>
+                                    </tr>
+                                </tbody>
+                                </table>
                         </div>
 
                         <div class="dashboard__content__main" v-if='showOrders'>
@@ -98,20 +88,17 @@ ob_start(); ?>
                                                 <td>{{ formatDate(detail.day) }}</td>
                                                 <td>{{ detail.time }}</td>
                                                 <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.salad_name }}</td>
-                                                <td><span class="status delivered">{{ detail.status }}</span></td>
+                                                <td>
+                                                    <span :class="{'status': true, 'delivered': detail.status === 'Livrée', 'to-deliver': detail.status === 'A livrer'}">
+                                                        {{ detail.status }}
+                                                    </span>
+                                                </td>
+
                                             </tr>
                                         </tbody>
                                     </table>
 
-                                    <div class="pagination">
-                                    <button class="btn btn-icon">
-                                        Precedent
-                                    </button>
-                                    <span>Page 1 sur 3</span>
-                                    <button class="btn btn-icon">
-                                        Suivant
-                                    </button>
-                                </div>
+                                    
                                 <p v-if="orders.length === 0">
                                     Aucune commande à afficher pour l'instant,  <br>programmez vos commandes avec le bouton "Progarammer" 
                                 </p>
@@ -132,23 +119,19 @@ ob_start(); ?>
                                 
 
 
-                                <div class="reservation-layout">
-                                       <form class="" action='api/script.php?action=orderForDay' method='POST'>
-                                             <div class="day-item">
+                                <div class="reservation">
+                                    <form @submit.prevent="orderForMonday">
+                                        <div class="day-item">
                                             <h3 class="day-title">Lundi</h3>
                                             <div class="form-group">
-                                            <input type="hidden" name="dayOfWeek" value="monday">
                                                 <label for="salade-0">Salade</label>
-                                                <select id="salade-0" class="salade-select" name='salad_name'>
+                                                <select id="salade-0" class="salade-select" v-model="mondaySalad" name="salad_name">
                                                     <option value="">Choisir</option>
-                                                    <option value="Pack Tropical">
-                                                       Pack Tropical</option>
-                                                    <option value="Pack Vitaminé"
-                                                    > Pack Vitaminé</option>
-                                                    <option value="Pack Croquant">
-                                                        Pack Croquant</option>
+                                                    <option value="Pack Tropical">Pack Tropical</option>
+                                                    <option value="Pack Vitaminé">Pack Vitaminé</option>
+                                                    <option value="Pack Croquant">Pack Croquant</option>
                                                 </select>
-                                                <select id="heure-0" class="heure-select" name='time'>
+                                                <select id="heure-0" class="heure-select" v-model="mondayTime" name="time">
                                                     <option value="">Heure</option>
                                                     <option value="9h">9h</option>
                                                     <option value="11h">11h</option>
@@ -156,12 +139,60 @@ ob_start(); ?>
                                                     <option value="15h">15h</option>
                                                     <option value="17h">17h</option>
                                                 </select>
-
-                                                <button type='submit' class="btn btn-secondary">Confirmer</button>
+                                                <button type="submit" class="btn btn-secondary">Confirmer</button>
                                             </div>
-                                        </form>
-                                    </div>
+                                        </div>
+                                    </form> <br>
+
+                                    <form @submit.prevent="orderForMonday">
+                                        <div class="day-item">
+                                            <h3 class="day-title">Mercredi</h3>
+                                            <div class="form-group">
+                                                <label for="salade-0">Salade</label>
+                                                <select id="salade-0" class="salade-select" v-model="mondaySalad" name="salad_name">
+                                                    <option value="">Choisir</option>
+                                                    <option value="Pack Tropical">Pack Tropical</option>
+                                                    <option value="Pack Vitaminé">Pack Vitaminé</option>
+                                                    <option value="Pack Croquant">Pack Croquant</option>
+                                                </select>
+                                                <select id="heure-0" class="heure-select" v-model="mondayTime" name="time">
+                                                    <option value="">Heure</option>
+                                                    <option value="9h">9h</option>
+                                                    <option value="11h">11h</option>
+                                                    <option value="13h">13h</option>
+                                                    <option value="15h">15h</option>
+                                                    <option value="17h">17h</option>
+                                                </select>
+                                                <button type="submit" class="btn btn-secondary">Confirmer</button>
+                                            </div>
+                                        </div>
+                                    </form> <br>
+
+                                    <form @submit.prevent="orderForMonday">
+                                        <div class="day-item">
+                                            <h3 class="day-title">Vendredi</h3>
+                                            <div class="form-group">
+                                                <label for="salade-0">Salade</label>
+                                                <select id="salade-0" class="salade-select" v-model="mondaySalad" name="salad_name">
+                                                    <option value="">Choisir</option>
+                                                    <option value="Pack Tropical">Pack Tropical</option>
+                                                    <option value="Pack Vitaminé">Pack Vitaminé</option>
+                                                    <option value="Pack Croquant">Pack Croquant</option>
+                                                </select>
+                                                <select id="heure-0" class="heure-select" v-model="mondayTime" name="time">
+                                                    <option value="">Heure</option>
+                                                    <option value="9h">9h</option>
+                                                    <option value="11h">11h</option>
+                                                    <option value="13h">13h</option>
+                                                    <option value="15h">15h</option>
+                                                    <option value="17h">17h</option>
+                                                </select>
+                                                <button type="submit" class="btn btn-secondary">Confirmer</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
+
                                
                             </div> <br><br>
                         </div>
@@ -203,12 +234,13 @@ ob_start(); ?>
                 offer_id: '',
                 salads: [],
                 times: ['9h', '10h', '11h', '13h', '15h', '17h'],
-                formMonday
+                mondaySalad: '',
+                mondayTime: ''
             };
         },
         mounted() {
             this.getUserDatas();
-            this.displayNewOrder();
+            this.displayOrders();
         },
         computed: {
             totalPages() {
@@ -301,9 +333,24 @@ ob_start(); ?>
                 this.showNewOrder = false;
             },
             formatDate(date) {
-                const [year, month, day] = date.split('-');
-                return `${day}-${month}-${year}`;
-            },
+    // Create a new Date object from the date string
+    const [year, month, day] = date.split('-');
+    const formattedDate = new Date(year, month - 1, day); // month - 1 because months are zero-based
+
+    // List of days of the week in French
+    const daysOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+    
+    // List of months in French
+    const monthsOfYear = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
+
+    // Get the day of the week and month in French
+    const dayOfWeek = daysOfWeek[formattedDate.getDay()];
+    const monthName = monthsOfYear[formattedDate.getMonth()];
+
+    // Return the formatted date
+    return `${dayOfWeek} ${formattedDate.getDate()} ${monthName} ${year}`;
+},
+
             capitalize(string) {
                 return string.toUpperCase();
             },
@@ -326,9 +373,42 @@ ob_start(); ?>
             getImage(pic) {
                 return `public/images/${pic}`;
             },
-            submit(){
-                
-            }
+            orderForMonday() {
+                axios.post('api/script.php?action=orderForDay', {
+            salad_name: this.mondaySalad,
+            day: 'lundi',
+            time: this.mondayTime
+                })
+            .then(response => {
+                if (response.data && response.data.success) {
+                    alert('Commande effectuée avec succès');
+                    this.resetFormMonday();
+                } else {
+                    // Loguez et affichez l'erreur spécifique
+                    const message = response.data || 'Erreur inconnue';
+                    console.error('Erreur API :', message);
+                    alert(message);
+                }
+            })
+            .catch(error => {
+                // Gérer les erreurs réseau ou autres erreurs axios
+                console.error('Une erreur technique est survenue :', error);
+
+                if (error.response) {
+                    // Loggez l'erreur retournée par le backend
+                    console.error('Erreur backend :', error.response.data.details || error.response.data.message);
+                    alert(error.response.data.details || 'Une erreur est survenue.');
+                } else if (error.request) {
+                    // Pas de réponse du serveur
+                    console.error('Pas de réponse reçue du serveur :', error.request);
+                    alert('Impossible de contacter le serveur.');
+                } else {
+                    // Erreur lors de la configuration de la requête
+                    console.error('Erreur dans la configuration de la requête :', error.message);
+                    alert('Erreur technique.');
+                }
+            });
+        }  
         },
     });
 
@@ -356,5 +436,21 @@ ob_start(); ?>
     background-color: #555; /* Highlight on hover */
     color: #fff; /* Ensure text remains visible */
 }
+
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+.to-deliver {
+    background-color:  #F99401;;
+    color: black; /* Optional: for better readability */
+}
+
+.delivered {
+    background-color: #50AF47;
+}
+
 
 </style>

@@ -735,6 +735,7 @@ h2{
     justify-content: start;
     gap: 2rem;
     flex-wrap: wrap;
+    margin: auto;
 }
 
 .pricing__content__item {
@@ -1666,8 +1667,10 @@ body {
         text-align: center;
       }
     
-      .reservation-layout {
+      .reservation {
         display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         width: 100%;
         gap: 1.5rem;
         margin-bottom: 1.5rem;

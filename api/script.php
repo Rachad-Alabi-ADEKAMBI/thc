@@ -11,24 +11,9 @@ if ($action == 'getOffer') {
     getOffer();
 }
 
-if (isset($_GET['action']) && $_GET['action'] === 'orderForDay') {
-    if (isset($_POST['dayOfWeek'])) {
-        $dayOfWeek = strtolower($_POST['dayOfWeek']); // Get the day from POST
-        $validDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']; // Allowed days
-
-        if (in_array($dayOfWeek, $validDays)) {
-            orderForDay($dayOfWeek); // Call the function with the valid day
-        } else {
-            sendJSON(['error' => 'Invalid day provided.']);
-        }
-    } else {
-        sendJSON(['error' => 'No day provided.']);
-    }
-} else {
-    sendJSON(['error' => 'Invalid action.']);
+if ($action == 'orderForDay') {
+    orderForDay();
 }
-
-
 
 
 if ($action == 'newsletters') {

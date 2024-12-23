@@ -132,9 +132,9 @@ ob_start();
     </div>
 
     <div class="col-6 text-center mx-auto">
-    <input type="number" v-model="form.offer_id">
-    <input type="text" v-model="form.offer_name">
-    <input type="number" v-model="form.offer_price">
+    <input type="hidden" v-model="form.offer_id">
+    <input type="hidden" v-model="form.offer_name">
+    <input type="hidden" v-model="form.offer_price">
 
     <button type="submit" class="submit-btn mx-auto">
         <i class="fas fa-money-check-alt"></i> Payer
@@ -195,7 +195,7 @@ const app = Vue.createApp({
                 details: [], 
                 offers: [
                     { id: 1, name: 'Starter', price: 7000, days: ['Mardi', 'Jeudi'], number_of_days: 2, featured: 'no' },
-                    { id: 2, name: 'Premium', price: 10000, days: ['Lundi', 'Mercredi', 'Vendredi'], number_of_days: 3, featured: 'yes' },
+                    { id: 2, name: 'Premium', price: 9000, days: ['Lundi', 'Mercredi', 'Vendredi'], number_of_days: 3, featured: 'yes' },
                     { id: 3, name: 'Gold', price: 15000, days: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'], number_of_days: 5, featured: 'no' }
                 ],
 

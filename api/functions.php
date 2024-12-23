@@ -34,22 +34,17 @@ function subscribe()
     }
 }
 
-function orderForDay($dayOfWeek)
+function orderForDay()
 {
     $pdo = getConnexion();  
-    $salad_name = verifyInput($_POST['salad_name']);
+    $salad_name = verifyInput($_POST['mon']);
     $time = verifyInput($_POST['time']);
+    
     $user_id = $_SESSION['user']['id'];
 
-    // Map days of the week to their SQL columns
-    $days = [
-        'monday' => 'monday',
-        'tuesday' => 'tuesday',
-        'wednesday' => 'wednesday',
-        'thursday' => 'thursday',
-        'friday' => 'friday'
-    ];
-
+    $dayOfWeek = 'monday'; // Specify the day of the week you want to find
+    $today = new DateTime(); // Get today's date
+    
     // Function to get the next occurrence of a specific day
     function getNextDay($dayOfWeek)
     {
@@ -57,37 +52,32 @@ function orderForDay($dayOfWeek)
         $today->modify("next $dayOfWeek"); // Move to the next specified day
         return $today->format('Y-m-d'); // Return the date in YYYY-MM-DD format
     }
-
-    if (!array_key_exists($dayOfWeek, $days)) {
-        // If the provided day is not valid, return an error
-        sendJSON(['error' => 'Invalid day provided']);
-        return;
-    }
-
-    // Get the correct SQL column and next day
-    $column = $days[$dayOfWeek];
+    
+    // Get the next Monday
     $nextDay = getNextDay($dayOfWeek);
 
     try {
         // Insert the order into the database
         $req = $pdo->prepare('INSERT INTO orders (user_id, salad_name, day, time, status) VALUES (?, ?, ?, ?, ?)');
         $req->execute([$user_id, $salad_name, $nextDay, $time, 'A livrer']);
-
+    
         // Update user's delivery day status to "yes"
         $req = $pdo->prepare("UPDATE users SET $column = ? WHERE id = ?");
         $req->execute(['yes', $user_id]);
-
+    
         // Return a success message to the front end
         $datas = ['success' => true, 'message' => "Order successfully placed for next $dayOfWeek!"];
-        sendJSON($datas);
+       // sendJSON($datas);
+       return $datas;
     } catch (PDOException $e) {
         // Handle database errors
         http_response_code(500); // Internal server error HTTP status code
-        sendJSON(['error' => 'An error occurred: ' . $e->getMessage()]);
+      return  ['error' => true, 'message' => 'An error occurred', 'details' => $e->getMessage()];
+      $datas = ['success' => false, 'message' => 'An error occurred', 'details' => $e->getMessage()];
+      return $datas;
     }
+    
 }
-
-
 
 
 function getMyDatas()
@@ -126,7 +116,7 @@ function getMyOrders()
 
     try {
         $pdo = getConnexion();
-        $req = $pdo->prepare("SELECT * FROM orders WHERE user_id = ?");
+        $req = $pdo->prepare("SELECT * FROM orders WHERE user_id = ? ORDER BY id DESc");
         
         // Assurez-vous de transmettre un tableau pour le paramètre
         $req->execute([$_SESSION['user']['id']]);
@@ -152,7 +142,7 @@ function getMyNextOrders()
 
     try {
         $pdo = getConnexion();
-        $req = $pdo->prepare("SELECT * FROM orders WHERE user_id = ? AND status = 'A venir' LIMIT 3");
+        $req = $pdo->prepare("SELECT * FROM orders WHERE user_id = ? AND status = 'A Livrer' ORDER BY id DESC");
         
         // Assurez-vous de transmettre un tableau pour le paramètre
         $req->execute([$_SESSION['user']['id']]);
@@ -222,8 +212,8 @@ function getMyCashback()
 function getMyAffiliated()
 {
     // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
-    if (!isset($_SESSION['user']['user_id'])) {
-        header("Location: index.php?action=loginPage");
+    if (!isset($_SESSION['user']['id'])) {
+        header("Location: ../index.php?action=loginPage");
         exit();
     }
 
@@ -236,7 +226,7 @@ function getMyAffiliated()
         WHERE sponsorships.sponsor_id = ?");
     
         // Assurez-vous de transmettre un tableau pour le paramètre
-        $req->execute([$_SESSION['user']['user_id']]);
+        $req->execute([$_SESSION['user']['id']]);
         $datas = $req->fetchAll(); 
         $req->closeCursor();
 

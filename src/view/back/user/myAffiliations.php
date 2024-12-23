@@ -41,13 +41,13 @@ ob_start(); ?>
     <div class="copy-btn" id="copyBtn">
             <i class="fa fa-copy"></i>
         </div>
-        <div class="share-btn" data-platform="whatsapp">
+        <div class="share-btn" data-platform="whatsapp" style='background: #50AF47;'>
             <i class="fa fa-whatsapp"></i> 
         </div>
-        <div class="share-btn" data-platform="facebook">
+        <div class="share-btn" data-platform="facebook" style='background: #0866FF'>
             <i class="fa fa-facebook"></i>
         </div>
-        <div class="share-btn" data-platform="email">
+        <div class="share-btn" data-platform="email" style='background: #F99401'>
             <i class="fa fa-envelope"></i>
         </div>
        
@@ -154,7 +154,7 @@ ob_start(); ?>
         },
         mounted() {
             this.getUserDatas();
-            this.displayCashback();
+            this.displayAffiliated();
         },
         computed: {
             totalPages() {
