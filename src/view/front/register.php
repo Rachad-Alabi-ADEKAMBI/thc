@@ -81,15 +81,26 @@ ob_start();
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group">
-                                    <label for="password"><i class="fas fa-lock"></i> Mot de passe</label>
-                                    <input type="password" id="password" name="password" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="password2"><i class="fas fa-lock"></i> Confirmez le mot de passe</label>
-                                    <input type="password" id="password2" name="password2" required>
-                                </div>
-                            </div>
+    <div class="form-group">
+        <label for="password1">
+            <i class="fas fa-lock"></i> Mot de passe
+        </label>
+        <div class="password-container">
+        <input :type="showPassword1 ? 'text' : 'password'" id="password1" name="password" required>
+        <i @click="togglePassword1Visibility" :class="showPassword1 ? 'fas fa-eye-slash' : 'fas fa-eye'" class="password-icon"></i>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password2">
+            <i class="fas fa-lock"></i> Confirmez le mot de passe
+        </label>
+       <div class="password-container">
+       <input :type="showPassword2 ? 'text' : 'password'" id="password2" name="password2" required>
+       <i @click="togglePassword2Visibility" :class="showPassword2 ? 'fas fa-eye-slash' : 'fas fa-eye'" class="password-icon"></i>
+       </div>
+    </div>
+</div>
+
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="address"><i class="fas fa-map-marker-alt"></i> Adresse de livraison</label>
@@ -147,13 +158,17 @@ ob_start();
 const app = Vue.createApp({
     data() {
         return {
-            showPassword: false
+            showPassword1: false,
+            showPassword2: false,
         };
     },
     methods: {
-        togglePasswordVisibility() {
-                this.showPassword = !this.showPassword;
-            },
+        togglePassword1Visibility() {
+        this.showPassword1 = !this.showPassword1;
+    },
+    togglePassword2Visibility() {
+        this.showPassword2 = !this.showPassword2;
+    },
             loginWithGoogle() {
                 console.log('Google login initiated.');
                 // Implémentez ici l'intégration avec l'API de Google
