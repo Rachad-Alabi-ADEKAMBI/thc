@@ -1,177 +1,173 @@
-<?php 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire Dynamique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
 
- include 'check_session.php'; 
+        #app {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
 
-    $title = "THC - Abonnement";
+        h3 {
+            color: #555;
+        }
 
-ob_start(); ?>
+        .form-line {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f5f5f5;
+        }
 
-<main class="main" id='app'>
-    <section class="section" >
-        <div class="row ">
-            <div class="col-12"> <br><br><br><br>
-                <div class="dashboard">
-                    <?php include 'menu.php'; ?>
+        .form-group {
+            margin-bottom: 10px;
+        }
 
-                    <div class="dashboard__content">
-                        <div class="dashboard__content__top">
-                            <h2>
-                                Abonnement
-                            </h2>
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
 
-                            <?php include 'profile_name.php'; ?>
-                        </div>
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+        }
 
-                        <div class="dashboard__content__main mt-2" v-for='detail in details' :key='detail.id'>
-                            <div class="top">
-                                <h3>
-                                    Abonnement en cours
-                                </h3>
-                            </div>
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-                            <div class="pricing" id="pricing"  >    
-                                <div class="pricing__content">
-                                <div class="pricing__content__item">
-                                    <span class="offer-name">
-                                    <i class="fas fa-leaf"></i> Starter
-                                    </span>
-                                    <ul>
-                                    <li><i class="fas fa-check"></i> 2 livraisons / semaine</li>
-                                    </ul>
-                                    <strong class="price">
-                                    <i class="fas fa-coins"></i> 6.000 XOF
-                                    </strong>
+        button[type="submit"] {
+            background-color: #28a745;
+            color: #fff;
+        }
 
-                                    <span>
-                                        Expiration: <strong>
-                                            15/01/2025
-                                        </strong>
-                                    </span>
-                                </div>
-                                </div>
-                            </div>
+        button[type="button"] {
+            background-color: #007bff;
+            color: #fff;
+        }
 
-                            <h3>
-                                Choisir un abonnement
-                            </h3>
+        button:hover {
+            opacity: 0.9;
+        }
 
-                            <div class="pricing" id="pricing" style="margin-top: -20px;">
-                                <div class="pricing__content">
-                                <div class="pricing__content__item">
-                                    <span class="offer-name">
-                                    <i class="fas fa-leaf"></i> Starter
-                                    </span>
-                                    <ul>
-                                    <li><i class="fas fa-check"></i> 2 livraisons / semaine</li>
-                                    </ul>
-                                    <strong class="price">
-                                    <i class="fas fa-coins"></i> 6.000 XOF
-                                    </strong>
-                                    <a href="index.php?action=registerPage" class="btn-select">Choisir</a>
-                                </div>
-                                <div class="pricing__content__item featured">
-                                    <span class="offer-name">
-                                    <i class="fas fa-star"></i> Premium
-                                    </span>
-                                    <ul>
-                                    <li><i class="fas fa-check"></i> 3 livraisons / semaine</li>
-                                    </ul>
-                                    <strong class="price">
-                                    <i class="fas fa-coins"></i> 7.000 XOF
-                                    </strong>
-                                    <a href="index.php?action=registerPage" class="btn-select">Choisir</a>
-                                </div>
-                                <div class="pricing__content__item">
-                                    <span class="offer-name">
-                                    <i class="fas fa-gem"></i> Gold
-                                    </span>
-                                    <ul>
-                                    <li><i class="fas fa-check"></i> 5 livraisons / semaine</li>
-                                    </ul>
-                                    <strong class="price">
-                                    <i class="fas fa-coins"></i> 10.000 XOF
-                                    </strong>
-                                    <a href="index.php?action=registerPage" class="btn-select">Choisir</a>
-                                </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
+        button.delete {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2>Formulaire de Réservation Dynamique</h2>
+        <form @submit.prevent="submitForm">
+            <div v-for="(line, index) in formLines" :key="index" class="form-line">
+                <h3>Ligne {{ index + 1 }}</h3>
+                <!-- Sélection du jour -->
+                <div class="form-group">
+                    <label :for="'day-' + index">Jour :</label>
+                    <select :id="'day-' + index" v-model="line.day" required>
+                        <option value="">Choisir un jour</option>
+                        <option v-for="(day, idx) in days" :key="idx" :value="day">{{ day }}</option>
+                    </select>
                 </div>
+                <!-- Sélection de la salade -->
+                <div class="form-group">
+                    <label :for="'salad-' + index">Salade :</label>
+                    <select :id="'salad-' + index" v-model="line.salad" required>
+                        <option value="">Choisir une salade</option>
+                        <option v-for="salad in salads" :key="salad.id" :value="salad.name">
+                            {{ salad.name }}
+                        </option>
+                    </select>
+                </div>
+                <!-- Sélection de l'heure -->
+                <div class="form-group">
+                    <label :for="'time-' + index">Heure :</label>
+                    <select :id="'time-' + index" v-model="line.time" required>
+                        <option value="">Choisir une heure</option>
+                        <option v-for="(time, idx) in times" :key="idx" :value="time">{{ time }}</option>
+                    </select>
+                </div>
+                <button type="button" class="delete" @click="removeLine(index)">Supprimer cette ligne</button>
             </div>
-        </div>
-        </div>
-    </section>
-</main>
+            <button type="button" @click="addLine">Ajouter une ligne</button>
+            <button type="submit">Soumettre</button>
+        </form>
+    </div>
 
-
-
-
-<?php $content = ob_get_clean(); ?>
-
-<?php require './src/view/layout.php'; ?>
-
-<script>
-    const app = Vue.createApp({
-        data() {
-            return {
-                showAffiliated: false,
-                details: [],
-                currentPage: 1,
-                itemsPerPage: 10,
-                selectedDetail: null,
-            };
-        },
-        mounted() {
-            this.getUserDatas();
-            this.displayAffiliated();
-        },
-        computed: {
-            totalPages() {
-                return Math.ceil(this.details.length / this.itemsPerPage);
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                days: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"],
+                salads: [
+                    { id: 1, name: "Tropicale" },
+                    { id: 2, name: "César" },
+                    { id: 3, name: "Niçoise" },
+                ],
+                times: ["9h", "10h", "11h", "13h", "15h", "17h"],
+                formLines: [
+                    { day: "", salad: "", time: "" },
+                ],
             },
-            paginatedData() {
-                const start = (this.currentPage - 1) * this.itemsPerPage;
-                const end = start + this.itemsPerPage;
-                return this.details.slice(start, end);
-            },
-        },
-        methods: {
-            getUserDatas() {
-                axios.get('api/script.php?action=getMyDatas')
-                    .then((response) => {
-                        this.details = response.data;
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
+            methods: {
+                addLine() {
+                    this.formLines.push({ day: "", salad: "", time: "" });
+                },
+                removeLine(index) {
+                    this.formLines.splice(index, 1);
+                },
+                submitForm() {
+                    const isValid = this.formLines.every(line => line.day && line.salad && line.time);
+                    if (!isValid) {
+                        alert("Veuillez remplir toutes les lignes correctement.");
+                        return;
+                    }
 
-            },
-            displayAffiliated() {
-                this.showAffiliated = true;
-                axios.get('api/script.php?action=myAffiliated')
-                    .then((response) => {
-                        console.log(response.data);
-                        this.details = response.data;
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            },
-            formatDate(date) {
-                const [year, month, day] = date.split('-');
-                return `${day}-${month}-${year}`;
-            },
-            capitalize(string) {
-                return string.toUpperCase();
-            },
-            capitalizeFirstLetter(string) {
-                return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-            },
-        },
-    });
+                    const formData = this.formLines.map(line => ({
+                        day: line.day,
+                        salad: line.salad,
+                        time: line.time,
+                    }));
 
-    app.mount('#app');
-</script>
+                    axios.post('/api/submit', { orders: formData })
+                        .then(response => {
+                            console.log("Formulaire soumis avec succès :", response.data);
+                            alert("Réservation enregistrée !");
+                        })
+                        .catch(error => {
+                            console.error("Erreur lors de la soumission :", error);
+                            alert("Une erreur est survenue.");
+                        });
+                },
+            },
+        });
+    </script>
+</body>
+</html>

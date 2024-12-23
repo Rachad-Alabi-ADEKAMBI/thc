@@ -34,6 +34,61 @@ function subscribe()
     }
 }
 
+function orderForDay($dayOfWeek)
+{
+    $pdo = getConnexion();  
+    $salad_name = verifyInput($_POST['salad_name']);
+    $time = verifyInput($_POST['time']);
+    $user_id = $_SESSION['user']['id'];
+
+    // Map days of the week to their SQL columns
+    $days = [
+        'monday' => 'monday',
+        'tuesday' => 'tuesday',
+        'wednesday' => 'wednesday',
+        'thursday' => 'thursday',
+        'friday' => 'friday'
+    ];
+
+    // Function to get the next occurrence of a specific day
+    function getNextDay($dayOfWeek)
+    {
+        $today = new DateTime(); // Get the current date
+        $today->modify("next $dayOfWeek"); // Move to the next specified day
+        return $today->format('Y-m-d'); // Return the date in YYYY-MM-DD format
+    }
+
+    if (!array_key_exists($dayOfWeek, $days)) {
+        // If the provided day is not valid, return an error
+        sendJSON(['error' => 'Invalid day provided']);
+        return;
+    }
+
+    // Get the correct SQL column and next day
+    $column = $days[$dayOfWeek];
+    $nextDay = getNextDay($dayOfWeek);
+
+    try {
+        // Insert the order into the database
+        $req = $pdo->prepare('INSERT INTO orders (user_id, salad_name, day, time, status) VALUES (?, ?, ?, ?, ?)');
+        $req->execute([$user_id, $salad_name, $nextDay, $time, 'A livrer']);
+
+        // Update user's delivery day status to "yes"
+        $req = $pdo->prepare("UPDATE users SET $column = ? WHERE id = ?");
+        $req->execute(['yes', $user_id]);
+
+        // Return a success message to the front end
+        $datas = ['success' => true, 'message' => "Order successfully placed for next $dayOfWeek!"];
+        sendJSON($datas);
+    } catch (PDOException $e) {
+        // Handle database errors
+        http_response_code(500); // Internal server error HTTP status code
+        sendJSON(['error' => 'An error occurred: ' . $e->getMessage()]);
+    }
+}
+
+
+
 
 function getMyDatas()
 {
@@ -49,11 +104,10 @@ function getMyDatas()
         
         // Assurez-vous de transmettre un tableau pour le paramètre
         $req->execute([$_SESSION['user']['id']]);
-        $datas = $req->fetchAll(); // Option pour obtenir un tableau associatif
-
+        $datas = $req->fetchAll(); 
         $req->closeCursor();
 
-        // Envoyer les données au format JSON
+        
         sendJSON($datas);
     } catch (PDOException $e) {
         // Gérer les erreurs de la base de données
@@ -76,11 +130,10 @@ function getMyOrders()
         
         // Assurez-vous de transmettre un tableau pour le paramètre
         $req->execute([$_SESSION['user']['id']]);
-        $datas = $req->fetchAll(); // Option pour obtenir un tableau associatif
-
+        $datas = $req->fetchAll(); 
         $req->closeCursor();
 
-        // Envoyer les données au format JSON
+        
         sendJSON($datas);
     } catch (PDOException $e) {
         // Gérer les erreurs de la base de données
@@ -103,15 +156,36 @@ function getMyNextOrders()
         
         // Assurez-vous de transmettre un tableau pour le paramètre
         $req->execute([$_SESSION['user']['id']]);
-        $datas = $req->fetchAll(); // Option pour obtenir un tableau associatif
-
+        $datas = $req->fetchAll(); 
         $req->closeCursor();
 
-        // Envoyer les données au format JSON
+        
         sendJSON($datas);
     } catch (PDOException $e) {
         // Gérer les erreurs de la base de données
         http_response_code(500); // Code HTTP d'erreur interne
+        sendJSON(['error' => 'Une erreur s\'est produite : ' . $e->getMessage()]);
+    }
+}
+
+function getSalads()
+{
+    // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
+    if (!isset($_SESSION['user']['id'])) {
+        header("Location: index.php?action=loginPage");
+        exit();
+    }
+
+    try {
+        $pdo = getConnexion();
+        $req = $pdo->prepare("SELECT * FROM salads");
+        $req->execute();
+        $datas = $req->fetchAll(); 
+        $req->closeCursor();
+        sendJSON($datas);
+    } 
+    catch (PDOException $e) {
+        http_response_code(500); 
         sendJSON(['error' => 'Une erreur s\'est produite : ' . $e->getMessage()]);
     }
 }
@@ -132,11 +206,10 @@ function getMyCashback()
     
         // Assurez-vous de transmettre un tableau pour le paramètre
         $req->execute([$_SESSION['user']['user_id']]);
-        $datas = $req->fetchAll(); // Option pour obtenir un tableau associatif
-
+        $datas = $req->fetchAll(); 
         $req->closeCursor();
 
-        // Envoyer les données au format JSON
+        
         sendJSON($datas);
     } catch (PDOException $e) {
         // Gérer les erreurs de la base de données
@@ -164,11 +237,10 @@ function getMyAffiliated()
     
         // Assurez-vous de transmettre un tableau pour le paramètre
         $req->execute([$_SESSION['user']['user_id']]);
-        $datas = $req->fetchAll(); // Option pour obtenir un tableau associatif
-
+        $datas = $req->fetchAll(); 
         $req->closeCursor();
 
-        // Envoyer les données au format JSON
+        
         sendJSON($datas);
     } catch (PDOException $e) {
         // Gérer les erreurs de la base de données

@@ -26,11 +26,11 @@ ob_start(); ?>
                             <form class="form">
                                 <label for="newRadio" class="ml-5">
                                     <input type="radio" id="newRadio" name="options" @click="displayNextOrders()">
-                                    Prochaines commandes
+                                    Mes futures commandes
                                 </label>
                                 <label for="allRadio" class="ml-5">
                                     <input type="radio" id="allRadio" name="options" @click="displayOrders()">
-                                    Mes commandes
+                                    Toutes mes commandes
                                 </label>
                             </form>
 
@@ -43,38 +43,41 @@ ob_start(); ?>
 
                         <div class="dashboard__content__main" v-if='showNextOrders'>
                             <h3>
-                                Commandes à venir
+                                Mes futures commandes
                             </h3>
 
-                            <div class="next-orders" v-if='nextOrders.length > 0'>
-                                <div class="flex-between" v-for='detail in nextOrders' :key='detail.id'>
-                                <hr>
-                                    <div>
-                                        <h4>{{ detail.name }}</h3>
-                                            <p>Livraison prévue le <strong>{{ formatDate(detail.day) }}</strong>
-                                                à <strong>{{ detail.time }}</strong></p>
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-primary" @click="displayEditOrder">
+                            <table class="orders-table">
+
+<thead>
+    <tr>
+        <th>Date</th>
+        <th>Heure</th>
+        <th>Salade</th>
+    </tr>
+</thead>
+<tbody>
+    <tr v-for='detail in nextOrders' :key='detail.id'>
+        <td>{{ formatDate(detail.day) }}</td>
+        <td>{{ detail.time }}</td>
+        <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.salad_name }}</td>
+        <td>
+        <button class="btn btn-primary" @click="displayEditOrder(detail.id)">
                                             <i class="fas fa-edit"></i> Modifier
                                         </button>
-
-                                    </div>
-                                </div>
-                               
-                            </div>
+        </td>
+    </tr>
+</tbody>
+</table>
 
                             <p v-if="nextOrders.length === 0">
-                                    Aucune commande à afficher
-                                </p>
-
-
+                            Aucune commande à afficher pour l'instant,  <br>programmez vos commandes avec le bouton "Progarammer" 
+                            </p>
                         </div>
 
                         <div class="dashboard__content__main" v-if='showOrders'>
                             <div class="top">
                                 <h3>
-                                    Mes commandes
+                                    Toutes mes commandes 
                                 </h3>
                             </div>
 
@@ -110,7 +113,7 @@ ob_start(); ?>
                                     </button>
                                 </div>
                                 <p v-if="orders.length === 0">
-                                    Aucune commande à afficher pour l'instant
+                                    Aucune commande à afficher pour l'instant,  <br>programmez vos commandes avec le bouton "Progarammer" 
                                 </p>
                             </div>
                            
@@ -118,7 +121,6 @@ ob_start(); ?>
 
                         </div>
                
-
                         <div class="dashboard__content__main" v-if='showNewOrder'>
                             <br>
                             <div class="reservation-component">
@@ -127,106 +129,41 @@ ob_start(); ?>
 
                                 </div>
                                 <h2 class="title">Programmez vos livraisons</h2>
+                                
 
 
                                 <div class="reservation-layout">
-                                    <div class="days-selection">
-                                        <div class="day-item">
+
+                                       <form class="" action='api/script.php?action=orderForDay' method='POST'>
+                                             <div class="day-item">
                                             <h3 class="day-title">Lundi</h3>
                                             <div class="form-group">
-                                                <label for="salade-0">Salade :</label>
-                                                <select id="salade-0" class="salade-select">
+                                            <input type="hidden" name="dayOfWeek" value="monday">
+                                                <label for="salade-0">Salade</label>
+                                                <select id="salade-0" class="salade-select" name='salad_name'>
                                                     <option value="">Choisir</option>
-                                                    <option value="Salade Tropicale"
-                                                        data-image="/placeholder.svg?height=30&width=30">
-                                                        Tropicale</option>
-                                                    <option value="Salade Estivale"
-                                                        data-image="/placeholder.svg?height=30&width=30">
-                                                        Estivale</option>
-                                                    <option value="Salade Exotique"
-                                                        data-image="/placeholder.svg?height=30&width=30">
-                                                        Exotique</option>
-                                                    <option value="Salade Vitaminée"
-                                                        data-image="/placeholder.svg?height=30&width=30">
-                                                        Vitaminée</option>
+                                                    <option value="Pack Tropical">
+                                                       Pack Tropical</option>
+                                                    <option value="Pack Vitaminé"
+                                                    > Pack Vitaminé</option>
+                                                    <option value="Pack Croquant">
+                                                        Pack Croquant</option>
                                                 </select>
-                                                <select id="heure-0" class="heure-select">
+                                                <select id="heure-0" class="heure-select" name='time'>
                                                     <option value="">Heure</option>
-                                                    <option value="10:00">10h</option>
-                                                    <option value="12:00">12h</option>
-                                                    <option value="14:00">14h</option>
-                                                    <option value="16:00">16h</option>
-                                                    <option value="18:00">18h</option>
+                                                    <option value="9h">9h</option>
+                                                    <option value="11h">11h</option>
+                                                    <option value="13h">13h</option>
+                                                    <option value="15h">15h</option>
+                                                    <option value="17h">17h</option>
                                                 </select>
+
+                                                <button type='submit' class="btn btn-secondary">Confirmer</button>
                                             </div>
-                                        </div>
-                                        <div class="day-item">
-                                            <h3 class="day-title">Mardi</h3>
-                                            <div class="form-group">
-                                                <label for="salade-1">Salade :</label>
-                                                <select id="salade-1" class="salade-select">
-                                                    <option value="">Choisir</option>
-                                                    <option value="Salade Tropicale"
-                                                        data-image="/placeholder.svg?height=30&width=30">
-                                                        Tropicale</option>
-                                                    <option value="Salade Estivale"
-                                                        data-image="/placeholder.svg?height=30&width=30">
-                                                        Estivale</option>
-                                                    <option value="Salade Exotique"
-                                                        data-image="/placeholder.svg?height=30&width=30">
-                                                        Exotique</option>
-                                                    <option value="Salade Vitaminée"
-                                                        data-image="/placeholder.svg?height=30&width=30">
-                                                        Vitaminée</option>
-                                                </select>
-                                                <select id="heure-1" class="heure-select">
-                                                    <option value="">Heure</option>
-                                                    <option value="10:00">10h</option>
-                                                    <option value="12:00">12h</option>
-                                                    <option value="14:00">14h</option>
-                                                    <option value="16:00">16h</option>
-                                                    <option value="18:00">18h</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="day-item">
-                                            <h3 class="day-title">Mercredi</h3>
-                                            <div class="form-group">
-                                                <label for="salade-2">Salade :</label>
-                                                <select id="salade-2" class="salade-select">
-                                                    <option value="">Choisir</option>
-                                                    <option value="Salade Tropicale"
-                                                        data-image="/placeholder.svg?height=30&width=30">
-                                                        Tropicale</option>
-                                                    <option value="Salade Estivale"
-                                                        data-image="/placeholder.svg?height=30&width=30">
-                                                        Estivale</option>
-                                                    <option value="Salade Exotique"
-                                                        data-image="/placeholder.svg?height=30&width=30">
-                                                        Exotique</option>
-                                                    <option value="Salade Vitaminée"
-                                                        data-image="/placeholder.svg?height=30&width=30">
-                                                        Vitaminée</option>
-                                                </select>
-                                                <select id="heure-2" class="heure-select">
-                                                    <option value="">Heure</option>
-                                                    <option value="10:00">10h</option>
-                                                    <option value="12:00">12h</option>
-                                                    <option value="14:00">14h</option>
-                                                    <option value="16:00">16h</option>
-                                                    <option value="18:00">18h</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="recap">
-                                        <h3>Récapitulatif de vos réservations</h3>
-                                        <p id="recap-lundi">Lundi : Aucune salade sélectionnée</p>
-                                        <p id="recap-mardi">Mardi : Aucune salade sélectionnée</p>
-                                        <p id="recap-mercredi">Mercredi : Aucune salade sélectionnée</p>
+                                        </form>
                                     </div>
                                 </div>
-                                <button class="btn btn-secondary">Confirmer</button>
+                               
                             </div> <br><br>
                         </div>
 
@@ -264,11 +201,14 @@ ob_start(); ?>
                 currentPage: 1,
                 itemsPerPage: 10,
                 selectedDetail: null,
+                offer_id: '',
+                salads: [],
+                times: ['9h', '10h', '11h', '13h', '15h', '17h']
             };
         },
         mounted() {
             this.getUserDatas();
-            this.displayOrders();
+            this.displayNewOrder();
         },
         computed: {
             totalPages() {
@@ -284,13 +224,18 @@ ob_start(); ?>
             getUserDatas() {
                 axios.get('api/script.php?action=getMyDatas')
                     .then((response) => {
-                        console.log(response.data.first_name);
-                        this.details = response.data;
+                        if (Array.isArray(response.data) && response.data.length > 0) {
+                            // Access the first object in the array
+                            this.details = response.data[0];
+                            this.offer_id = this.details.offer_id || null;
+                            console.log(this.offer_id); // Logs the offer_id value
+                        } else {
+                            console.warn('No data found in API response.');
+                        }
                     })
                     .catch((error) => {
-                        console.error(error);
+                        console.error('Error fetching user data:', error);
                     });
-
             },
             displayNextOrders() {
                 this.showNextOrders = true;
@@ -325,6 +270,14 @@ ob_start(); ?>
                     });
             },
             displayNewOrder() {
+                axios.get('api/script.php?action=getSalads')
+                    .then((response) => {
+                        this.salads = response.data;
+                        console.log(response.data);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
                 this.showNextOrders = false;
                 this.showOrders = false;
                 this.showBooking = false;
@@ -370,8 +323,35 @@ ob_start(); ?>
             gotoPage(page) {
                 this.currentPage = page;
             },
+            getImage(pic) {
+    return `public/images/${pic}`;
+}
         },
     });
 
     app.mount('#app');
 </script>
+
+<style>
+    /* Styling the select element */
+.salade-select {
+    background-color: #333; /* Dark background */
+    color: #fff; /* White text for contrast */
+    border: 1px solid #555; /* Optional border color */
+    padding: 10px; /* Add padding for better spacing */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Styling individual dropdown items */
+.salade-select option {
+    background-color: #444; /* Darker background for options */
+    color: #fff; /* White text */
+}
+
+/* Add hover effect for dropdown items */
+.salade-select option:hover {
+    background-color: #555; /* Highlight on hover */
+    color: #fff; /* Ensure text remains visible */
+}
+
+</style>
