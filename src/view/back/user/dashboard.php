@@ -133,7 +133,6 @@ ob_start(); ?>
 
 
                                 <div class="reservation-layout">
-
                                        <form class="" action='api/script.php?action=orderForDay' method='POST'>
                                              <div class="day-item">
                                             <h3 class="day-title">Lundi</h3>
@@ -203,7 +202,8 @@ ob_start(); ?>
                 selectedDetail: null,
                 offer_id: '',
                 salads: [],
-                times: ['9h', '10h', '11h', '13h', '15h', '17h']
+                times: ['9h', '10h', '11h', '13h', '15h', '17h'],
+                formMonday
             };
         },
         mounted() {
@@ -324,8 +324,11 @@ ob_start(); ?>
                 this.currentPage = page;
             },
             getImage(pic) {
-    return `public/images/${pic}`;
-}
+                return `public/images/${pic}`;
+            },
+            submit(){
+                
+            }
         },
     });
 
