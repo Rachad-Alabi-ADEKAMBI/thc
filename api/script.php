@@ -27,6 +27,14 @@ if ($action == 'getMyDatas') {
     getMyDatas();
 }
 
+if ($action == 'getMyOrders') {
+    getMyOrders();
+}
+
+if ($action == 'getMyNextOrders') {
+    getMyNextOrders();
+}
+
 if ($action == 'getMyCashback') {
     getMyCashback();
 }

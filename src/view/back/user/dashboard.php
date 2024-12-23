@@ -46,23 +46,14 @@ ob_start(); ?>
                                 Commandes à venir
                             </h3>
 
-                            <div class="next-orders">
-                                <div class="flex-between">
-                                    <div>
-                                        <h4>Salade Tropicale</h3>
-                                            <p>Livraison prévue le <strong>lundi 18/06/2023</strong>
-                                                a <strong>10 h</strong></p>
-                                    </div>
-                                </div>
+                            <div class="next-orders" v-if='nextOrders.length > 0'>
+                                <div class="flex-between" v-for='detail in nextOrders' :key='detail.id'>
                                 <hr>
-
-                                <div class="flex-between">
                                     <div>
-                                        <h4>Salade Tropicale</h3>
-                                            <p>Livraison prévue le <strong>lundi 18/06/2023</strong>
-                                                a <strong>10 h</strong></p>
+                                        <h4>{{ detail.name }}</h3>
+                                            <p>Livraison prévue le <strong>{{ formatDate(detail.day) }}</strong>
+                                                à <strong>{{ detail.time }}</strong></p>
                                     </div>
-
                                     <div>
                                         <button class="btn btn-primary" @click="displayEditOrder">
                                             <i class="fas fa-edit"></i> Modifier
@@ -70,7 +61,12 @@ ob_start(); ?>
 
                                     </div>
                                 </div>
+                               
                             </div>
+
+                            <p v-if="nextOrders.length === 0">
+                                    Aucune commande à afficher
+                                </p>
 
 
                         </div>
@@ -82,60 +78,46 @@ ob_start(); ?>
                                 </h3>
                             </div>
 
-                            <div class="table-container">
+                                <div class="table-container" v-if="orders.length > 0" >
 
-                                <table class="orders-table">
+                                    <table class="orders-table">
 
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Salade</th>
-                                            <th>Statut</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>15/06/2023</td>
-                                            <td><i data-lucide="apple" aria-hidden="true"></i> Salade Tropicale</td>
-                                            <td><span class="status delivered">Livrée</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>12/06/2023</td>
-                                            <td><i data-lucide="banana" aria-hidden="true"></i> Salade Vitaminée
-                                            </td>
-                                            <td><span class="status delivered">Livrée</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>09/06/2023</td>
-                                            <td><i data-lucide="cherry" aria-hidden="true"></i> Salade Gourmande
-                                            </td>
-                                            <td><span class="status delivered">Livrée</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>06/06/2023</td>
-                                            <td><i data-lucide="grape" aria-hidden="true"></i> Salade Exotique</td>
-                                            <td><span class="status delivered">Livrée</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>03/06/2023</td>
-                                            <td><i data-lucide="lemon" aria-hidden="true"></i> Salade Agrumes</td>
-                                            <td><span class="status delivered">Livrée</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Heure</th>
+                                                <th>Salade</th>
+                                                <th>Statut</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for='detail in orders' :key='detail.id'>
+                                                <td>{{ formatDate(detail.day) }}</td>
+                                                <td>{{ detail.time }}</td>
+                                                <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.salad_name }}</td>
+                                                <td><span class="status delivered">{{ detail.status }}</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="pagination">
+                                    <button class="btn btn-icon">
+                                        Precedent
+                                    </button>
+                                    <span>Page 1 sur 3</span>
+                                    <button class="btn btn-icon">
+                                        Suivant
+                                    </button>
+                                </div>
+                                <p v-if="orders.length === 0">
+                                    Aucune commande à afficher pour l'instant
+                                </p>
                             </div>
-                            <div class="pagination">
-                                <button class="btn btn-icon">
-                                    Precedent
-                                </button>
-                                <span>Page 1 sur 3</span>
-                                <button class="btn btn-icon">
-                                    Suivant
-                                </button>
-                            </div>
+                           
 
 
                         </div>
+               
 
                         <div class="dashboard__content__main" v-if='showNewOrder'>
                             <br>
@@ -277,6 +259,8 @@ ob_start(); ?>
                 showNewOrder: false,
                 showNewOrderBtn: false,
                 details: [],
+                orders: [],
+                nextOrders: [],
                 currentPage: 1,
                 itemsPerPage: 10,
                 selectedDetail: null,
@@ -315,10 +299,10 @@ ob_start(); ?>
                 this.showEdit = false;
                 this.showNewOrder = false;
                 this.showNewOrderBtn = true;
-                axios.get('api/script.php?action=nextOrders')
+                axios.get('api/script.php?action=getMyNextOrders')
                     .then((response) => {
                         console.log(response.data);
-                        this.details = response.data;
+                        this.nextOrders = response.data;
                     })
                     .catch((error) => {
                         console.error(error);
@@ -331,10 +315,10 @@ ob_start(); ?>
                 this.showEdit = false;
                 this.showNewOrder = false;
                 this.showNewOrderBtn = true;
-                axios.get('api/script.php?action=nextOrders')
+                axios.get('api/script.php?action=getMyOrders')
                     .then((response) => {
                         console.log(response.data);
-                        this.details = response.data;
+                        this.orders = response.data;
                     })
                     .catch((error) => {
                         console.error(error);

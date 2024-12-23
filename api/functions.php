@@ -35,103 +35,6 @@ function subscribe()
 }
 
 
-function newSurvey()
-{
-    // Assuming `getConnexion()` returns a PDO instance connected to your database
-    $pdo = getConnexion();
-
-    // Sanitize and retrieve input values
-    $last_name = verifyInput($_POST['last_name']);
-    $first_name = verifyInput($_POST['first_name']);
-    $phone = verifyInput($_POST['phone']);
-    $birth_date = verifyInput($_POST['birth_date']);
-    $sex = verifyInput($_POST['sex']);
-    $category = verifyInput($_POST['category']);
-    $status = verifyInput($_POST['status']);
-    $area = verifyInput($_POST['area']);
-    $household_size = verifyInput($_POST['household_size']);
-    $vegetables_in_diet = verifyInput($_POST['vegetables_in_diet']);
-    $vegetable_list = verifyInput($_POST['vegetable_list']);
-    $land_space = verifyInput($_POST['land_space']);
-    $alternative_space = verifyInput($_POST['alternative_space']);
-    $space_size = verifyInput($_POST['space_size']);
-    $space_observation = verifyInput($_POST['space_observation']);
-    $nutritional_importance = verifyInput($_POST['nutritional_importance']);
-    $interested_in_production = verifyInput($_POST['interested_in_production']);
-    $interested_in_installation = verifyInput($_POST['interested_in_installation']);
-    $available_time = verifyInput($_POST['available_time']);
-    $waste_management = verifyInput($_POST['waste_management']);
-    $gardener_experience = verifyInput($_POST['gardener_experience']);
-    $gardening_tools = verifyInput($_POST['gardening_tools']);
-    $tools_list = verifyInput($_POST['tools_list']);
-    $weekly_hours = verifyInput($_POST['weekly_hours']);
-    $objectives = verifyInput($_POST['objectives']);
-    $composting = verifyInput($_POST['composting']);
-    $cooking_fuel = verifyInput($_POST['cooking_fuel']);
-    $cooking_frequency = verifyInput($_POST['cooking_frequency']);
-    $monthly_budget = verifyInput($_POST['monthly_budget']);
-    $biogas_pack_interest = verifyInput($_POST['biogas_pack_interest']);
-
-    try {
-        // Prepare the SQL statement
-        $sql = $pdo->prepare('INSERT INTO survey (
-            last_name, first_name, birth_date, sex, area, phone, category, status,
-            household_size, vegetables_in_diet, vegetable_list, land_space, alternative_space, space_size, space_observation, nutritional_importance,
-            interested_in_production, interested_in_installation, available_time, waste_management, gardener_experience, gardening_tools, tools_list, weekly_hours,
-            objectives, composting, cooking_fuel, cooking_frequency, monthly_budget, biogas_pack_interest
-        ) VALUES (
-            ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, ?
-        );');
-
-        // Execute the statement with parameters
-        $sql->execute([
-            $last_name,
-            $first_name,
-            $birth_date,
-            $sex,
-            $area,
-            $phone,
-            $category,
-            $status,
-            $household_size,
-            $vegetables_in_diet,
-            $vegetable_list,
-            $land_space,
-            $alternative_space,
-            $space_size,
-            $space_observation,
-            $nutritional_importance,
-            $interested_in_production,
-            $interested_in_installation,
-            $available_time,
-            $waste_management,
-            $gardener_experience,
-            $gardening_tools,
-            $tools_list,
-            $weekly_hours,
-            $objectives,
-            $composting,
-            $cooking_fuel,
-            $cooking_frequency,
-            $monthly_budget,
-            $biogas_pack_interest
-        ]);
-
-        echo '<script>
-            alert("Formulaire enregistré avec succès !");
-            window.history.back();
-        </script>';
-    } catch (PDOException $e) {
-        echo '<script>
-            alert("Une erreur est survenue: ' . addslashes($e->getMessage()) . '");
-            window.history.back();
-        </script>';
-    }
-}
-
 function getMyDatas()
 {
     // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
@@ -143,6 +46,60 @@ function getMyDatas()
     try {
         $pdo = getConnexion();
         $req = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+        
+        // Assurez-vous de transmettre un tableau pour le paramètre
+        $req->execute([$_SESSION['user']['id']]);
+        $datas = $req->fetchAll(); // Option pour obtenir un tableau associatif
+
+        $req->closeCursor();
+
+        // Envoyer les données au format JSON
+        sendJSON($datas);
+    } catch (PDOException $e) {
+        // Gérer les erreurs de la base de données
+        http_response_code(500); // Code HTTP d'erreur interne
+        sendJSON(['error' => 'Une erreur s\'est produite : ' . $e->getMessage()]);
+    }
+}
+
+function getMyOrders()
+{
+    // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
+    if (!isset($_SESSION['user']['id'])) {
+        header("Location: index.php?action=loginPage");
+        exit();
+    }
+
+    try {
+        $pdo = getConnexion();
+        $req = $pdo->prepare("SELECT * FROM orders WHERE user_id = ?");
+        
+        // Assurez-vous de transmettre un tableau pour le paramètre
+        $req->execute([$_SESSION['user']['id']]);
+        $datas = $req->fetchAll(); // Option pour obtenir un tableau associatif
+
+        $req->closeCursor();
+
+        // Envoyer les données au format JSON
+        sendJSON($datas);
+    } catch (PDOException $e) {
+        // Gérer les erreurs de la base de données
+        http_response_code(500); // Code HTTP d'erreur interne
+        sendJSON(['error' => 'Une erreur s\'est produite : ' . $e->getMessage()]);
+    }
+}
+
+function getMyNextOrders()
+{
+    // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
+    if (!isset($_SESSION['user']['id'])) {
+        header("Location: index.php?action=loginPage");
+        exit();
+    }
+
+    try {
+        $pdo = getConnexion();
+        $req = $pdo->prepare("SELECT * FROM orders WHERE user_id = ? AND status = 'A venir' LIMIT 3");
         
         // Assurez-vous de transmettre un tableau pour le paramètre
         $req->execute([$_SESSION['user']['id']]);
