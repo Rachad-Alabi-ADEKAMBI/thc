@@ -31,7 +31,6 @@
                                 Riche en vitamine C pour un boost d'énergie.
                             </strong>
                         </div>
-                        <a href="#" class="btn">Choisir ce pack</a>
                     </div>
 
                     <div class="pack pack2">
@@ -50,7 +49,6 @@
                                 Une escapade exotique avec des saveurs tropicales.
                             </strong>
                         </div>
-                        <a href="#" class="btn">Choisir ce pack</a>
                     </div>
 
                     <div class="pack pack3">
@@ -69,7 +67,6 @@
                                 Un mélange croquant et savoureux.
                             </strong>
                         </div>
-                        <a href="#" class="btn">Choisir ce pack</a>
                     </div>
                 </div>
             </div>

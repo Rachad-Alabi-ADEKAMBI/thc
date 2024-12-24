@@ -177,6 +177,9 @@ ob_start(); ?>
         <strong class="price">
           <i class="fas fa-coins"></i> 7.000 XOF
         </strong>
+        <p class="small">
+          Validité: 30 jours
+        </p>
         <a href="index.php?action=mySubscriptionPage" class="btn-select">Choisir</a>
       </div>
       <div class="pricing__content__item featured mx-auto">
@@ -189,6 +192,9 @@ ob_start(); ?>
         <strong class="price">
           <i class="fas fa-coins"></i> 9.000 XOF
         </strong>
+        <p class="small">
+          Validité: 30 jours
+        </p>
         <a href="index.php?action=mySubscriptionPage" class="btn-select">Choisir</a>
       </div>
       <div class="pricing__content__item mx-auto">
@@ -201,6 +207,9 @@ ob_start(); ?>
         <strong class="price">
           <i class="fas fa-coins"></i> 15.000 XOF
         </strong>
+        <p class="small">
+        Validité: 30 jours
+        </p>
         <a href="index.php?action=mySubscriptionPage" class="btn-select">Choisir</a>
       </div>
     </div>
@@ -209,7 +218,7 @@ ob_start(); ?>
 
   <section class="testimonials">
     <h2 style="color: white"> Témoignages 🥭</h2>
-    <div class="testimonial-slider">
+    <div class="testimonial-slider">  
       <div class="testimonial-track">
         <div class="testimonial-card">
           <img src="public/images/user1.jpg" alt="Avatar 1" class="avatar">

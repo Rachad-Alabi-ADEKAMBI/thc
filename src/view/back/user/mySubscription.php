@@ -74,6 +74,9 @@ ob_start();
         <strong class="price">
             <i class="fas fa-coins"></i> {{ formatNumber(detail.price) }} XOF
         </strong>
+        <p class="small">
+          Validité: 30 jours
+        </p>
         <button class="btn-select" @click="displayPayment(detail)">Choisir</button>
     </div>
 </div>

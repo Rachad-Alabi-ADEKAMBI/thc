@@ -682,6 +682,10 @@ h2 {
   font-size: 1.2rem;
   margin-right: 0.5rem;
 }
+.main .small {
+  font-style: italic;
+  font-weight: smaller;
+}
 .main .btn-select {
   background-color: #F99401;
   color: #ffffff;
