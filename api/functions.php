@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -268,63 +271,71 @@ function newsletters()
     sendJSON($datas);
 }
 
-function login()
-{
-    // Establish database connection
-    $pdo = getConnexion();
 
-    // Retrieve and sanitize the input
-    $email = verifyInput($_POST['email']);
-    $password = verifyInput($_POST['password']);
+function login() {
 
-    $req = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-    $req->execute(array($email));
-    $user = $req->fetch(PDO::FETCH_ASSOC);
+    try {
+        // Connexion à la base de données
+        $pdo = getConnexion();
 
-    if ($user) {
-        // Verify the password using bcrypt
-        if (password_verify($password, $user['password'])) {
-            session_start();
-            // start a session called user
+        // Récupération et sécurisation des entrées
+        $email = verifyInput($_POST['email']); // Correspond au champ 'email' envoyé
+        $password = verifyInput($_POST['password']); // Correspond au champ 'password' envoyé
 
-            $role = $user['role'];
-            
-            $_SESSION['user'] = [
-                'id' => $user['id'],
-                'email' => $user['email'],
-                'first_name' => $user['first_name'],
-                'last_name' => $user['last_name'],
-                'role' => $user['role'],
-                'sponsor_id' => $user['sponsor_id']
-            ];
+        // Recherche de l'utilisateur par email
+        $req = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $req->execute([$email]);
+        $user = $req->fetch(PDO::FETCH_ASSOC);
 
-            if($role = 'user'){
-                header("Location: ../index.php?action=dashboardPage");
-            } else{
-                header("Location: ../index.php?action=dashboardPageAdmin");
+        if ($user) {
+            // Vérification du mot de passe
+            if (password_verify($password, $user['password'])) {
+                $role = $user['role'];
+
+                // Enregistrer les informations de l'utilisateur dans la session
+                session_start();
+                $_SESSION['user'] = [
+                    'id' => $user['id'],
+                    'email' => $user['email'],
+                    'first_name' => $user['first_name'],
+                    'last_name' => $user['last_name'],
+                    'role' => $user['role'],
+                    'sponsor_id' => $user['sponsor_id']
+                ];
+
+                // Réponse JSON
+                echo json_encode([
+                    'status' => 'success',
+                    'role' => $role // Rôle retourné
+                ]);
+                exit();
+            } else {
+                // Mot de passe incorrect
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Identifiants incorrects'
+                ]);
+                exit();
             }
-
-            exit();
         } else {
-            $_SESSION['login']['email'] = $email;
-
-        ?>
-<script>
-    alert('Identifiants incorrects !');
-    window.history.back();
-</script>
-<?php
+            // Utilisateur non trouvé
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Utilisateur non trouvé'
+            ]);
+            exit();
         }
-    } else {
-        $_SESSION['login']['email'] = $email;
-        ?>
-<script>
-    alert('Identifiants incorrects !');
-    window.history.back();
-</script>
-<?php
+    } catch (Exception $e) {
+        // Gestion des exceptions
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Une erreur est survenue : ' . $e->getMessage()
+        ]);
+        exit();
     }
 }
+
+
 
 function register()
 {
