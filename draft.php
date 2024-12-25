@@ -47,17 +47,12 @@
                     // Envoi de la requête avec Axios
                     axios.post('api/script.php?action=login', formData)
                         .then(response => {
-                            console.log('Réponse de l\'API :', response.data);
-                            if (response.data.status === 'success') {
-                                this.successMsg = `Connexion réussie en tant que ${response.data.role}!`;
-
-                                // Redirection selon le rôle
-                                if (response.data.role === 'user') {
+                             // Redirection selon le rôle
+                             if (response.data.role === 'user') {
                                     window.location.replace('index.php?action=dashboardPage');
                                 } else {
                                     window.location.replace('index.php?action=dashboardPageAdmin');
                                 }
-                            }
                         })
                         .catch(error => {
                             console.error('Erreur Axios :', error);
