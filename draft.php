@@ -10,7 +10,9 @@
 <body>
     <div id="app">
         <h1>Formulaire de connexion</h1>
-        <p>{{ successMsg }}</p>
+        <p >
+            {{role}}
+        </p>
         <form @submit.prevent="submitForm">
             <label for="email">
                 Email: <input type="email" id="email" v-model="form.email" required>
@@ -26,6 +28,7 @@
         const app = Vue.createApp({
             data() {
                 return {
+                    role: '',
                     successMsg: '',
                     form: {
                         email: '',
@@ -48,11 +51,16 @@
                     axios.post('api/script.php?action=login', formData)
                         .then(response => {
                              // Redirection selon le rôle
-                             if (response.data.role === 'user') {
-                                    window.location.replace('index.php?action=dashboardPage');
-                                } else {
-                                    window.location.replace('index.php?action=dashboardPageAdmin');
-                                }
+                             console.log(response.data.role);
+                             this.role=(response.data.role);
+
+                             const role= response.data.role;
+
+                             if(role === 'user'){
+                                window.location.replace('index.php?action=dashboardPage');
+                             } else if(role === 'admin' ){
+                                window.location.replace('index.php?action=dashboardAdminPage');
+                             }
                         })
                         .catch(error => {
                             console.error('Erreur Axios :', error);

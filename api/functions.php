@@ -291,9 +291,7 @@ function login() {
             // Vérification du mot de passe
             if (password_verify($password, $user['password'])) {
                 $role = $user['role'];
-
-                // Enregistrer les informations de l'utilisateur dans la session
-                session_start();
+                
                 $_SESSION['user'] = [
                     'id' => $user['id'],
                     'email' => $user['email'],
@@ -303,14 +301,10 @@ function login() {
                     'sponsor_id' => $user['sponsor_id']
                 ];
 
-                // Réponse JSON
-                echo json_encode([
-                    'status' => 'success',
-                    'role' => $role // Rôle retourné
-                ]);
-                exit();
+               sendJSON($user);
             } else {
                 // Mot de passe incorrect
+                header('Content-Type: application/json');
                 echo json_encode([
                     'status' => 'error',
                     'message' => 'Identifiants incorrects'
@@ -319,9 +313,10 @@ function login() {
             }
         } else {
             // Utilisateur non trouvé
+            header('Content-Type: application/json');
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Utilisateur non trouvé'
+                'message' => 'Identifiants incorrects'
             ]);
             exit();
         }
