@@ -35,25 +35,23 @@ ob_start(); ?>
                             </form>
 
                             <div class="ref">
-    <p>Lien d'affiliation: <strong id="link">{{detail.ref}}</strong></p>
+    <p>Lien d'affiliation: <strong id="link" >{{ detail.ref }}</strong></p>
     <div class="btns">
-       
-    <div class="copy-btn" id="copyBtn">
+        <div class="copy-btn" id="copyBtn" @click="copyLink">
             <i class="fa fa-copy"></i>
         </div>
-        <div class="share-btn" data-platform="whatsapp" style='background: #50AF47;'>
-            <i class="fa fa-whatsapp"></i> 
+        <div class="share-btn" data-platform="whatsapp" style="background: #50AF47;" @click="shareByWhatsapp">
+            <i class="fa fa-whatsapp"></i>
         </div>
-        <div class="share-btn" data-platform="facebook" style='background: #0866FF'>
+        <div class="share-btn" data-platform="facebook" style="background: #0866FF;" @click="shareByFacebook">
             <i class="fa fa-facebook"></i>
         </div>
-        <div class="share-btn" data-platform="email" style='background: #F99401'>
+        <div class="share-btn" data-platform="email" style="background: #F99401;" @click="shareByMail">
             <i class="fa fa-envelope"></i>
         </div>
-       
     </div>
-    <div id="copyMessage" class="copy-message"></div>
 </div>
+
                         </div>
 
                         <div class="dashboard__content__main mt-2" v-if='showCashback'>
@@ -141,7 +139,6 @@ ob_start(); ?>
     const app = Vue.createApp({
         data() {
             return {
-                showCashback: false,
                 details: [],
                 cashback: [],
                 affiliated: [],
@@ -150,6 +147,7 @@ ob_start(); ?>
                 selectedDetail: null,
                 showCashback: false,
                 showAffiliated: false,
+                ref: ''
             };
         },
         mounted() {
@@ -171,6 +169,9 @@ ob_start(); ?>
                 axios.get('api/script.php?action=getMyDatas')
                     .then((response) => {
                         this.details = response.data;
+
+                        this.detailss = response.data[0]; // Access the first object in the array
+                         this.ref = this.detailss.ref;
                     })
                     .catch((error) => {
                         console.error(error);
@@ -182,7 +183,6 @@ ob_start(); ?>
                 this.showAffiliated = false;
                 axios.get('api/script.php?action=getMyCashback')
                     .then((response) => {
-                        console.log(response.data);
                         this.cashback = response.data;
                     })
                     .catch((error) => {
@@ -194,7 +194,6 @@ ob_start(); ?>
                 this.showAffiliated = true;
                 axios.get('api/script.php?action=getMyAffiliated')
                     .then((response) => {
-                        console.log(response.data);
                         this.affiliated = response.data;
                     })
                     .catch((error) => {
@@ -242,6 +241,37 @@ ob_start(); ?>
             gotoPage(page) {
                 this.currentPage = page;
             },
+            copyLink() {
+                const link = 'https://www.thehealthychoice.com?ref='+this.ref;
+                navigator.clipboard.writeText(link).then(() => {
+                    alert("Lien copié dans le presse-papiers !");
+                }).catch(err => {
+                    console.error("Erreur lors de la copie du lien :", err);
+                });
+            },
+
+    // Share the referral link via email
+    shareByMail() {
+        const link = 'https://www.thehealthychoice.com?ref='+this.ref;
+        const subject = encodeURIComponent("Voici mon lien d'affiliation !");
+        const body = encodeURIComponent(`Bonjour,\n\nJe voulais partager ce lien avec vous :\n${link}\n\nCordialement.`);
+        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    },
+
+    // Share the referral link via WhatsApp
+    shareByWhatsapp() {
+        const link = 'https://www.thehealthychoice.com?ref='+this.ref;
+        const message = encodeURIComponent(`Bonjour, voici mon lien d'affiliation Healthy Choice : ${link}`);
+        const whatsappUrl = `https://wa.me/?text=${message}`;
+        window.open(whatsappUrl, "_blank");
+    },
+
+    // Share the referral link via Facebook
+    shareByFacebook() {
+        const link = 'https://www.thehealthychoice.com?ref='+this.ref;
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
+        window.open(facebookUrl, "_blank");
+    }
         },
     });
 

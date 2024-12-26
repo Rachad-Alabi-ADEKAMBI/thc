@@ -82,17 +82,13 @@ ob_start(); ?>
     const app = Vue.createApp({
         data() {
             return {
-                showMyAffiliations: false,
                 details: [],
                 affiliated: [],
-                currentPage: 1,
-                itemsPerPage: 10,
                 selectedDetail: null,
             };
         },
         mounted() {
             this.getUserDatas();
-            this.displayMyAfffiliations();
         },
         computed: {
             totalPages() {
@@ -116,17 +112,6 @@ ob_start(); ?>
                     });
 
             },
-            displayMyAffiliations() {
-                this.showNextOrders = false;
-                axios.get('api/script.php?action=getMyAffiliations')
-                    .then((response) => {
-                        console.log(response.data);
-                        this.affiliated = response.data;
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            },
             formatDate(date) {
                 const [year, month, day] = date.split('-');
                 return `${day}-${month}-${year}`;
@@ -136,20 +121,7 @@ ob_start(); ?>
             },
             capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-            },
-            previousPage() {
-                if (this.currentPage > 1) {
-                    this.currentPage--;
-                }
-            },
-            nextPage() {
-                if (this.currentPage < this.totalPages) {
-                    this.currentPage++;
-                }
-            },
-            gotoPage(page) {
-                this.currentPage = page;
-            },
+            }
         },
     });
 
