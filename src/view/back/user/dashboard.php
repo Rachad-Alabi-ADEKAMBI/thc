@@ -120,18 +120,22 @@ ob_start(); ?>
 
 
                                 <div class="reservation">
-                                    <form @submit.prevent="orderForMonday">
+                                <div class="monday"> 
+                                    <form @submit.prevent="orderForMonday" 
+                                       >
                                         <div class="day-item">
                                             <h3 class="day-title">Lundi</h3>
                                             <div class="form-group">
                                                 <label for="salade-0">Salade</label>
-                                                <select id="salade-0" class="salade-select" v-model="mondaySalad" name="salad_name">
+                                                <select id="salade-0" class="salade-select" v-model="form.salad_name" required>
                                                     <option value="">Choisir</option>
                                                     <option value="Pack Tropical">Pack Tropical</option>
                                                     <option value="Pack Vitaminé">Pack Vitaminé</option>
                                                     <option value="Pack Croquant">Pack Croquant</option>
                                                 </select>
-                                                <select id="heure-0" class="heure-select" v-model="mondayTime" name="time">
+                                                
+                                                <label for="heure-0">Heure</label>
+                                                <select id="heure-0" class="heure-select" v-model="form.time" required>
                                                     <option value="">Heure</option>
                                                     <option value="9h">9h</option>
                                                     <option value="11h">11h</option>
@@ -139,10 +143,18 @@ ob_start(); ?>
                                                     <option value="15h">15h</option>
                                                     <option value="17h">17h</option>
                                                 </select>
-                                                <button type="submit" class="btn btn-secondary">Confirmer</button>
+                                                
+                                                <button type="submit" 
+                                                        class="btn btn-secondary" 
+                                                        :disabled="!form.salad_name || !form.time">
+                                                    Confirmer
+                                                </button>
                                             </div>
                                         </div>
-                                    </form> <br>
+                                    </form>
+                                </div>
+                                <br>
+
 
                                     <form @submit.prevent="orderForMonday">
                                         <div class="day-item">
@@ -232,15 +244,23 @@ ob_start(); ?>
                 itemsPerPage: 10,
                 selectedDetail: null,
                 offer_id: '',
+                monday: '',
+                tuesday: '',
+                wednesday: '',
+                thursday: '',
+                friday: '',
                 salads: [],
                 times: ['9h', '10h', '11h', '13h', '15h', '17h'],
-                mondaySalad: '',
-                mondayTime: ''
+                form:{
+                    salad_name: '',
+                    day: '',
+                    time: ''
+                }
             };
         },
         mounted() {
             this.getUserDatas();
-            this.displayOrders();
+            this.displayNewOrder();
         },
         computed: {
             totalPages() {
@@ -257,10 +277,15 @@ ob_start(); ?>
                 axios.get('api/script.php?action=getMyDatas')
                     .then((response) => {
                         if (Array.isArray(response.data) && response.data.length > 0) {
-                            // Access the first object in the array
-                            this.details = response.data[0];
-                            this.offer_id = this.details.offer_id || null;
-                            console.log(this.offer_id); // Logs the offer_id value
+                            this.details = response.data;
+                            console.log(this.details)
+
+                            this.datas = response.data[0];
+                            this.offer_id = this.datas.offer_id || null;
+                            this.monday = this.datas.monday || null;
+
+
+                            console.log(this.monday); // Logs the offer_id value
                         } else {
                             console.warn('No data found in API response.');
                         }
@@ -318,6 +343,14 @@ ob_start(); ?>
                 this.showNewOrderBtn = false;
             },
             closeNewOrder() {
+                axios.get('api/script.php?action=getMyNextOrders')
+                    .then((response) => {
+                        console.log(response.data);
+                        this.nextOrders = response.data;
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
                 this.showNextOrders = true;
                 this.showOrders = false;
                 this.showBooking = false;
