@@ -12,14 +12,17 @@ ob_start(); ?>
                 <div class="contact-container">
                     <div class="contact-form-container" id="app">
                         <h2> Connexion 🍒</h2>
-                        <form class="contact-form" action="api/script.php?action=login" method="POST">
+                        <form class="contact-form"  @submit.prevent="submitForm">
+                            <p class="text text-danger  fw-bold" v-if='message != ""'>
+                                {{ message }}
+                            </p>
                             <div class="form-row">
                                 <div class="col-sm-12 col-md-6 mx-auto">
                                     <div class="form-group">
                                         <label for="email">
                                             <i class="fas fa-user"></i> Email
                                         </label>
-                                        <input type="text" id="email" name="email" required>
+                                        <input type="text" id="email" v-model="form.email" required>
                                     </div>
                                 </div>
                             </div>
@@ -30,7 +33,7 @@ ob_start(); ?>
                                             <i class="fas fa-lock"></i> Mot de passe
                                         </label>
                                         <div class="password-container">
-                                            <input :type="showPassword ? 'text' : 'password'" id="password" name="password" required>
+                                            <input :type="showPassword ? 'text' : 'password'" id="password" v-model="form.password" required>
                                             <i @click="togglePasswordVisibility" :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="password-icon"></i>
                                         </div>
                                     </div>
@@ -74,10 +77,48 @@ ob_start(); ?>
     createApp({
         data() {
             return {
-                showPassword: false
+                showPassword: false,
+                message: '',
+                role: '',
+                form: {
+                     email: '',
+                        password: ''
+                }
             };
         },
         methods: {
+            submitForm(){
+                const formData = new FormData();
+
+                    // Ajout des données saisies au FormData
+                    formData.append('email', this.form.email);
+                    formData.append('password', this.form.password);
+
+                    // Debug : Vérifier les données avant l'envoi
+                    console.log('Données envoyées :', Object.fromEntries(formData));
+
+                    // Envoi de la requête avec Axios
+                    axios.post('api/script.php?action=login', formData)
+                        .then(response => {
+                             // Redirection selon le rôle
+                             console.log(response.data.role);
+                             this.role=(response.data.role);
+
+                             const role= response.data.role;
+
+                             if(role === 'user'){
+                                window.location.replace('index.php?action=dashboardPage');
+                             } else if(role === 'admin' ){
+                                window.location.replace('index.php?action=dashboardAdminPage');
+                             } else{
+                                this.message = 'Identifiants incorrects';
+                             }
+                        })
+                        .catch(error => {
+                            console.error('Erreur Axios :', error);
+                            this.message = 'Erreur lors de la connexion.';
+                        });
+            },
             togglePasswordVisibility() {
                 this.showPassword = !this.showPassword;
             },
