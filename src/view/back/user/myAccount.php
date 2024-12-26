@@ -26,9 +26,13 @@ ob_start(); ?>
                             <div class="row">
                                 <div class="col-md-10 col-sm-12 mx-auto p-5 mt-3" style="border: 2px solid #000;" >
                                     <form class="contact-form" @submit.prevent="submitForm()">
-                                        <p v-if='message != ""' class='text text-danger mx-auto fw-bold'>
-                                            {{ message }}
+                                        <p v-if='successMessage != ""' class='text text-success mx-auto fw-bold'>
+                                            {{ successMessage }}
                                         </p>
+                                        <p v-if='errorMessage != ""' class='text text-danger mx-auto fw-bold'>
+                                            {{ errorMessage }}
+                                        </p>
+
                                         <div class="form-row">
                                             <div class="form-group">
                                                 <label for="password1">
@@ -145,11 +149,12 @@ ob_start(); ?>
     axios.post('api/script.php?action=updateAccount', formData)
         .then(response => {
             console.log(response.data);
-            this.message = 'Mise à jour réussie !';
+            this.successMessage = 'Mise à jour réussie !';
+            this.errorMessage = '';
         })
         .catch(error => {
             console.error('Erreur Axios :', error);
-            this.message = 'Erreur lors de la mise à jour.';
+            this.successMessage = '';
         });
 }
 
