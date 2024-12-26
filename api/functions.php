@@ -10,32 +10,10 @@ use PHPMailer\PHPMailer\Exception;
 // Load Composer's autoloader if using Composer
 require 'vendor/autoload.php';
 
-
+//include db file
 include 'db.php';
 
-function subscribe()
-{
-    $pdo = getConnexion();
-    $email = verifyInput($_POST['email']);
 
-    try {
-        $req = $pdo->prepare('INSERT INTO newsletters (email) VALUES (?)');
-        $req->execute([$email]);
-?>
-<script>
-    alert('Email ajouté avec succès');
-    window.history.back();
-</script>
-<?php
-    } catch (PDOException $e) {
-    ?>
-<script>
-    alert('Une erreur est survenue, merci de réessayer');
-    window.history.back();
-</script>
-<?php
-    }
-}
 
 function orderForDay()
 {
@@ -211,7 +189,6 @@ function getMyCashback()
     }
 }
 
-
 function getMyAffiliated()
 {
     // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
@@ -258,19 +235,6 @@ function getOffer(){
         sendJSON(['error' => 'Une erreur s\'est produite : ' . $e->getMessage()]);
     }
 }
-
-
-function newsletters()
-{
-    $pdo = getConnexion();
-    $req = $pdo->prepare("SELECT * FROM newsletters ORDER BY id DESC");
-    $req->execute();
-    $datas = $req->fetchAll();
-    $req->closeCursor();
-
-    sendJSON($datas);
-}
-
 
 function login() {
 
@@ -330,36 +294,34 @@ function login() {
     }
 }
 
-
-
 function register()
-{
-    // Establish database connection
-    $pdo = getConnexion();
+    {
+        // Establish database connection
+        $pdo = getConnexion();
 
-    // Check if all required fields are filled
-   // List of required fields
-$requiredFields = ['email', 'first_name', 'last_name', 'password', 'password2', 'adress', 'phone'];
+        // Check if all required fields are filled
+    // List of required fields
+    $requiredFields = ['email', 'first_name', 'last_name', 'password', 'password2', 'address', 'phone'];
 
-// Check if any required field is empty or if terms (cgu) are not accepted
-foreach ($requiredFields as $field) {
-    if (empty($_POST[$field])) {
-        showErrorAndGoBack();
-    }
-}
+    // Check if any required field is empty or if terms (cgu) are not accepted
+    foreach ($requiredFields as $field) {
+        if (empty($_POST[$field])) {
+            showErrorAndGoBack();
+                }
+        }
 
-if (!isset($_POST['cgu'])) {
-    showErrorAndGoBack();
-}
+        if (!isset($_POST['cgu'])) {
+            showErrorAndGoBack();
+        }
 
-// Function to display an error message and go back to the previous page
-function showErrorAndGoBack() {
-    echo "<script>
-        alert('Tous les champs doivent être remplis, et les conditions générales doivent être acceptées !');
-        window.history.back();
-    </script>";
-    exit();
-}
+        // Function to display an error message and go back to the previous page
+        function showErrorAndGoBack() {
+            echo "<script>
+                alert('Tous les champs doivent être remplis, et les conditions générales doivent être acceptées !');
+                window.history.back();
+            </script>";
+            exit();
+        }
 
 
     // Retrieve and sanitize input
@@ -368,7 +330,7 @@ function showErrorAndGoBack() {
     $last_name = verifyInput($_POST['last_name']);
     $password = verifyInput($_POST['password']);
     $password2 = verifyInput($_POST['password2']);
-    $adress = verifyInput($_POST['adress']);
+    $address = verifyInput($_POST['address']);
     $phone = verifyInput($_POST['phone']);
     $sponsor_id = verifyInput($_POST['sponsor_id']);
 
@@ -403,8 +365,8 @@ function showErrorAndGoBack() {
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
     // Insert new user into the database
-   $insert = $pdo->prepare("INSERT INTO users (email, first_name, last_name, password, adress, phone, subscription_status, wallet, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    if ($insert->execute([$email, $first_name, $last_name, $hashedPassword, $adress, $phone, 'Inactive', 0, 'user'])) {
+   $insert = $pdo->prepare("INSERT INTO users (email, first_name, last_name, password, address, phone, subscription_status, wallet, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    if ($insert->execute([$email, $first_name, $last_name, $hashedPassword, $address, $phone, 'Inactive', 0, 'user'])) {
 
         $user_id = $pdo->lastInsertId();
 
@@ -435,7 +397,6 @@ function showErrorAndGoBack() {
 
 }
 
-
 function payWithMobile()
 {
     try {
@@ -447,8 +408,7 @@ function payWithMobile()
         $offer_price = verifyInput($_POST['offer_price']);
         $user_first_name = $_SESSION['user']['first_name'];
         $user_last_name = $_SESSION['user']['last_name'];
-        $sponsor_id = $_SESSION['user']['sponsor_id'] ?? null; // Ensure sponsor_id exists or default to null
-        $amount = 1000;
+        $sponsor_id = $_SESSION['user']['sponsor_id'] ?? null; 
         $date_of_expiration = date('Y-m-d', strtotime('+30 days'));
 
         // Insert into subscriptions table
@@ -461,7 +421,13 @@ function payWithMobile()
             $offer_price, $date_of_expiration, 'Active'
         ]);
 
-      //  $subscription_id = $pdo->lastInsertId(); // Get the last inserted subscription ID
+        $subscription_id = $pdo->lastInsertId(); // Get the last inserted subscription ID
+
+         // Update user's subscription status
+         $req = $pdo->prepare(
+            'UPDATE users SET subscription_status = ?, subscription_id = ?, offer_id = ? WHERE id = ?'
+        );
+        $req->execute(['Active', $subscription_id, $offer_id, $user_id]);
 
         // If user was sponsored, insert into cashback table and update sponsor wallet
         if (!empty($sponsor_id)) {
@@ -486,14 +452,13 @@ function payWithMobile()
          //   $req->execute([$new_wallet, $sponsor_id]);
         }
 
-        // Update user's subscription status
-        $req = $pdo->prepare(
-            'UPDATE users SET subscription_status = ?, subscription_id = ?, offer_id = ? WHERE id = ?'
-        );
-     //   $req->execute(['Active', $subscription_id, $offer_id, $user_id]);
+       
 
         // Return a success message
-        return ['status' => 'success', 'message' => 'Subscription processed successfully.'];
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Abonnement effectif'
+        ]);
     } catch (Exception $e) {
         // Log the error in the PHP error log (visible in the console)
         error_log('An error occurred: ' . $e->getMessage());
@@ -507,93 +472,147 @@ function payWithMobile()
     }
 }
 
+function updateAccount() {
+    try {
+        $pdo = getConnexion();
+
+        // Récupération et sécurisation des entrées
+        $password1 = isset($_POST['password1']) ? verifyInput($_POST['password1']) : null;
+        $password2 = isset($_POST['password2']) ? verifyInput($_POST['password2']) : null;
+        $address = verifyInput($_POST['address']);
+        $phone = verifyInput($_POST['phone']);
+
+        $old_phone = $_SESSION['user']['phone'];
+        $old_address = $_SESSION['user']['address'];
+        $user_id = $_SESSION['user']['id'];
+
+        // Mise à jour du mot de passe
+        if (!empty($password1) && !empty($password2)) {
+            if ($password1 !== $password2) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Les mots de passe ne correspondent pas'
+                ]);
+                exit();
+            } else {
+                $hashedPassword = password_hash($password1, PASSWORD_BCRYPT);
+                $req = $pdo->prepare('UPDATE users SET password = ? WHERE id = ?');
+                $req->execute([$hashedPassword, $user_id]);
+            }
+        }
+
+        // Mise à jour du téléphone
+        if ($phone !== $old_phone) {
+            $req = $pdo->prepare('UPDATE users SET phone = ? WHERE id = ?');
+            $req->execute([$phone, $user_id]);
+        }
+
+        // Mise à jour de l'adresse
+        if ($address !== $old_address) {
+            $req = $pdo->prepare('UPDATE users SET address = ? WHERE id = ?');
+            $req->execute([$address, $user_id]);
+        }
+
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Les changements ont bien été enregistrés !'
+        ]);
+
+    } catch (Exception $e) {
+        // Gestion des exceptions
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Une erreur est survenue : ' . $e->getMessage()
+        ]);
+        exit();
+    }
+}
 
 
 
 
 function contact()
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] === 'contact') {
-        // Sanitize input to prevent XSS and other security issues
-        $fullname = htmlspecialchars(trim($_POST['fullname']));
-        $email = htmlspecialchars(trim($_POST['email']));
-        $subject = htmlspecialchars(trim($_POST['subject']));
-        $message = htmlspecialchars(trim($_POST['message']));
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] === 'contact') {
+            // Sanitize input to prevent XSS and other security issues
+            $fullname = htmlspecialchars(trim($_POST['fullname']));
+            $email = htmlspecialchars(trim($_POST['email']));
+            $subject = htmlspecialchars(trim($_POST['subject']));
+            $message = htmlspecialchars(trim($_POST['message']));
 
-        // Validate required fields
-        if (empty($fullname) || empty($email) || empty($subject) || empty($message)) {
-            echo 'Tous les champs avec une * sont obligatoires.';
-            return;
-        }
+            // Validate required fields
+            if (empty($fullname) || empty($email) || empty($subject) || empty($message)) {
+                echo 'Tous les champs avec une * sont obligatoires.';
+                return;
+            }
 
-        // Validate email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo 'Veuillez entrer une adresse email valide.';
-            return;
-        }
+            // Validate email
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                echo 'Veuillez entrer une adresse email valide.';
+                return;
+            }
 
-        // Create a new PHPMailer instance
-        $mail = new PHPMailer(true);
+            // Create a new PHPMailer instance
+            $mail = new PHPMailer(true);
 
-        try {
-            //Server settings
-            $mail->isSMTP();                                      // Send using SMTP
-            $mail->Host = 'smtp.example.com';                     // Set the SMTP server to send through
-            $mail->SMTPAuth = true;                               // Enable SMTP authentication
-            $mail->Username = 'your_smtp_username';               // SMTP username
-            $mail->Password = 'your_smtp_password';               // SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;   // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-            $mail->Port = 587;                                    // TCP port to connect to
+            try {
+                //Server settings
+                $mail->isSMTP();                                      // Send using SMTP
+                $mail->Host = 'smtp.example.com';                     // Set the SMTP server to send through
+                $mail->SMTPAuth = true;                               // Enable SMTP authentication
+                $mail->Username = 'your_smtp_username';               // SMTP username
+                $mail->Password = 'your_smtp_password';               // SMTP password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;   // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+                $mail->Port = 587;                                    // TCP port to connect to
 
-            //Recipients
-            $mail->setFrom($email, $fullname);                    // Sender's email and name
-            $mail->addAddress('adekambirachad@gmail.com');             // Add the recipient
+                //Recipients
+                $mail->setFrom($email, $fullname);                    // Sender's email and name
+                $mail->addAddress('adekambirachad@gmail.com');             // Add the recipient
 
-            // Content
-            $mail->isHTML(true);                                  // Set email format to HTML
-            $mail->Subject = 'Contact Form - ' . $subject;
-            $mail->Body    = "
-            <h3>Vous avez reçu un nouveau message via le formulaire de contact.</h3>
-            <p><strong>Nom:</strong> $fullname</p>
-            <p><strong>Email:</strong> $email</p>
-            <p><strong>Objet:</strong> $subject</p>
-            <p><strong>Message:</strong><br>$message</p>
-        ";
-            $mail->AltBody = "
-            Vous avez reçu un nouveau message via le formulaire de contact.\n
-            Nom: $fullname\n
-            Email: $email\n
-            Objet: $subject\n
-            Message:\n$message
-        ";
+                // Content
+                $mail->isHTML(true);                                  // Set email format to HTML
+                $mail->Subject = 'Contact Form - ' . $subject;
+                $mail->Body    = "
+                <h3>Vous avez reçu un nouveau message via le formulaire de contact.</h3>
+                <p><strong>Nom:</strong> $fullname</p>
+                <p><strong>Email:</strong> $email</p>
+                <p><strong>Objet:</strong> $subject</p>
+                <p><strong>Message:</strong><br>$message</p>
+            ";
+                $mail->AltBody = "
+                Vous avez reçu un nouveau message via le formulaire de contact.\n
+                Nom: $fullname\n
+                Email: $email\n
+                Objet: $subject\n
+                Message:\n$message
+            ";
 
-            // Send the email
-            if ($mail->send()) {
-        ?>
-<script>
-    alert("Votre message a bien été envoyé.");
-    //  window.history.back();
-</script>
-<?php
+                // Send the email
+                if ($mail->send()) {
+            ?>
+    <script>
+        alert("Votre message a bien été envoyé.");
+        //  window.history.back();
+    </script>
+    <?php
             } else {
             ?>
-<script>
-    alert("Erreur lors de l\'envoi du message. Merci de réessayer plus tard.");
-    // window.history.back();
-</script>
-<?php
+        <script>
+            alert("Erreur lors de l\'envoi du message. Merci de réessayer plus tard.");
+            // window.history.back();
+        </script>
+        <?php
             }
         } catch (Exception $e) {
             ?>
-<script>
-    alert("Erreur lors de l\'envoi du message. Veuillez réessayer plus tard.");
-    // window.history.back();
-</script>
-<?php
+    <script>
+        alert("Erreur lors de l\'envoi du message. Veuillez réessayer plus tard.");
+        // window.history.back();
+    </script>
+    <?php
+            }
         }
-    }
 }
-
 
 function logout()
 {

@@ -39,8 +39,6 @@
             methods: {
                 submitForm() {
                     const formData = new FormData();
-
-                    // Ajout des données saisies au FormData
                     formData.append('email', this.form.email);
                     formData.append('password', this.form.password);
 

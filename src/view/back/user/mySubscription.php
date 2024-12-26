@@ -89,7 +89,7 @@ ob_start();
                                    <h3>Choisir un nouvel abonnement</h3>
                                </div>
                                <div class="pricing">
-                                    <div class="pricing__content" action="" method="POST">
+                                    <div class="pricing__content" >
                                         <div class="pricing__content__item subscription ml-0">
                                             <p>
                                                 Abonnement choisi: <strong>{{ selectedOffer.name }}</strong> <br>
@@ -113,40 +113,39 @@ ob_start();
                                         </div>
 
                                         <div class="pricing__content__item subscription ml-0" v-if="showPayWithMobile">
-                                        <form class="contact-form" @submit.prevent="pay">
-    <div class="form-row">
-        <div class="form-group">
-            <label for="network">
-                <i class="fas fa-signal"></i> Réseau mobile
-            </label>
-            <select v-model="form.network" id="network" required>
-                <option value="Mtn">MTN</option>
-                <option value="Moov">Moov</option>
-                <option value="Celtiis">Celtiis</option>
-            </select>
-        </div>
-    </div>
+                                            <form class="contact-form" @submit.prevent="pay">
+                                                <div class="form-row">
+                                                    <div class="form-group">
+                                                        <label for="network">
+                                                            <i class="fas fa-signal"></i> Réseau mobile
+                                                        </label>
+                                                        <select v-model="form.network" id="network" required>
+                                                            <option value="Mtn">MTN</option>
+                                                            <option value="Moov">Moov</option>
+                                                            <option value="Celtiis">Celtiis</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
 
-    <div class="form-group">
-        <label for="phone">
-            <i class="fas fa-phone"></i> Numéro
-        </label>
-        <input type="number" id="phone" v-model="form.phone" required>
-    </div>
+                                                <div class="form-group">
+                                                    <label for="phone">
+                                                        <i class="fas fa-phone"></i> Numéro
+                                                    </label>
+                                                    <input type="number" id="phone" v-model="form.phone" required>
+                                                </div>
 
-    <div class="col-6 text-center mx-auto">
-    <input type="hidden" v-model="form.offer_id">
-    <input type="hidden" v-model="form.offer_name">
-    <input type="hidden" v-model="form.offer_price">
+                                                <div class="col-6 text-center mx-auto">
+                                                <input type="hidden" v-model="form.day" value='Monday'>
+                                                <input type="hidden" v-model="form.offer_id">
+                                                <input type="hidden" v-model="form.offer_name">
+                                                <input type="hidden" v-model="form.offer_price">
 
-    <button type="submit" class="submit-btn mx-auto">
-        <i class="fas fa-money-check-alt"></i> Payer
-    </button>
-</div>
+                                                <button type="submit" class="submit-btn mx-auto">
+                                                    <i class="fas fa-money-check-alt"></i> Payer
+                                                </button>
+                                                </div>
 
-</form>
-
-
+                                            </form>
                                         </div>
 
                                         <div class="pricing__content__item subscription ml-0" v-if="showPayWithWallet">
@@ -213,7 +212,8 @@ const app = Vue.createApp({
                 phone: '',
                 offer_id: '',
                 offer_name: '',
-                offer_price: ''
+                offer_price: '',
+                day: ''
             }
             };
     },
@@ -234,18 +234,18 @@ const app = Vue.createApp({
                 });
         },
         displayPayment(selectedOffer) {
-    this.selectedOffer = selectedOffer; // Set the selected offer
-    this.showSubscription = false;
-    this.showPayment = true;
-    this.showPayWithMobile = false;
-    this.showPayWithWallet = false;
-    this.showPaymentOptions = true;
+            this.selectedOffer = selectedOffer; // Set the selected offer
+            this.showSubscription = false;
+            this.showPayment = true;
+            this.showPayWithMobile = false;
+            this.showPayWithWallet = false;
+            this.showPaymentOptions = true;
 
-    // Populate the form object with the selected offer details
-    this.form.offer_id = selectedOffer.id;
-    this.form.offer_name = selectedOffer.name;
-    this.form.offer_price = selectedOffer.price;
-},
+            // Populate the form object with the selected offer details
+            this.form.offer_id = selectedOffer.id;
+            this.form.offer_name = selectedOffer.name;
+            this.form.offer_price = selectedOffer.price;
+        },
         payWithWallet() {
             this.showPayWithWallet = true;
             this.showPayWithMobile = false;
@@ -255,44 +255,26 @@ const app = Vue.createApp({
             this.showPayWithWallet = false;
         }, 
         pay() {
-    // Ensure the required fields are populated
-    if (!this.form.network || !this.form.phone || !this.form.offer_id) {
-        alert('Veuillez remplir tous les champs requis.');
-        return;
-    }
+            const formData = new FormData();
 
-    axios.post('api/script.php?action=payWithMobile', {
-    offer_id: this.form.offer_id,
-    offer_name: this.form.offer_name,
-    offer_price: this.form.offer_price,
-    network: this.form.network,
-    phone: this.form.phone
-})
-.then(response => {
-    if (response.data && response.data.status === 'success') {
-        alert('Abonnement effectué avec succès');
-        this.resetForm();
-    } else {
-        alert('Abonnement effectué avec succès');
-        const message = response.data.message;
-        console.log(message); // Log the error message from backend
-    }
-})
-.catch(error => {
-    console.error('Une erreur est survenue lors de la soumission du formulaire :', error);
-    alert('Une erreur technique est survenue. Veuillez réessayer.');
+            formData.append('network', this.form.network);
+            formData.append('phone', this.form.phone);
+            formData.append('day', this.form.day);
+            formData.append('offer_id', this.form.offer_id);
+            formData.append('offer_name', this.form.offer_name);
+            formData.append('offer_price', this.form.offer_price);
 
-    // Log the specific error message from the catch block
-    if (error.response) {
-        console.log('Erreur du backend :', error.response.data);
-    } else if (error.request) {
-        console.log('Pas de réponse reçue du serveur :', error.request);
-    } else {
-        console.log('Erreur dans la configuration de la requête :', error.message);
-    }
-});
+            console.log('Données envoyées :', Object.fromEntries(formData));
 
-
+            axios.post('api/script.php?action=payWithMobile', formData)
+                        .then(response => {
+                             console.log(response.data);
+                             alert('Votre abonnment a été activé avec succès');
+                        })
+                        .catch(error => {
+                            console.error('Erreur Axios :', error);
+                            this.successMsg = 'Erreur lors de la connexion.';
+                        });
 },
 
         selectOffer(offer) {

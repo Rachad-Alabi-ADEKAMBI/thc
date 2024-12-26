@@ -3,10 +3,6 @@ include 'functions.php';
 $action = $_GET['action'] ?? '';
 
 
-if ($action == 'subscribe') {
-    subscribe();
-}
-
 if ($action == 'getOffer') {
     getOffer();
 }
@@ -15,10 +11,6 @@ if ($action == 'orderForDay') {
     orderForDay();
 }
 
-
-if ($action == 'newsletters') {
-    newsletters();
-}
 
 if ($action == 'contact') {
     contact();
@@ -58,6 +50,10 @@ if ($action == 'login') {
 
 if ($action == 'register') {
     register();
+}
+
+if ($action == 'updateAccount') {
+    updateAccount();
 }
 
 if ($action == 'logout') {

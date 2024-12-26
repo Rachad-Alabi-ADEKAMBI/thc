@@ -104,7 +104,7 @@ ob_start();
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="address"><i class="fas fa-map-marker-alt"></i> Adresse de livraison</label>
-                                    <input type="text" id="adress" name="adress" required>
+                                    <input type="text" id="address" name="address" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone"><i class="fas fa-phone"></i> Téléphone</label>
