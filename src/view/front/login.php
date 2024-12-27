@@ -1,3 +1,5 @@
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
 <?php $title = "THC - Connexion";
 
 // $articles
@@ -48,9 +50,11 @@ ob_start(); ?>
                                 </button> <hr>
                                 <div class="socials">
                                     <!-- Gmail Button -->
-                                    <button @click.prevent="loginWithGoogle" class="connect-btn gmail-btn mx-auto">
+                                    <button class="connect-btn gmail-btn mx-auto">
                                         <i class="fa fa-google"></i>
                                     </button>
+
+
                                     <!-- Facebook Button -->
                                     <button @click.prevent="loginWithFacebook" class="connect-btn facebook-btn mx-auto">
                                         <i class="fa fa-facebook"></i>
@@ -129,7 +133,33 @@ ob_start(); ?>
             loginWithFacebook() {
                 console.log('Facebook login initiated.');
                 // Implémentez ici l'intégration avec l'API de Facebook
-            }
+            },
+            handleGoogleCredentialResponse(response) {
+        console.log('Google ID Token:', response.credential);
+
+        // Envoyer le token Google ID au serveur pour validation
+        const formData = new FormData();
+        formData.append('token', response.credential);
+
+        axios.post('api/script.php?action=google-login', formData)
+            .then(res => {
+                console.log(response.data.role);
+                             this.role=(response.data.role);
+
+                             const role= response.data.role;
+
+                             if(role === 'user'){
+                                window.location.replace('index.php?action=dashboardPage');
+                             } else if(role === 'admin' ){
+                                window.location.replace('index.php?action=dashboardAdminPage');
+                             } else{
+                                this.message = 'Identifiants incorrects';
+                             }
+            })
+            .catch(err => {
+                console.error('Erreur Google Login:', err);
+            });
+    }
         }
     }).mount('#app');
 </script>

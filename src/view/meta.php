@@ -27,4 +27,5 @@
 
 <script src="public/js/script.js"></script>
 
+
 <link rel="icon" type="image/x-icon" href="./public/images/logo-rond-simple.ico">

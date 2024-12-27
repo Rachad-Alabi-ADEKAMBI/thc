@@ -1,0 +1,144 @@
+$primary: #FD4F65;
+$secondary: #F99401;
+$tertiary: #50AF47;
+$grey-dark: #272222;
+$white: white;
+$black: black;
+$grey-light: #333333;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: $grey-dark;
+  color: $white;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+.about {
+  padding: 4rem 2rem;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: rgba($grey-light, 0.1);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 8px 32px rgba($black, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  &__title {
+    text-align: center;
+    color: $primary;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba($black, 0.1);
+  }
+
+  &__content {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  &__image-container {
+    flex: 1;
+    max-width: 50%;
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba($primary, 0.2);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__text {
+    flex: 1;
+  }
+
+  &__description {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: rgba($white, 0.9);
+  }
+
+  &__features {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 2rem;
+
+    li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 0.5rem;
+      color: $secondary;
+
+      &::before {
+        content: '🍓';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  &__cta {
+    display: inline-block;
+    background-color: $tertiary;
+    color: $white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: darken($tertiary, 10%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba($tertiary, 0.3);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 2rem 1rem;
+
+    &__container {
+      padding: 2rem;
+    }
+
+    &__title {
+      font-size: 2rem;
+    }
+
+    &__content {
+      flex-direction: column;
+    }
+
+    &__image-container {
+      max-width: 100%;
+      margin-bottom: 2rem;
+    }
+
+    &__description {
+      font-size: 1rem;
+    }
+
+    &__cta {
+      display: block;
+      text-align: center;
+    }
+  }
+}

@@ -794,6 +794,102 @@ h2 {
     box-sizing: border-box;
   }
 }
+.main .faq {
+  width: 100%;
+  padding: 2rem;
+}
+.main .faq__container {
+  background-color: rgba(51, 51, 51, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+.main .faq__title {
+  text-align: center;
+  color: #FD4F65;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.main .faq__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.main .faq__item {
+  background-color: rgba(51, 51, 51, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.main .faq__item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(253, 79, 101, 0.2);
+}
+.main .faq__question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.main .faq__question:hover {
+  background-color: rgba(249, 148, 1, 0.1);
+}
+.main .faq__question span {
+  flex: 1;
+  margin-right: 1rem;
+}
+.main .faq__icon {
+  width: 24px;
+  height: 24px;
+  fill: #F99401;
+  transition: transform 0.3s ease;
+}
+.active .main .faq__icon {
+  transform: rotate(45deg);
+}
+.main .faq__answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+}
+.main .faq__answer p {
+  padding: 0 1.2rem 1.2rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+.active .main .faq__answer {
+  max-height: 1000px;
+}
+@media (max-width: 600px) {
+  .main .faq {
+    padding: 1rem;
+  }
+  .main .faq__container {
+    padding: 1.5rem;
+  }
+  .main .faq__title {
+    font-size: 2rem;
+  }
+  .main .faq__question {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+  .main .faq__answer p {
+    padding: 0 1rem 1rem;
+  }
+}
 @keyframes fadeIn {
   from {
     opacity: 0;

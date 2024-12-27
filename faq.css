@@ -1,0 +1,118 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #272222;
+  color: white;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+.about {
+  padding: 4rem 2rem;
+}
+.about__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: rgba(51, 51, 51, 0.1);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+.about__title {
+  text-align: center;
+  color: #FD4F65;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.about__content {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+.about__image-container {
+  flex: 1;
+  max-width: 50%;
+}
+.about__image {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(253, 79, 101, 0.2);
+  transition: transform 0.3s ease;
+}
+.about__image:hover {
+  transform: scale(1.05);
+}
+.about__text {
+  flex: 1;
+}
+.about__description {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+.about__features {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+.about__features li {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 0.5rem;
+  color: #F99401;
+}
+.about__features li::before {
+  content: "🍓";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.about__cta {
+  display: inline-block;
+  background-color: #50AF47;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.about__cta:hover {
+  background-color: #3f8b38;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(80, 175, 71, 0.3);
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 2rem 1rem;
+  }
+  .about__container {
+    padding: 2rem;
+  }
+  .about__title {
+    font-size: 2rem;
+  }
+  .about__content {
+    flex-direction: column;
+  }
+  .about__image-container {
+    max-width: 100%;
+    margin-bottom: 2rem;
+  }
+  .about__description {
+    font-size: 1rem;
+  }
+  .about__cta {
+    display: block;
+    text-align: center;
+  }
+}/*# sourceMappingURL=faq.css.map */

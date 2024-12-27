@@ -28,3 +28,5 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error("Un ou plusieurs éléments sont manquants.");
     }
 });
+
+

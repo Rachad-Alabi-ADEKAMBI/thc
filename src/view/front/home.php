@@ -124,7 +124,7 @@ ob_start(); ?>
       </div>
 
       <div class="reason__content__image">
-        <img src="./public/images/fruits0.jpeg" alt="Logo carré">
+        <img src="./public/images/fruits3.jpg" alt="salades de fruits au benin">
       </div>
     </div>
   </div>
@@ -135,7 +135,7 @@ ob_start(); ?>
     <div class="reason__content">
 
       <div class="reason__content__image">
-        <img src="./public/images/fruits1.jpeg" alt="Logo carré">
+        <img src="./public/images/fruits1.jpeg" alt="salades de fruits au benin">
       </div>
       <div class="reason__content__text">
         <h2>
@@ -275,6 +275,153 @@ ob_start(); ?>
       <button class="next"><i class="fas fa-chevron-right"></i></button>
     </div>
   </section>
+
+
+  <div class="reason">
+    <div class="reason__content">
+
+      <div class="reason__content__image">
+      <img src="./public/images/fruits0.jpeg" alt="salades de fruits au benin" style='width: 100%; border-radius: 10px'>
+      </div>
+      <div class="reason__content__text">
+      <div class="faq__container">
+                  <h2 class="faq__title">Questions Fréquemment Posées 🍊</h2>
+                  <div class="faq__list">
+                      <div class="faq__item">
+                          <button class="faq__question">
+                              <span>Dans quelles zones livrez-vous à Cotonou ?</span>
+                              <svg class="faq__icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                          </button>
+                          <div class="faq__answer">
+                              <p>Nous livrons dans les zones suivantes: <br>
+                            <ul>
+                              <li>
+                                1er arrondissement (Le Bélier, Dandji, Donatin, Tokplegbe, Tanto, Suru-Léré, etc ...)
+                              </li>
+                              <li>
+                              2e arrondissement (Yénawa, Kowégbo, Irédé, Kpondéhou 1et 2, Sènadé 1 et 2, etc ...)
+                              </li>
+                              <li>
+                              3e arrondissement (Adjégoulè, Adogléta, Hounonkpo, Hlakonmè, Kpankpan, Midombo, Sègbéya, etc ....)
+                              </li>
+
+                              <li>
+                              4e arrondissement (Sodjeatinmè Est, Sodjeatinmè Ouest, Sodjeatinmè centre, Abokicodji centre, Abokicodji lagune, Dédokpo, etc ... )
+                              </li>
+
+                              <li>
+                              5e arrondissement (Guinkomè, Tokpa hoho, Wlacodji Kpodji, Wlacodji plage, Dota, Gbeto, Mifongu, Zongo, etc ...)
+                              </li>
+
+                              <li>
+                              6e arrondissement ( Aidjèdo 1, 2, 3,4 ; Ahouansori Agata, Ahouansori Toweta 1et 2, Gbèdromèdé 1 et 2, etc ...)
+                              </li>
+
+                              <li>
+                              7e arrondissement ( Gbenan, Gbewa (Batito), Sedami, Sedjro, Todoté, Yevedo, Dagbédji, Enagnon, Fignon, Missité, Sehogan, etc ...)
+                              </li>
+                              <li>
+                              8e arrondissement (Agbodjedo, Agontikon, Gbédagba, Houéhoun, Houénoussou, Médedjro, Tonato, Minonkpo, etc ...)
+                              </li>
+
+                              <li>
+                              9e arrondissement (Fifadji, Vossakpodji, Zogbo, Zogbohohouè, etc ...)
+                              </li>
+
+                              <li>
+                              10e arrondissement  (Gbènonkpo, Kouhounou, Midédji, Missékplé, Missogbé, Vèdoko, etc ...)
+                              </li>
+
+                              <li>
+                              11e arrondissement (Gbediga 1 et2, Gbégamey 1, 2, 3, 4, Saint Jean, Alobatin, Ayidoté, Finagnon, Houéyiho 1 et 2, Vodjè centre, etc ...)
+                              </li>
+                            </ul></p>
+                          </div>
+                      </div>
+                      <div class="faq__item">
+                          <button class="faq__question">
+                              <span>Comment programmer mes livraisons ?</span>
+                              <svg class="faq__icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                          </button>
+                          <div class="faq__answer">
+                              <p>
+                                Dans votre tableau de bord, cliquez sur le menu (programmer), choisissez le jour, l'heure et le pack de 
+                                votre choix, chaque semaine nous appliquerons ces choix, vous pouvez à tout moment modifier vos choix. Pour 
+                                ce faire aller dans le tableau recapitulatif de vos livraisons à venir toujours dans le tableau de bord et Sélectionnez
+                                la ligne concernée pour apporter des modifications.
+                              </p>
+                          </div>
+                      </div>
+                      
+                      <div class="faq__item">
+                          <button class="faq__question">
+                              <span>Quels types de fruits sont inclus dans vos salades ?</span>
+                              <svg class="faq__icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                          </button>
+                          <div class="faq__answer">
+                              <p>Nous sélectionnons une variété de fruits frais et de saison, tels que la mangue, l'ananas,
+                                 la pastèque, les fraises, et bien d’autres.</p>
+                          </div>
+                      </div>
+                      <div class="faq__item">
+                          <button class="faq__question">
+                              <span>Combien de temps mes salades de fruits restent-elles fraîches ?</span>
+                              <svg class="faq__icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                          </button>
+                          <div class="faq__answer">
+                              <p>
+                              Nos salades sont préparées quotidiennement et livrées fraîches. 
+                              Si elles sont conservées au réfrigérateur, elles restent fraîches jusqu'à 3 jours.
+                              </p>
+                          </div>
+                      </div>
+
+                      <div class="faq__item">
+                          <button class="faq__question">
+                              <span>Comment se passe l'affiliation ?</span>
+                              <svg class="faq__icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                          </button>
+                          <div class="faq__answer">
+                              <p>
+                                Vous avez un lien de parrainage présent dans le menu "affiliation", chaque fois que quelqu'un qui s'est inscrit grâce à votre 
+                                lien renouvelle son abonnement, 10% du montant payé vous sont reversés. Vous pouvez retirer cette somme ou vous en servir pour 
+                                renouveller votre abonnement. 
+                                <br> (Vous devez avoir un abonnement en cours pour profiter de ce service d'affiliation)
+                              </p>
+                          </div>
+                      </div>
+
+
+                      <div class="faq__item">
+                          <button class="faq__question">
+                              <span>Quelle est la fréquence de livraison ?</span>
+                              <svg class="faq__icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                          </button>
+                          <div class="faq__answer">
+                              <p>
+                              Vous pouvez choisir des livraisons quotidiennes, hebdomadaires ou selon un calendrier qui vous convient.
+                              </p>
+                          </div>
+                      </div>
+                      <div class="faq__item">
+                          <button class="faq__question">
+                              <span>Comment puis-je vous contacter en cas de problème ?</span>
+                              <svg class="faq__icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                          </button>
+                          <div class="faq__answer">
+                              <p>
+                              Vous pouvez nous joindre par téléphone, WhatsApp, ou via notre formulaire de contact sur le site. 
+                              Nous répondons rapidement à toutes vos demandes.
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+      </div>
+
+
+    </div>
+  </div>
 
 
 
