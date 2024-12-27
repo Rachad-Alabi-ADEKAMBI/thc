@@ -221,9 +221,12 @@ ob_start(); ?>
     <div class="testimonial-slider">  
       <div class="testimonial-track">
         <div class="testimonial-card">
-          <img src="public/images/user1.jpg" alt="Avatar 1" class="avatar">
-          <p class="quote">"Le service de livraison de fruits est incroyable ! Toujours frais et à l'heure."</p>
-          <p class="author">Marie D.</p>
+          <p class="quote">
+            THC a littéralement changé ma routine quotidienne. Chaque matin, 
+            je reçois une salade fraîche selon mes goûts, . Je n'ai plus besoin de m'inquiéter pour mes allergies à certains fruits, et
+              cela me fait vraiment plaisir. "
+          </p>
+          <p class="author">Marie DOSSOU.</p>
           <div class="rating">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -233,21 +236,28 @@ ob_start(); ?>
           </div>
         </div>
         <div class="testimonial-card">
-          <img src="https://i.pravatar.cc/150?img=2" alt="Avatar 2" class="avatar">
-          <p class="quote">"J'adore la variété des fruits proposés. Ça égaye mes journées !"</p>
-          <p class="author">Thomas L.</p>
+          <p class="quote">
+            "J’ai essayé le service d’abonnement pour mes pauses déjeuner au bureau, et j’en suis ravi ! 
+            Les fruits sont toujours d'une fraîcheur incomparable, et les portions sont généreuses.
+             Merci à toute l’équipe pour leur travail exceptionnel."
+          </p>
+          <p class="author">Thomas LOKO.</p>
           <div class="rating">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
+            <i class="fas fa-star"></i>
           </div>
         </div>
         <div class="testimonial-card">
-          <img src="https://i.pravatar.cc/150?img=3" alt="Avatar 3" class="avatar">
-          <p class="quote">"Excellent rapport qualité-prix. Je recommande vivement !"</p>
-          <p class="author">Sophie M.</p>
+          <p class="quote">
+            "Je suis abonnée depuis six mois, et je suis impressionnée par la régularité et la
+             qualité des livraisons. 
+               En tant que personne soucieuse de ma santé, je recommande vivement 
+               ce service à tous ceux qui veulent allier plaisir et nutrition."
+          </p>
+          <p class="author">Sophie MAHOUGNON</p>
           <div class="rating">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -257,9 +267,11 @@ ob_start(); ?>
           </div>
         </div>
         <div class="testimonial-card">
-          <img src="https://i.pravatar.cc/150?img=4" alt="Avatar 4" class="avatar">
-          <p class="quote">"Le service client est top ! Ils sont toujours à l'écoute et réactifs."</p>
-          <p class="author">Lucas P.</p>
+          <p class="quote">
+            "Je n’ai jamais vu un service client aussi efficace !! Les fruits sont excellents, et le packaging est 
+            très pratique pour emporter partout. Bravo pour ce service qui dépasse toutes mes attentes."
+          </p>
+          <p class="author">Lucas CAKPO</p>
           <div class="rating">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -274,7 +286,8 @@ ob_start(); ?>
       <button class="prev"><i class="fas fa-chevron-left"></i></button>
       <button class="next"><i class="fas fa-chevron-right"></i></button>
     </div>
-  </section>
+</section>
+
 
 
   <div class="reason">

@@ -20,6 +20,10 @@ if ($action == 'getMyDatas') {
     getMyDatas();
 }
 
+if ($action == 'getMySubscription') {
+    getMySubscription();
+}
+
 if ($action == 'getMyOrders') {
     getMyOrders();
 }

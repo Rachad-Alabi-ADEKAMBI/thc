@@ -62,6 +62,8 @@ ob_start();
                         if (isset($_GET['ref']) && !empty($_GET['ref'])) { ?>
                             <input type="hidden" name="ref" value="<?= htmlspecialchars($ref) ?>"> 
                             <input type="hidden" name="sponsor_id" value="<?= htmlspecialchars($datas[0]['id']) ?>">
+                            <input type="hidden" name="sponsor_first_name" value="<?= htmlspecialchars($datas[0]['first_name']) ?>">
+                            <input type="hidden" name="sponsor_last_name" value="<?= htmlspecialchars($datas[0]['last_name']) ?>">
                         <?php } ?>
 
                             <div class="form-row">
@@ -160,6 +162,7 @@ const app = Vue.createApp({
         return {
             showPassword1: false,
             showPassword2: false,
+
         };
     },
     methods: {

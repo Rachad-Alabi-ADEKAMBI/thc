@@ -21,67 +21,68 @@ ob_start();
                         </div>
 
                         <!-- Contenu principal -->
-                        <div class="dashboard__content__main mt-2" v-for="detail in details" :key="detail.id">
+                        <div class="dashboard__content__main mt-2">
                             <div class="" v-if="showSubscription">
                                 <div class="top">
                                     <h3>Abonnement en cours</h3>
                                 </div>
 
-                                <div class="pricing" id="pricing" style='margin-top: -50px;'  v-if="detail.subscription_status === 'Active'">    
-                                    <div class="pricing__content">
+                               <div class="" >
+                               <div class="pricing" id="pricing" style='margin-top: -50px;'  v-if="details.length > 0">    
+                                    <div class="pricing__content" v-for='detail in details' :key='detail.id'>
                                         <div class="pricing__content__item">
                                             <strong class="offer-name">
-                                                <i class="fas fa-leaf"></i> Starter
+                                                <i class="fas fa-leaf"></i> {{ detail.name }}
                                             </strong>
                                             <ul>
-                                                <li><i class="fas fa-check"></i> 2 livraisons / semaine</li>
+                                                <li><i class="fas fa-check"></i> {{ detail.days }} livraisons / semaine</li>
                                             </ul>
                                             <strong class="price">
-                                                <i class="fas fa-coins"></i> 6.000 XOF
+                                                <i class="fas fa-coins"></i> {{ formatNumber(detail.price) }} XOF
                                             </strong>
 
                                             <strong>
                                                 Expiration: <strong>
-                                                    15/01/2025
+                                                    {{ formatDate(detail.date_of_expiration) }}
                                                 </strong>
                                             </strong>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="pricing" id="pricing" style='margin-top: -50px;'  v-if="detail.subscription_status === 'Inactive'">
+                                <div class="pricing" id="pricing" style='margin-top: -50px;'   v-if="details.length === 0">
                                     <p class='mx-auto'>
                                         Vous n'avez aucun abonnement en cours
                                     </p> <br>
                                     <div class="pricing__content">
-    <div 
-        class="pricing__content__item" 
-        :class="{ 'featured': detail.featured === 'yes' }" 
-        v-for="detail in offers" 
-        :key="detail.id"
-    >
-        <strong class="offer-name">
-            <i class="fas fa-leaf"></i> {{ detail.name }}
-        </strong>
-        <p>
-            Jours de livraison ({{ detail.number_of_days }})
-        </p>
-        <ul>
-            <li v-for="day in detail.days" :key="day">
-                <i class="fas fa-check"></i> {{ day }}
-            </li>
-        </ul>
-        <strong class="price">
-            <i class="fas fa-coins"></i> {{ formatNumber(detail.price) }} XOF
-        </strong>
-        <p class="small">
-          Validité: 30 jours
-        </p>
-        <button class="btn-select" @click="displayPayment(detail)">Choisir</button>
-    </div>
-</div>
+                                        <div 
+                                            class="pricing__content__item" 
+                                            v-for="detail in offers" 
+                                            :key="detail.id"
+                                        >
+                                            <strong class="offer-name">
+                                                <i class="fas fa-leaf"></i> {{ detail.name }}
+                                            </strong>
+                                            <p>
+                                                Jours de livraison ({{ detail.number_of_days }})
+                                            </p>
+                                            <ul>
+                                                <li v-for="day in detail.days" :key="day">
+                                                    <i class="fas fa-check"></i> {{ day }}
+                                                </li>
+                                            </ul>
+                                            <strong class="price">
+                                                <i class="fas fa-coins"></i> {{ formatNumber(detail.price) }} XOF
+                                            </strong>
+                                            <p class="small">
+                                            Validité: 30 jours
+                                            </p>
+                                            <button class="btn-select" @click="displayPayment(detail)">Choisir</button>
+                                        </div>
+                                    </div>
 
                                 </div>
+                               </div>
                             </div>
 
                            <div class="" v-if="showPayment">
@@ -221,13 +222,13 @@ const app = Vue.createApp({
         this.getUserDatas();
     },
     methods: {
-        // Récupération des données utilisateur depuis l'API
         getUserDatas() {
             this.showSubscription = true;
             this.showPayment = false;
-            axios.get('api/script.php?action=getMyDatas')
+            axios.get('api/script.php?action=getMySubscription')
                 .then(response => {
                     this.details = response.data;
+                    console.log(details.length)
                 })
                 .catch(error => {
                     console.error("Erreur lors de la récupération des données : ", error);
@@ -270,6 +271,7 @@ const app = Vue.createApp({
                         .then(response => {
                              console.log(response.data);
                              alert('Votre abonnment a été activé avec succès');
+                             window.location.replace('index.php?action=mySubscriptionPage');
                         })
                         .catch(error => {
                             console.error('Erreur Axios :', error);
@@ -296,7 +298,11 @@ const app = Vue.createApp({
                 return '';
             }
             return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
+        },
+        formatDate(date) {
+    const [year, month, day] = date.split('-');
+    return `${day}-${month}-${year}`;
+  }
 
     }
 });

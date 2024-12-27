@@ -87,6 +87,38 @@ function getMyDatas()
     }
 }
 
+function getMySubscription()
+{
+    // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
+    if (!isset($_SESSION['user']['id'])) {
+        header("Location: index.php?action=loginPage");
+        exit();
+    }
+
+    try {
+        $pdo = getConnexion();
+        $req = $pdo->prepare("
+        SELECT * 
+        FROM users
+        INNER JOIN offers ON users.offer_id = offers.id
+        INNER JOIN subscriptions ON users.subscription_id = subscriptions.id
+        WHERE users.id = ? AND users.subscription_status = ?
+    ");
+        
+        // Assurez-vous de transmettre un tableau pour le paramètre
+        $req->execute([$_SESSION['user']['id'], 'Active']);
+        $datas = $req->fetchAll(); 
+        $req->closeCursor();
+
+        
+        sendJSON($datas);
+    } catch (PDOException $e) {
+        // Gérer les erreurs de la base de données
+        http_response_code(500); // Code HTTP d'erreur interne
+        sendJSON(['error' => 'Une erreur s\'est produite : ' . $e->getMessage()]);
+    }
+}
+
 function getMyOrders()
 {
     // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page de connexion
@@ -295,107 +327,75 @@ function login() {
 }
 
 function register()
-    {
-        // Establish database connection
+{
+    try {
         $pdo = getConnexion();
 
-        // Check if all required fields are filled
-    // List of required fields
-    $requiredFields = ['email', 'first_name', 'last_name', 'password', 'password2', 'address', 'phone'];
+        $email = verifyInput($_POST['email']);
+        $first_name = verifyInput($_POST['first_name']);
+        $last_name = verifyInput($_POST['last_name']);
+        $password = verifyInput($_POST['password']);
+        $password2 = verifyInput($_POST['password2']);
+        $address = verifyInput($_POST['address']);
+        $phone = verifyInput($_POST['phone']);
+        $sponsor_id = isset($_POST['sponsor_id']) && !empty($_POST['sponsor_id']) ? verifyInput($_POST['sponsor_id']) : null;
 
-    // Check if any required field is empty or if terms (cgu) are not accepted
-    foreach ($requiredFields as $field) {
-        if (empty($_POST[$field])) {
-            showErrorAndGoBack();
-                }
+        $sponsor_first_name = $sponsor_id ? verifyInput($_POST['sponsor_first_name']) : null;
+        $sponsor_last_name = $sponsor_id ? verifyInput($_POST['sponsor_last_name']) : null;
+
+        // Check if passwords match
+        if ($password !== $password2) {
+            respondWithError('Les mots de passe ne sont pas identiques');
         }
 
-        if (!isset($_POST['cgu'])) {
-            showErrorAndGoBack();
+        // Check if the email is already registered
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        if ($stmt->fetch()) {
+            respondWithError('Cet email est déjà utilisé !');
         }
 
-        // Function to display an error message and go back to the previous page
-        function showErrorAndGoBack() {
-            echo "<script>
-                alert('Tous les champs doivent être remplis, et les conditions générales doivent être acceptées !');
-                window.history.back();
-            </script>";
-            exit();
+        // Hash the password
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        // Insert new user into the database
+        $insert = $pdo->prepare("INSERT INTO users (email, first_name, last_name, password, address, phone, subscription_status, wallet, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        if (!$insert->execute([$email, $first_name, $last_name, $hashedPassword, $address, $phone, 'Inactive', 0, 'user'])) {
+            respondWithError('Une erreur est survenue, veuillez réessayer ou nous contacter si le problème persiste !');
         }
-
-
-    // Retrieve and sanitize input
-    $email = verifyInput($_POST['email']);
-    $first_name = verifyInput($_POST['first_name']);
-    $last_name = verifyInput($_POST['last_name']);
-    $password = verifyInput($_POST['password']);
-    $password2 = verifyInput($_POST['password2']);
-    $address = verifyInput($_POST['address']);
-    $phone = verifyInput($_POST['phone']);
-    $sponsor_id = verifyInput($_POST['sponsor_id']);
-
-    // Check if passwords match
-    if ($password !== $password2) {
-        echo "<script>
-            alert('Les mots de passe ne correspondent pas !');
-            window.history.back();
-        </script>";
-        exit();
-    }
-
-    // Check if the email is already registered
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->execute([$email]);
-    if ($stmt->fetch()) {
-        echo "<script>
-            alert('Cet email est déjà enregistré !');
-            window.history.back();
-        </script>";
-        exit();
-    }
-
-    //check if ref exists
-    if (isset($ref)){
-        $ref = verifyInput($_POST['ref']);
-        $sponsor_id =  verifyInput($_POST['sponsor_id']);
-    }
-
-
-    // Hash the password
-    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-    // Insert new user into the database
-   $insert = $pdo->prepare("INSERT INTO users (email, first_name, last_name, password, address, phone, subscription_status, wallet, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    if ($insert->execute([$email, $first_name, $last_name, $hashedPassword, $address, $phone, 'Inactive', 0, 'user'])) {
 
         $user_id = $pdo->lastInsertId();
 
-        if (isset($sponsor_id)) {
+        if ($sponsor_id) {
             // Update the user's sponsor_id in the users table
             $req = $pdo->prepare('UPDATE users SET sponsor_id = ? WHERE id = ?');
             $req->execute([$sponsor_id, $user_id]);
-        
+
             // Insert the sponsorship relationship into the sponsorships table
-            $req = $pdo->prepare('INSERT INTO sponsorships (sponsor_id, sponsored_id) VALUES (?, ?)');
-            $req->execute([$sponsor_id, $user_id]);
+            $req = $pdo->prepare('INSERT INTO sponsorships (sponsor_id, sponsor_first_name, sponsor_last_name, sponsored_id, sponsored_first_name, sponsored_last_name) VALUES (?, ?, ?, ?, ?, ?)');
+            $req->execute([$sponsor_id, $sponsor_first_name, $sponsor_last_name, $user_id, $first_name, $last_name]);
         }
 
-
-        echo "<script>
-            alert('Inscription réussie ! Veuillez vous connecter.');
-            window.location.href = '../index.php?action=loginPage';
-        </script>";
-    } else {
-        echo "<script>
-            alert('Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.');
-            window.history.back();
-        </script>";
+        respondWithSuccess('Inscription enregistrée avec succès, veuillez vous connecter');
+    } catch (Exception $e) {
+        respondWithError('Une erreur inattendue s\'est produite : ' . $e->getMessage());
     }
-
-   
-  
-
 }
+
+function respondWithError($message)
+{
+    header('Content-Type: application/json');
+    echo json_encode(['status' => 'error', 'message' => $message]);
+    exit();
+}
+
+function respondWithSuccess($message)
+{
+    header('Content-Type: application/json');
+    echo json_encode(['status' => 'success', 'message' => $message]);
+    exit();
+}
+
 
 function payWithMobile()
 {
@@ -410,6 +410,7 @@ function payWithMobile()
         $user_last_name = $_SESSION['user']['last_name'];
         $sponsor_id = $_SESSION['user']['sponsor_id'] ?? null; 
         $date_of_expiration = date('Y-m-d', strtotime('+30 days'));
+
 
         // Insert into subscriptions table
         $req = $pdo->prepare(   
@@ -429,18 +430,42 @@ function payWithMobile()
         );
         $req->execute(['Active', $subscription_id, $offer_id, $user_id]);
 
+        //if it is first subscription update user ref link
+        $req = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $req->execute([$email]);
+        $user = $req->fetch(PDO::FETCH_ASSOC);
+
+        $currentDate = date('d-m-Y'); 
+        $currentTime = date('Hi');
+        $firstNamePart = substr($firstName, 0, 2);
+        $dayPart = substr($currentDate, 0, 2);
+        $lastNamePart = substr($lastName, 0, 4);
+        
+        // Construire le lien d'affiliation unique
+        $ref = 'thc'.$firstNamePart . $dayPart . $lastNamePart . $currentTime . $userId;
+
+        $req = $pdo->prepare(
+            'UPDATE users SET ref = ? WHERE id = ?'
+        );
+
+        $req->execute([$ref, $user_id]);
+
+        
+
         // If user was sponsored, insert into cashback table and update sponsor wallet
         if (!empty($sponsor_id)) {
+            
+            $amount = 0.1 * $offer_price;
+
             // Insert into cashback table
             $req = $pdo->prepare(
                 'INSERT INTO cashback (sponsor_id, sponsored_id, sponsored_first_name, sponsored_last_name, 
                 subscription_id, offer_id, amount) VALUES (?, ?, ?, ?, ?, ?, ?)'
             );
-        /*    $req->execute([
+            $req->execute([
                 $sponsor_id, $user_id, $user_first_name, $user_last_name, 
                 $subscription_id, $offer_id, $amount
             ]);
-            */
 
             // Update sponsor wallet
             $req = $pdo->prepare('SELECT wallet FROM users WHERE id = ?');
@@ -449,7 +474,7 @@ function payWithMobile()
 
             $new_wallet = $old_wallet + $amount;
             $req = $pdo->prepare('UPDATE users SET wallet = ? WHERE id = ?');
-         //   $req->execute([$new_wallet, $sponsor_id]);
+            $req->execute([$new_wallet, $sponsor_id]);
         }
 
        
@@ -527,8 +552,6 @@ function updateAccount() {
         exit();
     }
 }
-
-
 
 
 function contact()

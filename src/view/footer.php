@@ -111,3 +111,4 @@
 </script>
 
 <script src="public/js/faq.js"></script>
+<script src="public/js/slider.js"></script>

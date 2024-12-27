@@ -121,8 +121,7 @@ ob_start(); ?>
 
                                 <div class="reservation">
                                 <div class="monday"> 
-                                    <form @submit.prevent="orderForMonday" 
-                                       >
+                                    <form @submit.prevent="orderForMonday"  >
                                         <div class="day-item">
                                             <h3 class="day-title">Lundi</h3>
                                             <div class="form-group">
@@ -154,55 +153,6 @@ ob_start(); ?>
                                     </form>
                                 </div>
                                 <br>
-
-
-                                    <form @submit.prevent="orderForMonday">
-                                        <div class="day-item">
-                                            <h3 class="day-title">Mercredi</h3>
-                                            <div class="form-group">
-                                                <label for="salade-0">Salade</label>
-                                                <select id="salade-0" class="salade-select" v-model="mondaySalad" name="salad_name">
-                                                    <option value="">Choisir</option>
-                                                    <option value="Pack Tropical">Pack Tropical</option>
-                                                    <option value="Pack Vitaminé">Pack Vitaminé</option>
-                                                    <option value="Pack Croquant">Pack Croquant</option>
-                                                </select>
-                                                <select id="heure-0" class="heure-select" v-model="mondayTime" name="time">
-                                                    <option value="">Heure</option>
-                                                    <option value="9h">9h</option>
-                                                    <option value="11h">11h</option>
-                                                    <option value="13h">13h</option>
-                                                    <option value="15h">15h</option>
-                                                    <option value="17h">17h</option>
-                                                </select>
-                                                <button type="submit" class="btn btn-secondary">Confirmer</button>
-                                            </div>
-                                        </div>
-                                    </form> <br>
-
-                                    <form @submit.prevent="orderForMonday">
-                                        <div class="day-item">
-                                            <h3 class="day-title">Vendredi</h3>
-                                            <div class="form-group">
-                                                <label for="salade-0">Salade</label>
-                                                <select id="salade-0" class="salade-select" v-model="mondaySalad" name="salad_name">
-                                                    <option value="">Choisir</option>
-                                                    <option value="Pack Tropical">Pack Tropical</option>
-                                                    <option value="Pack Vitaminé">Pack Vitaminé</option>
-                                                    <option value="Pack Croquant">Pack Croquant</option>
-                                                </select>
-                                                <select id="heure-0" class="heure-select" v-model="mondayTime" name="time">
-                                                    <option value="">Heure</option>
-                                                    <option value="9h">9h</option>
-                                                    <option value="11h">11h</option>
-                                                    <option value="13h">13h</option>
-                                                    <option value="15h">15h</option>
-                                                    <option value="17h">17h</option>
-                                                </select>
-                                                <button type="submit" class="btn btn-secondary">Confirmer</button>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
 
                                
@@ -238,6 +188,7 @@ ob_start(); ?>
                 showNewOrder: false,
                 showNewOrderBtn: false,
                 details: [],
+                datas: [],
                 orders: [],
                 nextOrders: [],
                 currentPage: 1,
@@ -278,14 +229,6 @@ ob_start(); ?>
                     .then((response) => {
                         if (Array.isArray(response.data) && response.data.length > 0) {
                             this.details = response.data;
-                            console.log(this.details)
-
-                            this.datas = response.data[0];
-                            this.offer_id = this.datas.offer_id || null;
-                            this.monday = this.datas.monday || null;
-
-
-                            console.log(this.monday); // Logs the offer_id value
                         } else {
                             console.warn('No data found in API response.');
                         }
@@ -330,11 +273,32 @@ ob_start(); ?>
                 axios.get('api/script.php?action=getSalads')
                     .then((response) => {
                         this.salads = response.data;
-                        console.log(response.data);
                     })
                     .catch((error) => {
                         console.error(error);
+                });
+
+                axios.get('api/script.php?action=getMyDatas')
+                    .then((response) => {
+                        if (Array.isArray(response.data) && response.data.length > 0) {
+                        // Récupérer le premier objet de la réponse
+                        const dataa = response.data[0];
+
+                        // Assigner les valeurs en utilisant les clés descriptives
+                        this.datas = dataa;
+                        this.offer_id = dataa.offer_id || null;
+                        //this.monday = datas.monday || null;
+
+                        console.log(dataa.offer_id); // Logs the offer_id value
+                        } else {
+                        console.warn('No data found in API response.');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error fetching user data:', error);
                     });
+
+                    
                 this.showNextOrders = false;
                 this.showOrders = false;
                 this.showBooking = false;
@@ -408,40 +372,40 @@ ob_start(); ?>
             },
             orderForMonday() {
                 axios.post('api/script.php?action=orderForDay', {
-            salad_name: this.mondaySalad,
-            day: 'lundi',
-            time: this.mondayTime
-                })
-            .then(response => {
-                if (response.data && response.data.success) {
-                    alert('Commande effectuée avec succès');
-                    this.resetFormMonday();
-                } else {
-                    // Loguez et affichez l'erreur spécifique
-                    const message = response.data || 'Erreur inconnue';
-                    console.error('Erreur API :', message);
-                    alert(message);
-                }
-            })
-            .catch(error => {
-                // Gérer les erreurs réseau ou autres erreurs axios
-                console.error('Une erreur technique est survenue :', error);
+                    salad_name: this.mondaySalad,
+                    day: 'lundi',
+                    time: this.mondayTime
+                        })
+                    .then(response => {
+                        if (response.data && response.data.success) {
+                            alert('Commande effectuée avec succès');
+                            this.resetFormMonday();
+                        } else {
+                            // Loguez et affichez l'erreur spécifique
+                            const message = response.data || 'Erreur inconnue';
+                            console.error('Erreur API :', message);
+                            alert(message);
+                        }
+                        })
+                        .catch(error => {
+                            // Gérer les erreurs réseau ou autres erreurs axios
+                            console.error('Une erreur technique est survenue :', error);
 
-                if (error.response) {
-                    // Loggez l'erreur retournée par le backend
-                    console.error('Erreur backend :', error.response.data.details || error.response.data.message);
-                    alert(error.response.data.details || 'Une erreur est survenue.');
-                } else if (error.request) {
-                    // Pas de réponse du serveur
-                    console.error('Pas de réponse reçue du serveur :', error.request);
-                    alert('Impossible de contacter le serveur.');
-                } else {
-                    // Erreur lors de la configuration de la requête
-                    console.error('Erreur dans la configuration de la requête :', error.message);
-                    alert('Erreur technique.');
-                }
-            });
-        }  
+                            if (error.response) {
+                                // Loggez l'erreur retournée par le backend
+                                console.error('Erreur backend :', error.response.data.details || error.response.data.message);
+                                alert(error.response.data.details || 'Une erreur est survenue.');
+                            } else if (error.request) {
+                                // Pas de réponse du serveur
+                                console.error('Pas de réponse reçue du serveur :', error.request);
+                                alert('Impossible de contacter le serveur.');
+                            } else {
+                                // Erreur lors de la configuration de la requête
+                                console.error('Erreur dans la configuration de la requête :', error.message);
+                                alert('Erreur technique.');
+                            }
+                        });
+                    }  
         },
     });
 
