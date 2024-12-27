@@ -56,8 +56,12 @@ ob_start();
                             <?php endif; ?>
                         <?php endif; ?>
                         <hr>
-                        <form class="contact-form" action="api/script.php?action=register" 
-                        method="POST">
+                        <form class="contact-form"  @submit.prevent="submitForm">
+                            
+                        <p class="text text-danger  fw-bold" v-if='message != ""'>
+                                {{ message }}
+                            </p>
+                            
                         <?php
                         if (isset($_GET['ref']) && !empty($_GET['ref'])) { ?>
                             <input type="hidden" name="ref" value="<?= htmlspecialchars($ref) ?>"> 
@@ -162,6 +166,17 @@ const app = Vue.createApp({
         return {
             showPassword1: false,
             showPassword2: false,
+            form: {
+                     email: '',
+                    password: '',
+                    phone: '',
+                    address: '',
+                    password2: '',
+                    ref: '',
+                    sponsor_id: '',
+                    sponsor_first_name: '',
+                    sponsor_last_name: '',
+                }
 
         };
     },
@@ -172,14 +187,38 @@ const app = Vue.createApp({
     togglePassword2Visibility() {
         this.showPassword2 = !this.showPassword2;
     },
-            loginWithGoogle() {
-                console.log('Google login initiated.');
-                // Implémentez ici l'intégration avec l'API de Google
+    submitForm(){
+                const formData = new FormData();
+
+                    // Ajout des données saisies au FormData
+                    formData.append('email', this.form.email);
+                    formData.append('password', this.form.password);
+
+                    // Debug : Vérifier les données avant l'envoi
+                    console.log('Données envoyées :', Object.fromEntries(formData));
+
+                    // Envoi de la requête avec Axios
+                    axios.post('api/script.php?action=register', formData)
+                        .then(response => {
+                             // Redirection selon le rôle
+                             console.log(response.data.role);
+                             this.role=(response.data.role);
+
+                             const role= response.data.role;
+
+                             if(role === 'user'){
+                                window.location.replace('index.php?action=dashboardPage');
+                             } else if(role === 'admin' ){
+                                window.location.replace('index.php?action=dashboardAdminPage');
+                             } else{
+                                this.message = 'Identifiants incorrects';
+                             }
+                        })
+                        .catch(error => {
+                            console.error('Erreur Axios :', error);
+                            this.message = 'Erreur lors de la connexion.';
+                        });
             },
-            loginWithFacebook() {
-                console.log('Facebook login initiated.');
-                // Implémentez ici l'intégration avec l'API de Facebook
-            }
     },
 });
 app.mount('#app');
