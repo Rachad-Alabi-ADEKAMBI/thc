@@ -17,45 +17,49 @@ include 'db.php';
 
 function orderForDay()
 {
-    $pdo = getConnexion();  
-    $salad_name = verifyInput($_POST['mon']);
-    $time = verifyInput($_POST['time']);
-    
-    $user_id = $_SESSION['user']['id'];
+    try{
+        $pdo = getConnexion(); 
 
-    $dayOfWeek = 'monday'; // Specify the day of the week you want to find
-    $today = new DateTime(); // Get today's date
-    
-    // Function to get the next occurrence of a specific day
-    function getNextDay($dayOfWeek)
-    {
-        $today = new DateTime(); // Get the current date
-        $today->modify("next $dayOfWeek"); // Move to the next specified day
-        return $today->format('Y-m-d'); // Return the date in YYYY-MM-DD format
-    }
-    
-    // Get the next Monday
-    $nextDay = getNextDay($dayOfWeek);
+        $user_id = $_SESSION['user']['id'];
+        $salad_name = verifyInput($_POST['salad_name']);
+        $time = verifyInput($_POST['time']);
+        $dayOfWeek =  verifyInput($_POST['day']);
+        $today = new DateTime(); 
+        
+        // Function to get the next occurrence of a specific day
+        function getNextDay($dayOfWeek)
+        {
+            $today = new DateTime(); // Get the current date
+            $today->modify("next $dayOfWeek"); // Move to the next specified day
+            return $today->format('Y-m-d'); // Return the date in YYYY-MM-DD format
+        }
+        
+        // Get the next Monday
+        $nextDay = getNextDay($dayOfWeek);
 
-    try {
-        // Insert the order into the database
+          // Insert the order into the database
         $req = $pdo->prepare('INSERT INTO orders (user_id, salad_name, day, time, status) VALUES (?, ?, ?, ?, ?)');
         $req->execute([$user_id, $salad_name, $nextDay, $time, 'A livrer']);
     
         // Update user's delivery day status to "yes"
-        $req = $pdo->prepare("UPDATE users SET $column = ? WHERE id = ?");
+        $req = $pdo->prepare("UPDATE users SET $day = ? WHERE id = ?");
         $req->execute(['yes', $user_id]);
     
-        // Return a success message to the front end
-        $datas = ['success' => true, 'message' => "Order successfully placed for next $dayOfWeek!"];
-       // sendJSON($datas);
-       return $datas;
-    } catch (PDOException $e) {
-        // Handle database errors
-        http_response_code(500); // Internal server error HTTP status code
-      return  ['error' => true, 'message' => 'An error occurred', 'details' => $e->getMessage()];
-      $datas = ['success' => false, 'message' => 'An error occurred', 'details' => $e->getMessage()];
-      return $datas;
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Commande enregistrée avec succès !'
+        ]);
+
+    } catch (Exception $e) {
+        // Log the error in the PHP error log (visible in the console)
+        error_log('Une erreur est : ' . $e->getMessage());
+
+        // Return an error message with detailed explanation
+        return [
+            'status' => 'error',
+            'message' => 'Une erreur est survenue lors du traitement de l\'abonnement : ' . $e->getMessage(),
+            'details' => 'Veillez à vérifier les informations saisies et réessayer. Si le problème persiste, contactez le support technique.'
+        ];
     }
     
 }

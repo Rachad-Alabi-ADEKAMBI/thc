@@ -122,8 +122,7 @@ ob_start(); ?>
                                 <div class="reservation">
                                     <div class="monday" v-if="offer_id == 2 || offer_id == 3">
                                         <form @submit.prevent="orderForDay"  >
-                                        <input  value="monday" v-model="form.day">
-
+                                            <input  type='hidden' value='monday' v-model='form.day'>
                                             <div class="day-item">
                                                 <h3 class="day-title">Lundi</h3>
                                                 <div class="form-group">
