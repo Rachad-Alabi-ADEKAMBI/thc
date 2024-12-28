@@ -24,33 +24,38 @@ ob_start(); ?>
 
                         <div class="dashboard__content__menu">
                         <form class="form">
+                        <label for="allRadio" class="ml-5">
+                                    <input type="radio" id="allRadio" name="options" @click="displayAffiliated()">
+                                    Mes affiliés
+                                </label>
                                 <label for="newRadio" class="ml-5">
                                     <input type="radio" id="newRadio" name="options" @click="displayCashback()">
                                     Historique Cashback
                                 </label>
-                                <label for="allRadio" class="ml-5">
-                                    <input type="radio" id="allRadio" name="options" @click="displayAffiliated()">
-                                    Mes affiliés
-                                </label>
+                                
                             </form>
-
+                            
+                            
                             <div class="ref">
-    <p>Lien d'affiliation: <strong id="link" >{{ detail.ref }}</strong></p>
-    <div class="btns">
-        <div class="copy-btn" id="copyBtn" @click="copyLink">
-            <i class="fa fa-copy"></i>
-        </div>
-        <div class="share-btn" data-platform="whatsapp" style="background: #50AF47;" @click="shareByWhatsapp">
-            <i class="fa fa-whatsapp"></i>
-        </div>
-        <div class="share-btn" data-platform="facebook" style="background: #0866FF;" @click="shareByFacebook">
-            <i class="fa fa-facebook"></i>
-        </div>
-        <div class="share-btn" data-platform="email" style="background: #F99401;" @click="shareByMail">
-            <i class="fa fa-envelope"></i>
-        </div>
-    </div>
-</div>
+                            <p class='text text-danger'  v-if="!detail.ref" > Merci de souscrire à un abonnement <br> pour générer votre lien unique  <br>
+                            d'affiliation</p>
+                                <p  v-if='detail.ref'>Lien d'affiliation: <strong id="link" >{{ detail.ref }}</strong></p>
+
+                                <div class="btns" v-if='detail.ref'>
+                                    <div class="copy-btn" id="copyBtn" @click="copyLink">
+                                        <i class="fa fa-copy"></i>
+                                    </div>
+                                    <div class="share-btn" data-platform="whatsapp" style="background: #50AF47;" @click="shareByWhatsapp">
+                                        <i class="fa fa-whatsapp"></i>
+                                    </div>
+                                    <div class="share-btn" data-platform="facebook" style="background: #0866FF;" @click="shareByFacebook">
+                                        <i class="fa fa-facebook"></i>
+                                    </div>
+                                    <div class="share-btn" data-platform="email" style="background: #F99401;" @click="shareByMail">
+                                        <i class="fa fa-envelope"></i>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
 

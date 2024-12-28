@@ -66,11 +66,6 @@ ob_start();
                                             <p>
                                                 Jours de livraison ({{ detail.number_of_days }})
                                             </p>
-                                            <ul>
-                                                <li v-for="day in detail.days" :key="day">
-                                                    <i class="fas fa-check"></i> {{ day }}
-                                                </li>
-                                            </ul>
                                             <strong class="price">
                                                 <i class="fas fa-coins"></i> {{ formatNumber(detail.price) }} XOF
                                             </strong>
