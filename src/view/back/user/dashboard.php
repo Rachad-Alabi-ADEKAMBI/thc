@@ -120,38 +120,166 @@ ob_start(); ?>
 
 
                                 <div class="reservation">
-                                <div class="monday"> 
-                                    <form @submit.prevent="orderForMonday"  >
-                                        <div class="day-item">
-                                            <h3 class="day-title">Lundi</h3>
-                                            <div class="form-group">
-                                                <label for="salade-0">Salade</label>
-                                                <select id="salade-0" class="salade-select" v-model="form.salad_name" required>
-                                                    <option value="">Choisir</option>
-                                                    <option value="Pack Tropical">Pack Tropical</option>
-                                                    <option value="Pack Vitaminé">Pack Vitaminé</option>
-                                                    <option value="Pack Croquant">Pack Croquant</option>
-                                                </select>
-                                                
-                                                <label for="heure-0">Heure</label>
-                                                <select id="heure-0" class="heure-select" v-model="form.time" required>
-                                                    <option value="">Heure</option>
-                                                    <option value="9h">9h</option>
-                                                    <option value="11h">11h</option>
-                                                    <option value="13h">13h</option>
-                                                    <option value="15h">15h</option>
-                                                    <option value="17h">17h</option>
-                                                </select>
-                                                
-                                                <button type="submit" 
-                                                        class="btn btn-secondary" 
-                                                        :disabled="!form.salad_name || !form.time">
-                                                    Confirmer
-                                                </button>
+                                    <div class="monday" v-if="offer_id == 2 || offer_id == 3">
+                                        <form @submit.prevent="orderForDay"  >
+                                        <input  value="monday" v-model="form.day">
+
+                                            <div class="day-item">
+                                                <h3 class="day-title">Lundi</h3>
+                                                <div class="form-group">
+                                                    <label for="salade-0">Salade</label>
+                                                    <select id="salade-0" class="salade-select" v-model="form.salad_name" required>
+                                                        <option value="">Choisir</option>
+                                                        <option value="Pack Tropical">Pack Tropical</option>
+                                                        <option value="Pack Vitaminé">Pack Vitaminé</option>
+                                                        <option value="Pack Croquant">Pack Croquant</option>
+                                                    </select>
+                                                    
+                                                    <label for="heure-0">Heure</label>
+                                                    <select id="heure-0" class="heure-select" v-model="form.time" required>
+                                                        <option value="">Heure</option>
+                                                        <option value="9h">9h</option>
+                                                        <option value="11h">11h</option>
+                                                        <option value="13h">13h</option>
+                                                        <option value="15h">15h</option>
+                                                        <option value="17h">17h</option>
+                                                    </select>
+                                                    
+                                                   <button class="btn btn-secondary">
+                                                         <i class="fas fa-check-circle"></i> Confirmer
+                                                   </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="tuesday"  v-if="offer_id == 1 || offer_id == 3">
+                                        <form @submit.prevent="orderForDay"  >
+                                            <input type="hidden" value='tuesday' v-model='form.day'>
+                                            <div class="day-item">
+                                                <h3 class="day-title">Mardi</h3>
+                                                <div class="form-group">
+                                                    <label for="salade-0">Salade</label>
+                                                    <select id="salade-0" class="salade-select" v-model="form.salad_name" required>
+                                                        <option value="">Choisir</option>
+                                                        <option value="Pack Tropical">Pack Tropical</option>
+                                                        <option value="Pack Vitaminé">Pack Vitaminé</option>
+                                                        <option value="Pack Croquant">Pack Croquant</option>
+                                                    </select>
+                                                    
+                                                    <label for="heure-0">Heure</label>
+                                                    <select id="heure-0" class="heure-select" v-model="form.time" required>
+                                                        <option value="">Heure</option>
+                                                        <option value="9h">9h</option>
+                                                        <option value="11h">11h</option>
+                                                        <option value="13h">13h</option>
+                                                        <option value="15h">15h</option>
+                                                        <option value="17h">17h</option>
+                                                    </select>
+                                                    
+                                                   <button class="btn btn-secondary">
+                                                         <i class="fas fa-check-circle"></i> Confirmer
+                                                   </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="wednesday" v-if="offer_id == 2 || offer_id == 3">
+                                        <form @submit.prevent="orderForDay"  >
+                                            <input type="hidden" value='wednesday' v-model='form.day'>
+                                            <div class="day-item">
+                                                <h3 class="day-title">Mercredi</h3>
+                                                <div class="form-group">
+                                                    <label for="salade-0">Salade</label>
+                                                    <select id="salade-0" class="salade-select" v-model="form.salad_name" required>
+                                                        <option value="">Choisir</option>
+                                                        <option value="Pack Tropical">Pack Tropical</option>
+                                                        <option value="Pack Vitaminé">Pack Vitaminé</option>
+                                                        <option value="Pack Croquant">Pack Croquant</option>
+                                                    </select>
+                                                    
+                                                    <label for="heure-0">Heure</label>
+                                                    <select id="heure-0" class="heure-select" v-model="form.time" required>
+                                                        <option value="">Heure</option>
+                                                        <option value="9h">9h</option>
+                                                        <option value="11h">11h</option>
+                                                        <option value="13h">13h</option>
+                                                        <option value="15h">15h</option>
+                                                        <option value="17h">17h</option>
+                                                    </select>
+                                                    
+                                                   <button class="btn btn-secondary">
+                                                         <i class="fas fa-check-circle"></i> Confirmer
+                                                   </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="thursday"  v-if="offer_id == 1 || offer_id == 3">
+                                        <form @submit.prevent="orderForDay"  >
+                                            <input type="hidden" value='thursday' v-model='form.day'>
+                                            <div class="day-item">
+                                                <h3 class="day-title">Jeudi</h3>
+                                                <div class="form-group">
+                                                    <label for="salade-0">Salade</label>
+                                                    <select id="salade-0" class="salade-select" v-model="form.salad_name" required>
+                                                        <option value="">Choisir</option>
+                                                        <option value="Pack Tropical">Pack Tropical</option>
+                                                        <option value="Pack Vitaminé">Pack Vitaminé</option>
+                                                        <option value="Pack Croquant">Pack Croquant</option>
+                                                    </select>
+                                                    
+                                                    <label for="heure-0">Heure</label>
+                                                    <select id="heure-0" class="heure-select" v-model="form.time" required>
+                                                        <option value="">Heure</option>
+                                                        <option value="9h">9h</option>
+                                                        <option value="11h">11h</option>
+                                                        <option value="13h">13h</option>
+                                                        <option value="15h">15h</option>
+                                                        <option value="17h">17h</option>
+                                                    </select>
+                                                    
+                                                   <button class="btn btn-secondary">
+                                                         <i class="fas fa-check-circle"></i> Confirmer
+                                                   </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="friday" v-if="offer_id == 2 || offer_id == 3">
+                                        <form @submit.prevent="orderForDay">
+                                            <input type="hidden" value='friday' v-model='form.day'>
+                                            <div class="day-item">
+                                                <h3 class="day-title">Vendredi</h3>
+                                                <div class="form-group">
+                                                    <label for="salade-0">Salade</label>
+                                                    <select id="salade-0" class="salade-select" v-model="form.salad_name" required>
+                                                        <option value="">Choisir</option>
+                                                        <option value="Pack Tropical">Pack Tropical</option>
+                                                        <option value="Pack Vitaminé">Pack Vitaminé</option>
+                                                        <option value="Pack Croquant">Pack Croquant</option>
+                                                    </select>
+                                                    
+                                                    <label for="heure-0">Heure</label>
+                                                    <select id="heure-0" class="heure-select" v-model="form.time" required>
+                                                        <option value="">Heure</option>
+                                                        <option value="9h">9h</option>
+                                                        <option value="11h">11h</option>
+                                                        <option value="13h">13h</option>
+                                                        <option value="15h">15h</option>
+                                                        <option value="17h">17h</option>
+                                                    </select>
+                                                    
+                                                   <button class="btn btn-secondary">
+                                                         <i class="fas fa-check-circle"></i> Confirmer
+                                                   </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 <br>
                                 </div>
 
@@ -201,7 +329,7 @@ ob_start(); ?>
                 thursday: '',
                 friday: '',
                 salads: [],
-                times: ['9h', '10h', '11h', '13h', '15h', '17h'],
+                times: ['9h', '11h', '13h', '15h', '17h'],
                 form:{
                     salad_name: '',
                     day: '',
@@ -330,24 +458,23 @@ ob_start(); ?>
                 this.showNewOrder = false;
             },
             formatDate(date) {
-    // Create a new Date object from the date string
-    const [year, month, day] = date.split('-');
-    const formattedDate = new Date(year, month - 1, day); // month - 1 because months are zero-based
+                // Create a new Date object from the date string
+                const [year, month, day] = date.split('-');
+                const formattedDate = new Date(year, month - 1, day); // month - 1 because months are zero-based
 
-    // List of days of the week in French
-    const daysOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-    
-    // List of months in French
-    const monthsOfYear = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
+                // List of days of the week in French
+                const daysOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                
+                // List of months in French
+                const monthsOfYear = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
 
-    // Get the day of the week and month in French
-    const dayOfWeek = daysOfWeek[formattedDate.getDay()];
-    const monthName = monthsOfYear[formattedDate.getMonth()];
+                // Get the day of the week and month in French
+                const dayOfWeek = daysOfWeek[formattedDate.getDay()];
+                const monthName = monthsOfYear[formattedDate.getMonth()];
 
-    // Return the formatted date
-    return `${dayOfWeek} ${formattedDate.getDate()} ${monthName} ${year}`;
-},
-
+                // Return the formatted date
+                return `${dayOfWeek} ${formattedDate.getDate()} ${monthName} ${year}`;
+            },
             capitalize(string) {
                 return string.toUpperCase();
             },
@@ -370,43 +497,27 @@ ob_start(); ?>
             getImage(pic) {
                 return `public/images/${pic}`;
             },
-            orderForMonday() {
-                axios.post('api/script.php?action=orderForDay', {
-                    salad_name: this.mondaySalad,
-                    day: 'lundi',
-                    time: this.mondayTime
-                        })
-                    .then(response => {
-                        if (response.data && response.data.success) {
-                            alert('Commande effectuée avec succès');
-                            this.resetFormMonday();
-                        } else {
-                            // Loguez et affichez l'erreur spécifique
-                            const message = response.data || 'Erreur inconnue';
-                            console.error('Erreur API :', message);
-                            alert(message);
-                        }
+            orderForDay() {
+                const formData = new FormData();
+
+                formData.append('day', this.form.day);
+                formData.append('salad_name', this.form.salad_name);
+                formData.append('time', this.form.time);
+
+                console.log('Données envoyées :', Object.fromEntries(formData));
+
+                axios.post('api/script.php?action=orderForDay', formData)
+                        .then(response => {
+                             console.log(response.data);
+                             if(response.data.status === 'success');
+                             console.log('ok');
                         })
                         .catch(error => {
-                            // Gérer les erreurs réseau ou autres erreurs axios
-                            console.error('Une erreur technique est survenue :', error);
-
-                            if (error.response) {
-                                // Loggez l'erreur retournée par le backend
-                                console.error('Erreur backend :', error.response.data.details || error.response.data.message);
-                                alert(error.response.data.details || 'Une erreur est survenue.');
-                            } else if (error.request) {
-                                // Pas de réponse du serveur
-                                console.error('Pas de réponse reçue du serveur :', error.request);
-                                alert('Impossible de contacter le serveur.');
-                            } else {
-                                // Erreur lors de la configuration de la requête
-                                console.error('Erreur dans la configuration de la requête :', error.message);
-                                alert('Erreur technique.');
-                            }
+                            console.error('Erreur Axios :', error);
+                            this.successMsg = 'Erreur lors de la connexion.';
                         });
-                    }  
-        },
+            }
+        }
     });
 
     app.mount('#app');
