@@ -34,7 +34,7 @@ function orderForDay()
             return $today->format('Y-m-d'); // Return the date in YYYY-MM-DD format
         }
         
-        // Get the next Monday
+        // Get the next day
         $nextDay = getNextDay($dayOfWeek);
 
           // Insert the order into the database
@@ -42,7 +42,7 @@ function orderForDay()
         $req->execute([$user_id, $salad_name, $nextDay, $time, 'A livrer']);
     
         // Update user's delivery day status to "yes"
-        $req = $pdo->prepare("UPDATE users SET $day = ? WHERE id = ?");
+        $req = $pdo->prepare("UPDATE users SET $dayOfWeek = ? WHERE id = ?");
         $req->execute(['yes', $user_id]);
     
         echo json_encode([
