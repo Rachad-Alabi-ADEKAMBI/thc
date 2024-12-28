@@ -113,12 +113,9 @@ ob_start(); ?>
                             <div class="reservation-component">
                                 <div class="close-btn" @click='closeNewOrder()'>
                                     <i class="fas fa-times"></i>
-
                                 </div>
-                                <h2 class="title">Programmez vos livraisons</h2>
                                 
-
-
+                                <h2 class="title">Programmez vos livraisons</h2>
                                 <div class="reservation">
                                     <div class="day">
                                         <form @submit.prevent="orderForDay"  >
@@ -161,8 +158,6 @@ ob_start(); ?>
                                         </form>
                                     </div>
                                 </div>
-
-                               
                             </div> <br><br>
                         </div>
 
