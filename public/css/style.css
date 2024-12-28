@@ -108,6 +108,9 @@ h2 {
   background-color: #FD4F65;
   color: white;
 }
+.header .btn-discovery:hover i {
+  color: white;
+}
 .header ul li a:hover {
   color: #FD4F65;
   font-weight: bold;

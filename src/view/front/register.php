@@ -62,28 +62,27 @@ ob_start();
                                 {{ message }}
                             </p>
                             
-                        <?php
-                        if (isset($_GET['ref']) && !empty($_GET['ref'])) { ?>
-                            <input type="hidden" name="ref" value="<?= htmlspecialchars($ref) ?>"> 
-                            <input type="hidden" name="sponsor_id" value="<?= htmlspecialchars($datas[0]['id']) ?>">
-                            <input type="hidden" name="sponsor_first_name" value="<?= htmlspecialchars($datas[0]['first_name']) ?>">
-                            <input type="hidden" name="sponsor_last_name" value="<?= htmlspecialchars($datas[0]['last_name']) ?>">
-                        <?php } ?>
+                            <?php if (isset($_GET['ref']) && !empty($_GET['ref'])): ?>
+                                <input type="hidden"  v-model="form.sponsor_id" :value="">
+                                <input type="hidden"  v-model="form.sponsor_first_name" :value="">
+                                <input type="hidden" v-model="form.sponsor_last_name" :value="">
+                            <?php endif; ?>
+
 
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="email"><i class="fas fa-envelope"></i> Email</label>
-                                    <input type="email" id="email" name="email" required>
+                                    <input type="email" id="email" v-model="form.email" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="first_name"><i class="fas fa-user"></i> Prénoms</label>
-                                    <input type="text" id="first_name" name="first_name" required>
+                                    <input type="text" id="first_name" v-model="form.first_name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="last_name"><i class="fas fa-user"></i> Nom</label>
-                                    <input type="text" id="last_name" name="last_name" required>
+                                    <input type="text" id="last_name" v-model="form.last_name" required>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -92,7 +91,7 @@ ob_start();
             <i class="fas fa-lock"></i> Mot de passe
         </label>
         <div class="password-container">
-        <input :type="showPassword1 ? 'text' : 'password'" id="password1" name="password" required>
+        <input :type="showPassword1 ? 'text' : 'password'" id="password1" v-model="form.password" required>
         <i @click="togglePassword1Visibility" :class="showPassword1 ? 'fas fa-eye-slash' : 'fas fa-eye'" class="password-icon"></i>
         </div>
     </div>
@@ -101,7 +100,7 @@ ob_start();
             <i class="fas fa-lock"></i> Confirmez le mot de passe
         </label>
        <div class="password-container">
-       <input :type="showPassword2 ? 'text' : 'password'" id="password2" name="password2" required>
+       <input :type="showPassword2 ? 'text' : 'password'" id="password2" v-model="form.password2" required>
        <i @click="togglePassword2Visibility" :class="showPassword2 ? 'fas fa-eye-slash' : 'fas fa-eye'" class="password-icon"></i>
        </div>
     </div>
@@ -110,16 +109,17 @@ ob_start();
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="address"><i class="fas fa-map-marker-alt"></i> Adresse de livraison</label>
-                                    <input type="text" id="address" name="address" required>
+                                    <input type="text" id="address" v-model="form.address" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone"><i class="fas fa-phone"></i> Téléphone</label>
-                                    <input type="tel" id="phone" name="phone" required>
+                                    <input type="number" id="phone" v-model="form.phone" required @input="form.phone = form.phone < 0 ? 0 : form.phone" />
+
                                 </div>
                             </div>
                             <div class="form-group checkbox-group">
-                                <input type="checkbox" id="cgu" name="cgu" required>
-                                <label for="cgu">J'accepte les <a href="#">conditions générales d'utilisation</a></label>
+                                <input type="checkbox" id="cgu" required>
+                                <label for="cgu">J'accepte les <a href="index.php?action=terms">conditions générales d'utilisation</a></label>
                             </div>
                             <div class="col-6 text-center mx-auto">
                                 <button type="submit" class="submit-btn mx-auto">
@@ -166,16 +166,18 @@ const app = Vue.createApp({
         return {
             showPassword1: false,
             showPassword2: false,
+            message: '',
             form: {
                      email: '',
+                     frst_name: '',
+                     last_name: '',
                     password: '',
                     phone: '',
                     address: '',
                     password2: '',
-                    ref: '',
-                    sponsor_id: '',
-                    sponsor_first_name: '',
-                    sponsor_last_name: '',
+                    sponsor_id: '<?= htmlspecialchars(json_encode($datas[0]['id'])) ?>',
+                    sponsor_first_name: <?= htmlspecialchars_decode(json_encode($datas[0]['first_name'])) ?>,
+                    sponsor_last_name: <?= htmlspecialchars_decode(json_encode($datas[0]['last_name'])) ?>,
                 }
 
         };
@@ -187,12 +189,27 @@ const app = Vue.createApp({
     togglePassword2Visibility() {
         this.showPassword2 = !this.showPassword2;
     },
+    loginWithGoogle(){
+        alert('Api indisponible pour le moment, merci de reéssayer ultérieurement !');
+    },
+    loginWithFacebook(){
+        alert('Api indisponible pour le moment, merci de reéssayer ultérieurement !');
+    },
+
     submitForm(){
                 const formData = new FormData();
 
                     // Ajout des données saisies au FormData
                     formData.append('email', this.form.email);
+                    formData.append('first_name', this.form.first_name);
+                    formData.append('last_name', this.form.last_name);
                     formData.append('password', this.form.password);
+                    formData.append('password2', this.form.password2);
+                    formData.append('phone', this.form.phone);
+                    formData.append('address', this.form.address);
+                    formData.append('sponsor_id', this.form.sponsor_id);
+                    formData.append('sponsor_first_name', this.form.sponsor_first_name);
+                    formData.append('sponsor_last_name', this.form.sponsor_last_name);
 
                     // Debug : Vérifier les données avant l'envoi
                     console.log('Données envoyées :', Object.fromEntries(formData));
@@ -200,18 +217,14 @@ const app = Vue.createApp({
                     // Envoi de la requête avec Axios
                     axios.post('api/script.php?action=register', formData)
                         .then(response => {
-                             // Redirection selon le rôle
-                             console.log(response.data.role);
-                             this.role=(response.data.role);
+                             console.log(response.data);
 
-                             const role= response.data.role;
-
-                             if(role === 'user'){
-                                window.location.replace('index.php?action=dashboardPage');
-                             } else if(role === 'admin' ){
-                                window.location.replace('index.php?action=dashboardAdminPage');
+                             if(response.data.status === 'success'){
+                                    alert("Inscription enregistrée avec succès, veuillez vous connecter");
+                                   // window.location.replace('index.php?action=loginPage');
                              } else{
-                                this.message = 'Identifiants incorrects';
+                                this.message = response.data.message
+                                window.location.replace('#app')
                              }
                         })
                         .catch(error => {

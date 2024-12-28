@@ -134,6 +134,10 @@ h2{
     .btn-discovery:hover{
       background-color: $primary;
       color: $white;
+
+      i{
+        color: $white;
+      }
     }
 
     ul{
