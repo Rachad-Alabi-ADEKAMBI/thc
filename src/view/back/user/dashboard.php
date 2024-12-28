@@ -100,7 +100,7 @@ ob_start(); ?>
 
                                     
                                 <p v-if="orders.length === 0">
-                                    Aucune commande à afficher pour l'instant,  <br>programmez vos commandes avec le bouton "Progarammer" 
+                                    Aucune commande à afficher pour l'instant,  <br>programmez vos commandes avec le bouton "Programmer" 
                                 </p>
                             </div>
                            
@@ -122,7 +122,6 @@ ob_start(); ?>
                                 <div class="reservation">
                                     <div class="day">
                                         <form @submit.prevent="orderForDay"  >
-                                            <input  type='hidden' value='monday' v-model='form.day'>
                                             <div class="day-item">
                                                 
                                                 <div class="form-group">
@@ -203,6 +202,7 @@ ob_start(); ?>
                 itemsPerPage: 10,
                 selectedDetail: null,
                 offer_id: '',
+                subscription_status: '',
                 monday: '',
                 tuesday: '',
                 wednesday: '',
@@ -219,7 +219,7 @@ ob_start(); ?>
         },
         mounted() {
             this.getUserDatas();
-            this.displayNewOrder();
+            this.displayOrders();
         },
         computed: {
             totalPages() {
@@ -237,6 +237,12 @@ ob_start(); ?>
                     .then((response) => {
                         if (Array.isArray(response.data) && response.data.length > 0) {
                             this.details = response.data;
+                            const dataa = response.data[0];
+
+                            // Assigner les valeurs en utilisant les clés descriptives
+                            this.datas = dataa;
+                            this.subscription_status = dataa.subscription_status || null;
+
                         } else {
                             console.warn('No data found in API response.');
                         }
@@ -278,6 +284,7 @@ ob_start(); ?>
                     });
             },
             displayNewOrder() {
+               if(this.subscription_status === 'Active'){
                 axios.get('api/script.php?action=getSalads')
                     .then((response) => {
                         this.salads = response.data;
@@ -295,9 +302,11 @@ ob_start(); ?>
                         // Assigner les valeurs en utilisant les clés descriptives
                         this.datas = dataa;
                         this.offer_id = dataa.offer_id || null;
-                        //this.monday = datas.monday || null;
-
-                        console.log(dataa.offer_id); // Logs the offer_id value
+                        this.monday = dataa.monday || null;
+                        this.tuesday = dataa.tuesday || null;
+                        this.wednesday = dataa.wednesday || null;
+                        this.thursday = dataa.thursday || null;
+                        this.friday = dataa.friday || null;
                         } else {
                         console.warn('No data found in API response.');
                         }
@@ -313,18 +322,22 @@ ob_start(); ?>
                 this.showEdit = false;
                 this.showNewOrder = true;
                 this.showNewOrderBtn = false;
+               } else{
+                alert("Vous devez d'abord souscrire à un abonnement !");
+                exit();
+               }
             },
             closeNewOrder() {
-                axios.get('api/script.php?action=getMyNextOrders')
+                axios.get('api/script.php?action=getMyOrders')
                     .then((response) => {
                         console.log(response.data);
-                        this.nextOrders = response.data;
+                        this.orders = response.data;
                     })
                     .catch((error) => {
                         console.error(error);
                     });
-                this.showNextOrders = true;
-                this.showOrders = false;
+                this.showNextOrders = false;
+                this.showOrders = true;
                 this.showBooking = false;
                 this.showEdit = false;
                 this.showNewOrder = false;
