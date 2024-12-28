@@ -86,7 +86,7 @@ ob_start();
                                </div>
                                <div class="pricing">
                                     <div class="pricing__content" >
-                                        <div class="pricing__content__item subscription ml-0">
+                                        <div class="pricing__content__item subscription ml-0" v-if='showSelected'>
                                             <p>
                                                 Abonnement choisi: <strong>{{ selectedOffer.name }}</strong> <br>
                                                 Montant: <strong>{{ formatNumber(selectedOffer.price) }} XOF</strong>
@@ -110,6 +110,10 @@ ob_start();
 
                                         <div class="pricing__content__item subscription ml-0" v-if="showPayWithMobile">
                                             <form class="contact-form" @submit.prevent="pay">
+                                                <div class="close" @click='displayPayment(this.selectedOffer)'>
+                                                    <i class="fas fa-times"></i>
+                                                </div> 
+
                                                 <div class="form-row">
                                                     <div class="form-group">
                                                         <label for="network">
@@ -145,9 +149,11 @@ ob_start();
                                         </div>
 
                                         <div class="pricing__content__item subscription ml-0" v-if="showPayWithWallet">
-                                            <form class="contact-form" action="api/script.php?action=register" method="POST">
-                                                
+                                        <div class="close" @click='displayPayment(this.selectedOffer)'>
+                                                    <i class="fas fa-times"></i>
+                                                </div>
 
+                                            <form class="contact-form" action="api/script.php?action=register" method="POST">
                                                 <div class="form-group">
                                                     <p v-for="detail in details" :key="detail.id">
                                                         Solde: <strong> {{ formatNumber(detail.wallet) }} XOF</strong>
@@ -241,14 +247,17 @@ const app = Vue.createApp({
             this.form.offer_id = selectedOffer.id;
             this.form.offer_name = selectedOffer.name;
             this.form.offer_price = selectedOffer.price;
+            this.showSelected = true;
         },
         payWithWallet() {
             this.showPayWithWallet = true;
             this.showPayWithMobile = false;
+            this.showSelected = false;
         },
         payWithMobile() {
             this.showPayWithMobile = true;
             this.showPayWithWallet = false;
+            this.showSelected = false;
         }, 
         pay() {
             const formData = new FormData();
@@ -304,3 +313,18 @@ const app = Vue.createApp({
 
 app.mount('#app');
 </script>
+
+<style>
+    .close{
+        background-color: #FD4F65;
+        width: 50px;
+        height: 50px;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .close i{
+        margin: 13px auto;
+    }
+</style>
