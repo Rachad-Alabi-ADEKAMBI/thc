@@ -50,15 +50,13 @@ ob_start(); ?>
                                 <thead>
                                     <tr>
                                         <th>Date</th>
-                                        <th>Heure</th>
                                         <th>Salade</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for='detail in nextOrders' :key='detail.id'>
-                                        <td>{{ formatDate(detail.day) }}</td>
-                                        <td>{{ detail.time }}</td>
-                                        <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.salad_name }}</td>
+                                        <td><strong>{{ formatDate(detail.day)}}</strong> à <strong>{{ detail.time }}</strong></td>
+                                        <td><i data-lucide="apple" aria-hidden="true"></i><strong> {{ detail.salad_name }}</strong></td>
                                     </tr>
                                 </tbody>
                                 </table>
@@ -78,19 +76,17 @@ ob_start(); ?>
                                         <thead>
                                             <tr>
                                                 <th>Date</th>
-                                                <th>Heure</th>
                                                 <th>Salade</th>
                                                 <th>Statut</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr v-for='detail in orders' :key='detail.id'>
-                                                <td>{{ formatDate(detail.day) }}</td>
-                                                <td>{{ detail.time }}</td>
-                                                <td><i data-lucide="apple" aria-hidden="true"></i> {{ detail.salad_name }}</td>
+                                                <td><strong>{{ formatDate(detail.day) }}</strong> à <strong>{{ detail.time }}</strong></td>
+                                                <td><i data-lucide="apple" aria-hidden="true"></i> <strong>{{ detail.salad_name }}</strong></td>
                                                 <td>
                                                     <span :class="{'status': true, 'delivered': detail.status === 'Livrée', 'to-deliver': detail.status === 'A livrer'}">
-                                                        {{ detail.status }}
+                                                        <strong>{{ detail.status }}</strong>
                                                     </span>
                                                 </td>
 
@@ -111,54 +107,54 @@ ob_start(); ?>
                         <div class="dashboard__content__main" v-if='showNewOrder'>
                             <br>
                             <div class="reservation-component">
-                                <div class="close-btn" @click='closeNewOrder()'>
-                                    <i class="fas fa-times"></i>
-                                </div>
-                                
-                                <h2 class="title">Programmez vos livraisons</h2>
-                                <div class="reservation">
-                                    <div class="day">
-                                        <form @submit.prevent="orderForDay"  >
-                                            <div class="day-item">
-                                                
-                                                <div class="form-group">
-                                                <label for="day">Jour</label>
-                                                    <select id="day-0" class="day-select" v-model="form.day" required>
-                                                        <option value=''>Choisir</option>
-                                                        <option value="monday" v-if="offer_id == 2 || offer_id == 3">Lundi</option>
-                                                        <option value="tuesday" v-if="offer_id == 1 || offer_id == 3">Mardi</option>
-                                                        <option value="wednesday" v-if="offer_id == 2 || offer_id == 3">Mercredi</option>
-                                                        <option value="thursday" v-if="offer_id == 1 || offer_id == 3">Jeudi</option>
-                                                        <option value="friday" v-if="offer_id == 2 || offer_id == 3">Vendredi</option>
-                                                    </select>
-
-                                                    <label for="salade-0">Salade</label>
-                                                    <select id="salade-0" class="salade-select" v-model="form.salad_name" required>
-                                                        <option value="">Choisir</option>
-                                                        <option value="Pack Tropical">Pack Tropical</option>
-                                                        <option value="Pack Vitaminé">Pack Vitaminé</option>
-                                                        <option value="Pack Croquant">Pack Croquant</option>
-                                                    </select>
-                                                    
-                                                    <label for="heure-0">Heure</label>
-                                                    <select id="heure-0" class="heure-select" v-model="form.time" required>
-                                                        <option value="">Heure</option>
-                                                        <option value="9h">9h</option>
-                                                        <option value="11h">11h</option>
-                                                        <option value="13h">13h</option>
-                                                        <option value="15h">15h</option>
-                                                        <option value="17h">17h</option>
-                                                    </select>
-                                                    
-                                                   <button class="btn btn-secondary">
-                                                         <i class="fas fa-check-circle"></i> Confirmer
-                                                   </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div> <br><br>
+    <div class="close-btn" @click='closeNewOrder()'>
+        <i class="fas fa-times"></i>
+    </div>
+    
+    <h2 class="title">Programmez vos livraisons</h2>
+    <div class="reservation">
+        <div class="day">
+            <form @submit.prevent="orderForDay" class="reservation-form">
+                <div class="day-item">
+                    <div class="form-group">
+                        <label for="day">Jour</label>
+                        <select id="day-0" class="day-select" v-model="form.day" required>
+                            <option value=''>Choisir</option>
+                            <option value="monday" v-if="offer_id == 2 || offer_id == 3">Lundi</option>
+                            <option value="tuesday" v-if="offer_id == 1 || offer_id == 3">Mardi</option>
+                            <option value="wednesday" v-if="offer_id == 2 || offer_id == 3">Mercredi</option>
+                            <option value="thursday" v-if="offer_id == 1 || offer_id == 3">Jeudi</option>
+                            <option value="friday" v-if="offer_id == 2 || offer_id == 3">Vendredi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="salade-0">Salade</label>
+                        <select id="salade-0" class="salade-select" v-model="form.salad_name" required>
+                            <option value="">Choisir</option>
+                            <option value="Pack Tropical">Pack Tropical</option>
+                            <option value="Pack Vitaminé">Pack Vitaminé</option>
+                            <option value="Pack Croquant">Pack Croquant</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="heure-0">Heure</label>
+                        <select id="heure-0" class="heure-select" v-model="form.time" required>
+                            <option value="">Heure</option>
+                            <option value="9h">9h</option>
+                            <option value="11h">11h</option>
+                            <option value="13h">13h</option>
+                            <option value="15h">15h</option>
+                            <option value="17h">17h</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-check-circle"></i> Confirmer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> <br><br>
                         </div>
 
                         <div class="dashboard__content__main" v-if='showEditOrder'>
@@ -398,7 +394,7 @@ ob_start(); ?>
                         .then(response => {
                              console.log(response.data);
                              if(response.data.status === 'success');
-                             console.log('ok');
+                            alert('Cette commande a bien été enregistrée !')
                         })
                         .catch(error => {
                             console.error('Erreur Axios :', error);

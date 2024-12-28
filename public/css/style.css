@@ -151,6 +151,8 @@ h2 {
   /*dashboard starts*/
   /*dashboard ends*/
   /*reservation starts*/
+  /*reservation starts*/
+  /*reservation ends*/
   /*reservation ends*/
 }
 .main .hero {
@@ -1543,7 +1545,7 @@ h2 {
   color: white;
   cursor: pointer;
   text-align: center;
-  float: right;
+  align-self: flex-end;
 }
 .main .reservation-component .close-btn i {
   margin: auto;
@@ -1562,32 +1564,25 @@ h2 {
   gap: 1.5rem;
   margin-bottom: 1.5rem;
 }
-.main .reservation-component .days-selection {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.main .reservation-component .reservation-form {
+  width: 100%;
 }
 .main .reservation-component .day-item {
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   padding: 1rem;
 }
-.main .reservation-component .day-item .day-title {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  color: #F99401;
-}
-.main .reservation-component .day-item .form-group {
+.main .reservation-component .form-group {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 0.5rem;
+  margin-bottom: 1rem;
 }
-.main .reservation-component .day-item .form-group label {
+.main .reservation-component .form-group label {
   font-size: 0.9rem;
   color: #50AF47;
 }
-.main .reservation-component .day-item .form-group select {
+.main .reservation-component .form-group select {
   padding: 0.4rem;
   border: none;
   border-radius: 4px;
@@ -1599,8 +1594,7 @@ h2 {
   background-position: right 0.5rem center;
   background-size: 10px;
 }
-.main .reservation-component .day-item .form-group .salade-select {
-  flex-grow: 1;
+.main .reservation-component .form-group .salade-select {
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
@@ -1609,30 +1603,13 @@ h2 {
   background-position: 5px center, right 0.5rem center;
   background-repeat: no-repeat, no-repeat;
 }
-.main .reservation-component .day-item .form-group .heure-select {
-  width: 70px;
+.main .reservation-component .form-group .heure-select {
   background-color: #272222;
   color: #F99401;
   border: 1px solid #F99401;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23F99401' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
 }
-.main .reservation-component .recap {
-  flex: 1;
-  padding: 1rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-}
-.main .reservation-component .recap h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  color: #50AF47;
-}
-.main .reservation-component .recap p {
-  margin-bottom: 0.3rem;
-  font-size: 0.9rem;
-  color: #F99401;
-}
-.main .reservation-component .submit-btn {
+.main .reservation-component .btn-secondary {
   padding: 0.6rem 1.5rem;
   border: none;
   border-radius: 5px;
@@ -1641,22 +1618,37 @@ h2 {
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
 }
-.main .reservation-component .submit-btn:hover {
+.main .reservation-component .btn-secondary:hover {
   background-color: #fc1d39;
   transform: translateY(-2px);
 }
-.main .reservation-component .submit-btn:active {
+.main .reservation-component .btn-secondary:active {
   transform: translateY(0);
 }
 @media (max-width: 600px) {
   .main .reservation-component {
     padding: 1rem;
   }
-  .main .reservation-component .reservation-layout {
-    flex-direction: column;
+  .main .reservation-component .close-btn {
+    align-self: flex-end;
+    margin-bottom: 1rem;
   }
-  .main .reservation-component .recap {
+  .main .reservation-component .title {
+    font-size: 1.2rem;
+  }
+  .main .reservation-component .form-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .main .reservation-component .form-group select {
+    width: 100%;
+  }
+  .main .reservation-component .form-group .heure-select {
+    width: 100%;
+  }
+  .main .reservation-component .btn-secondary {
     width: 100%;
   }
 }

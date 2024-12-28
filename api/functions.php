@@ -57,7 +57,7 @@ function orderForDay()
         // Return an error message with detailed explanation
         return [
             'status' => 'error',
-            'message' => 'Une erreur est survenue lors du traitement de l\'abonnement : ' . $e->getMessage(),
+            'message' => 'Une erreur est survenue lors du traitement de la commande : ' . $e->getMessage(),
             'details' => 'Veillez à vérifier les informations saisies et réessayer. Si le problème persiste, contactez le support technique.'
         ];
     }
