@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Load Composer's autoloader if using Composer
-require 'vendor/autoload.php';
+//require 'vendor/autoload.php';
 
 //include db file
 include 'db.php';

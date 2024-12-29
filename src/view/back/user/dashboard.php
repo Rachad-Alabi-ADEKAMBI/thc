@@ -46,20 +46,24 @@ ob_start(); ?>
                                 Mes futures commandes
                             </h3>
 
-                            <table class="orders-table"  v-if='nextOrders.length > 0'>
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Salade</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for='detail in nextOrders' :key='detail.id'>
-                                        <td><strong>{{ formatDate(detail.day)}}</strong> à <strong>{{ detail.time }}</strong></td>
-                                        <td><i data-lucide="apple" aria-hidden="true"></i><strong> {{ detail.salad_name }}</strong></td>
-                                    </tr>
-                                </tbody>
+                                <table class="orders-table"  v-if='nextOrders.length > 0'>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Salade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for='detail in nextOrders' :key='detail.id'>
+                                            <td><strong>{{ formatDate(detail.day)}}</strong> à <strong>{{ detail.time }}</strong></td>
+                                            <td><i data-lucide="apple" aria-hidden="true"></i><strong> {{ detail.salad_name }}</strong></td>
+                                        </tr>
+                                    </tbody>
                                 </table>
+
+                                <p v-if="nextOrders.length === 0">
+                                    Aucune commande à afficher pour l'instant,  <br>programmez vos commandes avec le bouton "Programmer" 
+                                </p>
                         </div>
 
                         <div class="dashboard__content__main" v-if='showOrders'>
@@ -70,7 +74,6 @@ ob_start(); ?>
                             </div>
 
                                 <div class="table-container" v-if="orders.length > 0" >
-
                                     <table class="orders-table">
 
                                         <thead>
@@ -93,15 +96,12 @@ ob_start(); ?>
                                             </tr>
                                         </tbody>
                                     </table>
+                                </div>
 
-                                    
                                 <p v-if="orders.length === 0">
                                     Aucune commande à afficher pour l'instant,  <br>programmez vos commandes avec le bouton "Programmer" 
                                 </p>
-                            </div>
                            
-
-
                         </div>
                
                         <div class="dashboard__content__main" v-if='showNewOrder'>

@@ -206,27 +206,27 @@ ob_start(); ?>
                     });
             },
             formatDate(date) {
-    const daysOfWeek = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
-    
-    // Split the date and time parts
-    const [datePart, timePart] = date.split(' ');
-    const [year, month, day] = datePart.split('-');
-    const [hours, minutes] = timePart.split(':');
-    
-    // Create a Date object to find the day of the week
-    const dateObj = new Date(`${year}-${month}-${day}`);
-    const dayOfWeek = daysOfWeek[dateObj.getDay()];
-    
-    // Format the result
-    return ` ${String(Number(day) + 1).padStart(2, '0')}/${month}/${year.slice(-2)}`;
-},
-            formatNumber(number) {
-      if (isNaN(number)) {
-        return '';
-      }
-      // Convert the number to a string and add thousand separators
-      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    },
+            const daysOfWeek = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+            
+            // Split the date and time parts
+            const [datePart, timePart] = date.split(' ');
+            const [year, month, day] = datePart.split('-');
+            const [hours, minutes] = timePart.split(':');
+            
+            // Create a Date object to find the day of the week
+            const dateObj = new Date(`${year}-${month}-${day}`);
+            const dayOfWeek = daysOfWeek[dateObj.getDay()];
+            
+            // Format the result
+            return ` ${String(Number(day) + 1).padStart(2, '0')}/${month}/${year.slice(-2)}`;
+        },
+                    formatNumber(number) {
+            if (isNaN(number)) {
+                return '';
+            }
+            // Convert the number to a string and add thousand separators
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            },
             capitalize(string) {
                 return string.toUpperCase();
             },
@@ -247,7 +247,7 @@ ob_start(); ?>
                 this.currentPage = page;
             },
             copyLink() {
-                const link = 'https://www.thehealthychoice.com?ref='+this.ref;
+                const link = 'https://apptest1.kesug.com/index.php?action=registerPage&ref='+this.ref;
                 navigator.clipboard.writeText(link).then(() => {
                     alert("Lien copié dans le presse-papiers !");
                 }).catch(err => {
@@ -257,7 +257,7 @@ ob_start(); ?>
 
     // Share the referral link via email
     shareByMail() {
-        const link = 'https://www.thehealthychoice.com?ref='+this.ref;
+        const link = 'https://apptest1.kesug.com/index.php?action=registerPage&ref='+this.ref;
         const subject = encodeURIComponent("Voici mon lien d'affiliation !");
         const body = encodeURIComponent(`Bonjour,\n\nJe voulais partager ce lien avec vous :\n${link}\n\nCordialement.`);
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
@@ -265,7 +265,7 @@ ob_start(); ?>
 
     // Share the referral link via WhatsApp
     shareByWhatsapp() {
-        const link = 'https://www.thehealthychoice.com?ref='+this.ref;
+        const link = 'https://apptest1.kesug.com/index.php?action=registerPage&ref='+this.ref;
         const message = encodeURIComponent(`Bonjour, voici mon lien d'affiliation Healthy Choice : ${link}`);
         const whatsappUrl = `https://wa.me/?text=${message}`;
         window.open(whatsappUrl, "_blank");
@@ -273,7 +273,7 @@ ob_start(); ?>
 
     // Share the referral link via Facebook
     shareByFacebook() {
-        const link = 'https://www.thehealthychoice.com?ref='+this.ref;
+        const link = 'https://apptest1.kesug.com/index.php?action=registerPage&ref='+this.ref;
         const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
         window.open(facebookUrl, "_blank");
     }

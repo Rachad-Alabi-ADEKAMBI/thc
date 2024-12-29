@@ -221,7 +221,7 @@ const app = Vue.createApp({
 
                              if(response.data.status === 'success'){
                                     alert("Inscription enregistrée avec succès, veuillez vous connecter");
-                                   // window.location.replace('index.php?action=loginPage');
+                                    window.location.replace('index.php?action=loginPage');
                              } else{
                                 this.message = response.data.message
                                 window.location.replace('#app')

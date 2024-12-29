@@ -50,7 +50,7 @@ ob_start(); ?>
                                 </button> <hr>
                                 <div class="socials">
                                     <!-- Gmail Button -->
-                                    <button class="connect-btn gmail-btn mx-auto">
+                                    <button @click.prevent="loginWithGoogle" class="connect-btn gmail-btn mx-auto">
                                         <i class="fa fa-google"></i>
                                     </button>
 
@@ -126,14 +126,12 @@ ob_start(); ?>
             togglePasswordVisibility() {
                 this.showPassword = !this.showPassword;
             },
-            loginWithGoogle() {
-                console.log('Google login initiated.');
-                // Implémentez ici l'intégration avec l'API de Google
-            },
-            loginWithFacebook() {
-                console.log('Facebook login initiated.');
-                // Implémentez ici l'intégration avec l'API de Facebook
-            },
+            loginWithGoogle(){
+        alert('Api indisponible pour le moment, merci de reéssayer ultérieurement !');
+    },
+    loginWithFacebook(){
+        alert('Api indisponible pour le moment, merci de reéssayer ultérieurement !');
+    },
             handleGoogleCredentialResponse(response) {
         console.log('Google ID Token:', response.credential);
 
