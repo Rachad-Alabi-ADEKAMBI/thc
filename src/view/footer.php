@@ -81,7 +81,9 @@
         <p>
             © 2024 All rights reserved | The Healthy
             Choice <br>
+            <a href="">
             <i class="fas fa-heart"></i> <span>The Lazy Company</span>
+            </a>
         </p>
     </div>
 </div>
