@@ -79,7 +79,7 @@
 
     <div class="row footer__bottom">
         <p>
-            © 2024 All rights reserved | The Healthy
+            © 2025 All rights reserved | The Healthy
             Choice <br>
             <a href="">
             <i class="fas fa-heart"></i> <span>The Lazy Company</span>
